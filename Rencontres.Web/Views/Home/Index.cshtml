@@ -2,7 +2,10 @@
 @{
     ViewData["Title"] = "Rencontres non-scolarisées";
 }
-
+<br/>
+<div class="text-center">
+    <H1>Bonjour Ami-e !</H1>
+</div>
 <!-- Card -->
 <div class="card card-cascade wider reverse">
 
@@ -31,41 +34,102 @@
     </div>
 
 </div>
-<!-- Card -->
-@for (int i = 0; i < Model.Charte.Count; i++)
-{
-    var contenu = Model.Charte[i];
-    string hiddenStyle = (i == 0) ? "" : "display:none;";
-    var chkId = "Accepte" + i;
-    
-    <div id="@($"divCharte{i}")" class="card text-center" style="width: 22rem;@hiddenStyle">
-        <div class="card-header success-color white-text">
-            Lisez et acceptez :
-        </div>
-        <div class="card-body">
-            <h4 class="card-title">@contenu.Categorie</h4>
-            <p class="card-text">@Html.Raw(contenu.Contenu)</p>
 
-        </div>
-        <div class="card-footer text-muted ">
-            <p class="mb-0">
-                <!-- Default unchecked -->
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="@chkId" onchange="deroule(@i)">
-                    <label class="custom-control-label" for="@chkId">J'ai lu et accepté</label>
+<div class="row">
+    <!-- Card -->
+    @for (int i = 0; i < Model.Charte.Count; i++)
+    {
+        bool newRow = i == 0 || (i % 2 == 0);
+
+        var contenu = Model.Charte[i];
+        string hiddenStyle = (i == 0) ? "" : "display:none;";
+        var chkId = "Accepte" + i;
+
+
+        <div class="col-sm-6">
+            <div id="@($"divCharte{i}")" class="card text-center" style="height: 300px; @hiddenStyle">
+                <div class="card-header success-color white-text">
+                    Lis et accepte :
                 </div>
-            </p>
+                <div class="card-body">
+                    <h4 class="card-title">@contenu.Categorie</h4>
+                    <p class="card-text">@Html.Raw(contenu.Contenu)</p>
+
+                </div>
+                <div class="card-footer text-muted ">
+                    <p class="mb-0">
+                        <!-- Default unchecked -->
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="@chkId" onchange="deroule(@i)">
+                            <label class="custom-control-label" id="@($"lblCharte{i}")" for="@chkId">J'ai lu et j'accepte</label>
+                        </div>
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="row" id="divInscription" style="display:none">
+    <div class="col-sm-12">
+        <div class="card text-center" >
+            <div class="card-header success-color white-text">
+                Finalisons ton inscription
+            </div>
+            <div class="card-body">
+                <form method="post" asp-action="SignInMeetup" asp-controller="Home" id="meetup-form">
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="md-form">
+                                <input type="text" class="form-control" maxlength="50" id="inputFirstName" input="firstName">
+                                <label for="inputFirstName">Prénom</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="md-form">
+                                <input type="text" required maxlength="50" class="form-control" id="intpuName" name="name">
+                                <label for="inputName">Nom</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="md-form">
+                                <input type="email" required maxlength="50" class="form-control" id="inputEmail" name="email">
+                                <label for="inputEmail">Email</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="md-form">
+                                <input type="text" class="form-control" id="inputPhone" name="phone">
+                                <label for="inputPhone">Téléphone</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div id ="divBtnSignin" class="card-footer text-muted success-color white-text">
+                <a class="btn btn-success"onclick="document.getElementById('meetup-form').submit();">Je m'inscris</a>
+            </div>
         </div>
     </div>
-}
+</div>
+    @section Scripts
+        {
+        <script>
 
-@section Scripts
-    {
-    <script>
-
-        function deroule(i) {
-            $("#Accepte" + i).prop("disabled", true);
-            $("#divCharte" + (i + 1)).show();
-        }
-    </script>
-}
+            function deroule(i) {
+                $("#Accepte" + i).prop("disabled", true);
+                $("#lblCharte" + i).html("J'ai accepté");
+                var next = $("#divCharte" + (i + 1));
+                if (next.length > 0)
+                    next.show();
+                else {
+                    $("#divInscription").show();
+                    $('html, body').animate({
+                        scrollTop: $("#divBtnSignin").offset().top
+                    }, 2000);
+                }
+            }
+        </script>
+    }

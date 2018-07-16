@@ -48,8 +48,8 @@ namespace Rencontres.Metier.Infrastructure
                 DateDebut = new DateTime(2018, 10, 22),
                 DateFin = new DateTime(2018, 10, 29),
                 EstVisible = true,
-                OuvertInscriptionLe = new DateTime(2018, 1, 1),
-                DescriptionPublique= "Rencontre près de Casteljaloux(47) du 22 au 29 octobre 2018.",
+                OuvertInscriptionLe = new DateTime(2018,2, 1),
+                DescriptionPublique= "Rencontre près de Casteljaloux(47) du 22 au 29 octobre 2018. Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.",
                 DescriptionInscrit = "<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail &agrave; : francois.fonseca@solincite.org</strong></div>\r\n<div>Vous devrez lui indiquer vos&nbsp;<strong>noms/pr&eacute;noms/adresse postale/nb d&rsquo;adultes+d&rsquo;enfants.</strong></div>\r\n<div><strong>Il n&rsquo;y a qu&rsquo;un seul interlocuteur par logement : un logement est r&eacute;serv&eacute; par une seule famille, c&rsquo;est elle qui fait la r&eacute;servation et paiera la somme totale au village de vacances. </strong>Vous pouvez donc r&eacute;server &agrave; votre nom et trouver d&rsquo;autres familles pour partager, gr&acirc;ce au document Pad mis &agrave; disposition <strong>:&nbsp;</strong><strong><a href=\"https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B\">https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B</a></strong></div>\r\n<div>Ce document servira &agrave; partager toutes les infos sur la rencontre (logements, covoiturage, activit&eacute;s,&hellip;)</div>",
                 ImageTitre="La-Taillade.jpg"
 
@@ -69,7 +69,7 @@ namespace Rencontres.Metier.Infrastructure
                     Id = 2,
                     Categorie = "Spécifique à la Taillade",
                     Contenu =
-                        "<ul><li>La tradition est né de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants</li></ul>",
+                        "<ul><li>La tradition est née de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants</li></ul>",
                     RencontreId=1
                 }
             };

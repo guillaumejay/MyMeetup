@@ -28,6 +28,12 @@ namespace Rencontres.Web.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public void SigninMeetup(SigninMeetupModel model)
+        {
+
+        }
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
