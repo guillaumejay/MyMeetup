@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -27,6 +29,7 @@ namespace Rencontres.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLocalization();
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -64,7 +67,21 @@ namespace Rencontres.Web
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+            var supportedCultures = new List<CultureInfo>
+            {
+                new CultureInfo("fr"),
+                new CultureInfo("fr-FR"),
+                //new CultureInfo("en"),
+                //new CultureInfo("en-US")
+            };
 
+            var localizationOptions = new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("fr-FR"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            };
+            app.UseRequestLocalization(localizationOptions);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

@@ -1,0 +1,61 @@
+﻿@model Rencontres.Metier.Modeles.Rencontre
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Rencontre</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Titre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Titre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateDebut)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateDebut)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateFin)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateFin)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EstVisible)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EstVisible)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOuvertureInscription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateOuvertureInscription)
+        </dd>
+   
+        <dt>
+            @Html.DisplayNameFor(model => model.CreeLe)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreeLe)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifieLe)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ModifieLe)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

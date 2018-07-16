@@ -61,8 +61,7 @@ namespace Rencontres.Metier.Migrations
                     DateDebut = table.Column<DateTime>(type: "Date", nullable: false),
                     DateFin = table.Column<DateTime>(type: "Date", nullable: false),
                     EstVisible = table.Column<bool>(nullable: false),
-                    DateOuvertureInscription = table.Column<DateTime>(nullable: false),
-                    MontantVerse = table.Column<int>(nullable: false)
+                    DateOuvertureInscription = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -209,7 +208,8 @@ namespace Rencontres.Metier.Migrations
                     ModifieLe = table.Column<DateTime>(nullable: false),
                     RencontreUserId = table.Column<int>(nullable: false),
                     RencontreId = table.Column<int>(nullable: false),
-                    CodeReservation = table.Column<string>(maxLength: 20, nullable: true)
+                    CodeReservation = table.Column<string>(maxLength: 20, nullable: true),
+                    MontantVerse = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -223,6 +223,31 @@ namespace Rencontres.Metier.Migrations
                     table.ForeignKey(
                         name: "FK_Inscriptions_AspNetUsers_RencontreUserId",
                         column: x => x.RencontreUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ResponsablesRencontres",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(nullable: false),
+                    RencontreId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ResponsablesRencontres", x => new { x.UserId, x.RencontreId });
+                    table.UniqueConstraint("AK_ResponsablesRencontres_RencontreId_UserId", x => new { x.RencontreId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_ResponsablesRencontres_Rencontres_RencontreId",
+                        column: x => x.RencontreId,
+                        principalTable: "Rencontres",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ResponsablesRencontres_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -305,6 +330,9 @@ namespace Rencontres.Metier.Migrations
 
             migrationBuilder.DropTable(
                 name: "Inscriptions");
+
+            migrationBuilder.DropTable(
+                name: "ResponsablesRencontres");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

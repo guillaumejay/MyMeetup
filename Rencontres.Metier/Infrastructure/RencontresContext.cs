@@ -17,8 +17,13 @@ namespace Rencontres.Metier.Infrastructure
         public DbSet<Inscription> Inscriptions { get; set; }
 
         public DbSet<Rencontre> Rencontres { get; set; }
-    
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<ResponsableRencontre>()
+                .HasKey(c => new { c.UserId, c.RencontreId });
+        }
     }
 
 }

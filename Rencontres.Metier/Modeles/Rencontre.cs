@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -22,6 +23,6 @@ namespace Rencontres.Metier.Modeles
 
         public DateTime DateOuvertureInscription { get; set; }
 
-        public int MontantVerse { get; set; }
+      public List<ResponsableRencontre> Responsables { get; set; }
     }
 }

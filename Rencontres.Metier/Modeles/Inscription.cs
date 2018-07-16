@@ -15,5 +15,7 @@ namespace Rencontres.Metier.Modeles
 
         [StringLength(20)]
         public string CodeReservation { get; set; }
+
+        public decimal MontantVerse { get; set; }
     }
 }

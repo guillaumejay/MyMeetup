@@ -14,5 +14,10 @@ namespace Rencontres.Metier.Modeles
         }
 
         public DateTime ModifieLe { get; set; }
+
+        protected EntiteDatee()
+        {
+            CreeLe = DateTime.UtcNow;
+        }
     }
 }

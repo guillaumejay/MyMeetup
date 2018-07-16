@@ -218,6 +218,8 @@ namespace Rencontres.Metier.Migrations
 
                     b.Property<DateTime>("ModifieLe");
 
+                    b.Property<decimal>("MontantVerse");
+
                     b.Property<int>("RencontreId");
 
                     b.Property<int>("RencontreUserId");
@@ -251,14 +253,25 @@ namespace Rencontres.Metier.Migrations
 
                     b.Property<DateTime>("ModifieLe");
 
-                    b.Property<int>("MontantVerse");
-
                     b.Property<string>("Titre")
                         .HasMaxLength(80);
 
                     b.HasKey("Id");
 
                     b.ToTable("Rencontres");
+                });
+
+            modelBuilder.Entity("Rencontres.Metier.Modeles.ResponsableRencontre", b =>
+                {
+                    b.Property<int>("UserId");
+
+                    b.Property<int>("RencontreId");
+
+                    b.HasKey("UserId", "RencontreId");
+
+                    b.HasAlternateKey("RencontreId", "UserId");
+
+                    b.ToTable("ResponsablesRencontres");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -323,6 +336,19 @@ namespace Rencontres.Metier.Migrations
                     b.HasOne("Rencontres.Metier.Infrastructure.RencontreUser", "RencontreUser")
                         .WithMany()
                         .HasForeignKey("RencontreUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Rencontres.Metier.Modeles.ResponsableRencontre", b =>
+                {
+                    b.HasOne("Rencontres.Metier.Modeles.Rencontre", "Rencontre")
+                        .WithMany("Responsables")
+                        .HasForeignKey("RencontreId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Rencontres.Metier.Infrastructure.RencontreUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
