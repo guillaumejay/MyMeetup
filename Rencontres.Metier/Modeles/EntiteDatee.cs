@@ -8,16 +8,17 @@ namespace Rencontres.Metier.Modeles
         [Key]
         public int Id { get; set; }
 
-        public DateTime CreeLe
+        public DateTime CreationLe
         {
             get; set;
         }
 
-        public DateTime ModifieLe { get; set; }
+        public DateTime ModificationLe { get; set; }
 
         protected EntiteDatee()
         {
-            CreeLe = DateTime.UtcNow;
+            CreationLe = DateTime.UtcNow;
+            ModificationLe = CreationLe;
         }
     }
 }

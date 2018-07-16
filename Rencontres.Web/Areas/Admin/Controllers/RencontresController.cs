@@ -55,7 +55,7 @@ namespace Rencontres.Web.Areas.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Titre,DateDebut,DateFin,EstVisible,DateOuvertureInscription,MontantVerse,Id,CreeLe,ModifieLe")] Rencontre rencontre)
+        public async Task<IActionResult> Create([Bind("Titre,DateDebut,DateFin,EstVisible,DateOuvertureInscription,MontantVerse,Id,CreationLe,ModifieLe")] Rencontre rencontre)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace Rencontres.Web.Areas.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Titre,DateDebut,DateFin,EstVisible,DateOuvertureInscription,MontantVerse,Id,CreeLe,ModifieLe")] Rencontre rencontre)
+        public async Task<IActionResult> Edit(int id, [Bind("Titre,DateDebut,DateFin,EstVisible,DateOuvertureInscription,MontantVerse,Id,CreationLe,ModifieLe")] Rencontre rencontre)
         {
             if (id != rencontre.Id)
             {

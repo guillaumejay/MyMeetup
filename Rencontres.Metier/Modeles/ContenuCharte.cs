@@ -7,7 +7,10 @@ namespace Rencontres.Metier.Modeles
     [Table("ContenusChartes")]
     public class ContenuCharte:EntiteDatee
     {
-        
+        public ContenuCharte()
+        {
+            Actif = true;
+        }
         [StringLength(80)]
         public string Categorie { get; set; }
 

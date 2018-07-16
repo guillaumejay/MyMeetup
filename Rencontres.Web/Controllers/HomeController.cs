@@ -4,15 +4,28 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Rencontres.Metier.Infrastructure;
 using Rencontres.Web.Models;
+using Rencontres.Web.Models.Home;
 
 namespace Rencontres.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
+        public HomeController(RencontresDomaine domaine) : base(domaine)
+        {
+        }
+
         public IActionResult Index()
         {
-            return View();
+            int rencontreId = 1;
+            var model = new IndexModel
+            {
+                Rencontre = Domaine.ObteniRencontre(rencontreId, true),
+                Charte = Domaine.ObtenirChartePour(rencontreId,true)
+            };
+
+            return View(model);
         }
 
         public IActionResult About()
@@ -40,4 +53,6 @@ namespace Rencontres.Web.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
+
+   
 }

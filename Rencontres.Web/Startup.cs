@@ -39,7 +39,7 @@ namespace Rencontres.Web
             services.AddDbContext<RencontresContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("RencontresDb")));
-
+            
             services.AddIdentity<RencontreUser, RencontreRole>(options => {
                     options.Password.RequireDigit = true;
                     options.Password.RequiredLength = 4;
@@ -50,7 +50,7 @@ namespace Rencontres.Web
                 .AddEntityFrameworkStores<RencontresContext>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
-
+            services.AddScoped<RencontresDomaine>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
