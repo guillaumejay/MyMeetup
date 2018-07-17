@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-using Rencontres.Metier.Infrastructure;
+using MyMeetUp.Logic.Infrastructure;
 
-namespace Rencontres.Metier.Modeles
+namespace MyMeetUp.Logic.Modeles
 {
     [Table("ResponsablesRencontres")]
    public class ResponsableRencontre
@@ -15,7 +12,7 @@ namespace Rencontres.Metier.Modeles
         public int UserId { get; set; }
 
         [ForeignKey(nameof(UserId))]
-        public RencontreUser User { get; set; }
+        public MyMeetupUser User { get; set; }
 
         [Key(), Column(Order = 1)]
         [ForeignKey(nameof(Rencontre))]

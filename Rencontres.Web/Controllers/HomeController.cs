@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Rencontres.Metier.Infrastructure;
+using MyMeetUp.Logic.Infrastructure;
 using Rencontres.Web.Models;
 using Rencontres.Web.Models.Home;
 
@@ -12,7 +12,7 @@ namespace Rencontres.Web.Controllers
 {
     public class HomeController : BaseController
     {
-        public HomeController(RencontresDomaine domaine) : base(domaine)
+        public HomeController(MyMeetupDomain domaine) : base(domaine)
         {
         }
 
@@ -22,7 +22,7 @@ namespace Rencontres.Web.Controllers
             var model = new IndexModel
             {
                 Rencontre = Domaine.ObteniRencontre(rencontreId, true),
-                Charte = Domaine.ObtenirChartePour(rencontreId,true)
+                Charter = Domaine.ObtenirChartePour(rencontreId,true)
             };
 
             return View(model);

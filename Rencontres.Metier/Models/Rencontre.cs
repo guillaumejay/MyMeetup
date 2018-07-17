@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Rencontres.Metier.Modeles
+namespace MyMeetUp.Logic.Modeles
 {
-    public class Rencontre : EntiteDatee
+    public class Rencontre : EntityWithDate
     {
 
         [StringLength(80)]

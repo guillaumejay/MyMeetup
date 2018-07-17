@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Rencontres.Metier.Modeles;
+using MyMeetUp.Logic.Modeles;
 
-namespace Rencontres.Metier.Infrastructure
+namespace MyMeetUp.Logic.Infrastructure
 {
-    public class RencontresContext : IdentityDbContext<RencontreUser, RencontreRole, int>
+    public class MyMeetupContext : IdentityDbContext<MyMeetupUser, MyMeetupRole, int>
     {
-        public RencontresContext(DbContextOptions<RencontresContext> options) : base(options)
+        public MyMeetupContext(DbContextOptions<MyMeetupContext> options) : base(options)
         {
         }
 
@@ -25,15 +24,15 @@ namespace Rencontres.Metier.Infrastructure
             modelBuilder.Entity<ResponsableRencontre>()
                 .HasKey(c => new { c.UserId, c.RencontreId });
             foreach (var entityType in modelBuilder.Model.GetEntityTypes()
-                .Where(e => typeof(EntiteDatee).IsAssignableFrom(e.ClrType)))
+                .Where(e => typeof(EntityWithDate).IsAssignableFrom(e.ClrType)))
             {
                 modelBuilder
                     .Entity(entityType.ClrType)
-                    .Property("CreationLe")
+                    .Property(nameof(EntityWithDate.CreatedAt))
                     .HasDefaultValueSql("getutcdate()");
                 modelBuilder
                     .Entity(entityType.ClrType)
-                    .Property("ModificationLe")
+                    .Property(nameof(EntityWithDate.UpdatedAt))
                     .HasDefaultValueSql("getutcdate()");
             }
             InitialiserDonnees(modelBuilder);
@@ -62,15 +61,27 @@ namespace Rencontres.Metier.Infrastructure
                     Categorie = "Animaux",
                     Contenu =
                         "<ul><li>Les chiens sont tolérés, à condition qu'ils restent attachés ou auprès de vous en permanence.</li><li>Ils ne doivent également pas être bruyants.</li></ul>",
+                    Position=1
 
                 },
                 new ContenuCharte
                 {
                     Id = 2,
+                    Categorie = "Alcool",
+                    Contenu =
+                        "<ul><li>La consommation d’alcool doit être raisonnée, pour toutes les personnes participantes, quel que soit leur âge, et bien sûr, les parents ou les référents sont invités à être attentifs à cette problématique vis-à-vis des personnes dont ils sont responsables.</li></ul>",
+                    Position=2
+
+                },
+                new ContenuCharte
+                {
+                    Id = 3,
                     Categorie = "Spécifique à la Taillade",
                     Contenu =
                         "<ul><li>La tradition est née de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants</li></ul>",
-                    RencontreId=1
+                    RencontreId=1,
+                    Position=1
+
                 }
             };
 

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Rencontres.Metier.Migrations
+namespace MyMeetUp.Logic.Migrations
 {
     public partial class Initial : Migration
     {
@@ -42,7 +42,9 @@ namespace Rencontres.Metier.Migrations
                     PasswordHash = table.Column<string>(nullable: true),
                     SecurityStamp = table.Column<string>(nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true)
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    FirstName = table.Column<string>(maxLength: 60, nullable: false),
+                    LastName = table.Column<string>(maxLength: 60, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -55,8 +57,8 @@ namespace Rencontres.Metier.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreationLe = table.Column<DateTime>(nullable: false),
-                    ModificationLe = table.Column<DateTime>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    UpdatedAt = table.Column<DateTime>(nullable: false),
                     Titre = table.Column<string>(maxLength: 80, nullable: false)
                 },
                 constraints: table =>
@@ -70,8 +72,8 @@ namespace Rencontres.Metier.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreationLe = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    ModificationLe = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
+                    CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
+                    UpdatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     Titre = table.Column<string>(maxLength: 80, nullable: false),
                     DateDebut = table.Column<DateTime>(type: "Date", nullable: false),
                     DateFin = table.Column<DateTime>(type: "Date", nullable: false),
@@ -198,12 +200,13 @@ namespace Rencontres.Metier.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreationLe = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    ModificationLe = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
+                    CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
+                    UpdatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     Categorie = table.Column<string>(maxLength: 80, nullable: true),
                     Contenu = table.Column<string>(nullable: true),
                     Actif = table.Column<bool>(nullable: false),
-                    RencontreId = table.Column<int>(nullable: true)
+                    RencontreId = table.Column<int>(nullable: true),
+                    Position = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -222,9 +225,10 @@ namespace Rencontres.Metier.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreationLe = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    ModificationLe = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
+                    CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
+                    UpdatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     RencontreUserId = table.Column<int>(nullable: false),
+                    MyMeetupUserId = table.Column<int>(nullable: true),
                     RencontreId = table.Column<int>(nullable: false),
                     CodeReservation = table.Column<string>(maxLength: 20, nullable: true),
                     MontantVerse = table.Column<decimal>(nullable: false)
@@ -233,15 +237,15 @@ namespace Rencontres.Metier.Migrations
                 {
                     table.PrimaryKey("PK_Inscriptions", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Inscriptions_AspNetUsers_MyMeetupUserId",
+                        column: x => x.MyMeetupUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Inscriptions_Rencontres_RencontreId",
                         column: x => x.RencontreId,
                         principalTable: "Rencontres",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Inscriptions_AspNetUsers_RencontreUserId",
-                        column: x => x.RencontreUserId,
-                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -273,26 +277,30 @@ namespace Rencontres.Metier.Migrations
 
             migrationBuilder.InsertData(
                 table: "ContenusChartes",
-                columns: new[] { "Id", "Actif", "Categorie", "Contenu", "CreationLe", "ModificationLe", "RencontreId" },
-                values: new object[] { 1, true, "Animaux", "<ul><li>Les chiens sont tolérés, à condition qu'ils restent attachés ou auprès de vous en permanence.</li><li>Ils ne doivent également pas être bruyants.</li></ul>", new DateTime(2018, 7, 16, 16, 14, 14, 425, DateTimeKind.Utc), new DateTime(2018, 7, 16, 16, 14, 14, 425, DateTimeKind.Utc), null });
+                columns: new[] { "Id", "Actif", "Categorie", "Contenu", "CreatedAt", "Position", "RencontreId", "UpdatedAt" },
+                values: new object[,]
+                {
+                    { 1, true, "Animaux", "<ul><li>Les chiens sont tolérés, à condition qu'ils restent attachés ou auprès de vous en permanence.</li><li>Ils ne doivent également pas être bruyants.</li></ul>", new DateTime(2018, 7, 17, 14, 35, 8, 890, DateTimeKind.Utc), 1, null, new DateTime(2018, 7, 17, 14, 35, 8, 890, DateTimeKind.Utc) },
+                    { 2, true, "Alcool", "<ul><li>La consommation d’alcool doit être raisonnée, pour toutes les personnes participantes, quel que soit leur âge, et bien sûr, les parents ou les référents sont invités à être attentifs à cette problématique vis-à-vis des personnes dont ils sont responsables.</li></ul>", new DateTime(2018, 7, 17, 14, 35, 8, 890, DateTimeKind.Utc), 2, null, new DateTime(2018, 7, 17, 14, 35, 8, 890, DateTimeKind.Utc) }
+                });
 
             migrationBuilder.InsertData(
                 table: "ParametrageApplication",
-                columns: new[] { "Id", "CreationLe", "ModificationLe", "Titre" },
-                values: new object[] { 1, new DateTime(2018, 7, 16, 16, 14, 14, 426, DateTimeKind.Utc), new DateTime(2018, 7, 16, 16, 14, 14, 426, DateTimeKind.Utc), "Rencontres Non Scolarisees" });
+                columns: new[] { "Id", "CreatedAt", "Titre", "UpdatedAt" },
+                values: new object[] { 1, new DateTime(2018, 7, 17, 14, 35, 8, 891, DateTimeKind.Utc), "Rencontres Non Scolarisees", new DateTime(2018, 7, 17, 14, 35, 8, 891, DateTimeKind.Utc) });
 
             migrationBuilder.InsertData(
                 table: "Rencontres",
-                columns: new[] { "Id", "CreationLe", "DateDebut", "DateFin", "DescriptionInscrit", "DescriptionPublique", "EstVisible", "ImageTitre", "ModificationLe", "OuvertInscriptionLe", "Titre" },
-                values: new object[] { 1, new DateTime(2018, 7, 16, 16, 14, 14, 424, DateTimeKind.Utc), new DateTime(2018, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2018, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), @"<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail &agrave; : francois.fonseca@solincite.org</strong></div>
+                columns: new[] { "Id", "CreatedAt", "DateDebut", "DateFin", "DescriptionInscrit", "DescriptionPublique", "EstVisible", "ImageTitre", "OuvertInscriptionLe", "Titre", "UpdatedAt" },
+                values: new object[] { 1, new DateTime(2018, 7, 17, 14, 35, 8, 889, DateTimeKind.Utc), new DateTime(2018, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2018, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), @"<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail &agrave; : francois.fonseca@solincite.org</strong></div>
 <div>Vous devrez lui indiquer vos&nbsp;<strong>noms/pr&eacute;noms/adresse postale/nb d&rsquo;adultes+d&rsquo;enfants.</strong></div>
 <div><strong>Il n&rsquo;y a qu&rsquo;un seul interlocuteur par logement : un logement est r&eacute;serv&eacute; par une seule famille, c&rsquo;est elle qui fait la r&eacute;servation et paiera la somme totale au village de vacances. </strong>Vous pouvez donc r&eacute;server &agrave; votre nom et trouver d&rsquo;autres familles pour partager, gr&acirc;ce au document Pad mis &agrave; disposition <strong>:&nbsp;</strong><strong><a href=""https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B"">https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B</a></strong></div>
-<div>Ce document servira &agrave; partager toutes les infos sur la rencontre (logements, covoiturage, activit&eacute;s,&hellip;)</div>", "Rencontre près de Casteljaloux(47) du 22 au 29 octobre 2018.", true, "La-Taillade.jpg", new DateTime(2018, 7, 16, 16, 14, 14, 424, DateTimeKind.Utc), new DateTime(2018, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "La Taillade 2018" });
+<div>Ce document servira &agrave; partager toutes les infos sur la rencontre (logements, covoiturage, activit&eacute;s,&hellip;)</div>", "Rencontre près de Casteljaloux(47) du 22 au 29 octobre 2018. Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.", true, "La-Taillade.jpg", new DateTime(2018, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "La Taillade 2018", new DateTime(2018, 7, 17, 14, 35, 8, 889, DateTimeKind.Utc) });
 
             migrationBuilder.InsertData(
                 table: "ContenusChartes",
-                columns: new[] { "Id", "Actif", "Categorie", "Contenu", "CreationLe", "ModificationLe", "RencontreId" },
-                values: new object[] { 2, true, "Spécifique à la Taillade", "<ul><li>La tradition est né de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants</li></ul>", new DateTime(2018, 7, 16, 16, 14, 14, 425, DateTimeKind.Utc), new DateTime(2018, 7, 16, 16, 14, 14, 425, DateTimeKind.Utc), 1 });
+                columns: new[] { "Id", "Actif", "Categorie", "Contenu", "CreatedAt", "Position", "RencontreId", "UpdatedAt" },
+                values: new object[] { 3, true, "Spécifique à la Taillade", "<ul><li>La tradition est née de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants</li></ul>", new DateTime(2018, 7, 17, 14, 35, 8, 890, DateTimeKind.Utc), 1, 1, new DateTime(2018, 7, 17, 14, 35, 8, 890, DateTimeKind.Utc) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -339,14 +347,14 @@ namespace Rencontres.Metier.Migrations
                 column: "RencontreId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Inscriptions_MyMeetupUserId",
+                table: "Inscriptions",
+                column: "MyMeetupUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Inscriptions_RencontreId",
                 table: "Inscriptions",
                 column: "RencontreId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Inscriptions_RencontreUserId",
-                table: "Inscriptions",
-                column: "RencontreUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

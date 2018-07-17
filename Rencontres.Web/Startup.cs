@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Rencontres.Metier.Infrastructure;
+using MyMeetUp.Logic.Infrastructure;
 
 namespace Rencontres.Web
 {
@@ -36,21 +36,21 @@ namespace Rencontres.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddDbContext<RencontresContext>(options =>
+            services.AddDbContext<MyMeetupContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("RencontresDb")));
             
-            services.AddIdentity<RencontreUser, RencontreRole>(options => {
+            services.AddIdentity<MyMeetupUser, MyMeetupRole>(options => {
                     options.Password.RequireDigit = true;
                     options.Password.RequiredLength = 4;
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireUppercase = false;
                     options.Password.RequireLowercase = false;
                 })
-                .AddEntityFrameworkStores<RencontresContext>()
+                .AddEntityFrameworkStores<MyMeetupContext>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
-            services.AddScoped<RencontresDomaine>();
+            services.AddScoped<MyMeetupDomain>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -100,28 +100,28 @@ namespace Rencontres.Web
                
             });
         }
-        public static void SeedRoles(RoleManager<RencontreRole> roleManager)
+        public static void SeedRoles(RoleManager<MyMeetupRole> roleManager)
         {
-            if (!roleManager.RoleExistsAsync(RencontreRole.Participant).Result)
+            if (!roleManager.RoleExistsAsync(MyMeetupRole.Participant).Result)
             {
-                var role = new RencontreRole(RencontreRole.Participant);
+                var role = new MyMeetupRole(MyMeetupRole.Participant);
 
                 IdentityResult roleResult = roleManager.CreateAsync(role).Result;
             }
 
 
-            if (!roleManager.RoleExistsAsync(RencontreRole.Administrateur).Result)
+            if (!roleManager.RoleExistsAsync(MyMeetupRole.Administrateur).Result)
             {
-                var role = new RencontreRole(RencontreRole.Administrateur);
+                var role = new MyMeetupRole(MyMeetupRole.Administrateur);
                 IdentityResult roleResult = roleManager.CreateAsync(role).Result;
             }
         }
 
-        public static void SeedUsers(UserManager<RencontreUser> userManager)
+        public static void SeedUsers(UserManager<MyMeetupUser> userManager)
         {
             if (userManager.FindByNameAsync("admin").Result == null)
             {
-                var user = new RencontreUser
+                var user = new MyMeetupUser
                 {
                     UserName = "admin",
                     Email = "guillaume.jay@gmail.com"
@@ -131,7 +131,7 @@ namespace Rencontres.Web
                 if (result.Succeeded)
                 {
                     userManager.AddToRoleAsync(user,
-                        RencontreRole.Administrateur).Wait();
+                        MyMeetupRole.Administrateur).Wait();
                 }
             }
 

@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Rencontres.Metier.Infrastructure;
+using MyMeetUp.Logic.Infrastructure;
 
-namespace Rencontres.Metier.Modeles
+namespace MyMeetUp.Logic.Modeles
 {
-    public class Inscription:EntiteDatee
+    public class Inscription:EntityWithDate
     {
         public int RencontreUserId { get; set; }
 
-        public RencontreUser RencontreUser { get; set; }
+        public MyMeetupUser MyMeetupUser { get; set; }
 
         public int RencontreId { get; set; }
 

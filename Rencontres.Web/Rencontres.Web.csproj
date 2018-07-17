@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Rencontres.Metier\Rencontres.Metier.csproj" />
+    <ProjectReference Include="..\Rencontres.Metier\MyMeetup.Logic.csproj" />
   </ItemGroup>
 
   <ItemGroup>

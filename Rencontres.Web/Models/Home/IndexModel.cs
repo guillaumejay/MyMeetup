@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Rencontres.Metier.Modeles;
+using MyMeetUp.Logic.Modeles;
 
 namespace Rencontres.Web.Models.Home
 {
@@ -11,6 +11,6 @@ namespace Rencontres.Web.Models.Home
 
         public Rencontre Rencontre { get; set; }
 
-        public List<ContenuCharte> Charte { get; set; }=new List<ContenuCharte>();
+        public List<ContenuCharte> Charter { get; set; }=new List<ContenuCharte>();
     }
 }

@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Rencontres.Metier.Infrastructure;
+using MyMeetUp.Logic.Infrastructure;
 
-namespace Rencontres.Metier.Migrations
+namespace MyMeetUp.Logic.Migrations
 {
-    [DbContext(typeof(RencontresContext))]
-    partial class RencontresContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(MyMeetupContext))]
+    partial class MyMeetupContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -102,7 +102,7 @@ namespace Rencontres.Metier.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Rencontres.Metier.Infrastructure.RencontreRole", b =>
+            modelBuilder.Entity("MyMeetUp.Logic.Infrastructure.MyMeetupRole", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -127,7 +127,7 @@ namespace Rencontres.Metier.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("Rencontres.Metier.Infrastructure.RencontreUser", b =>
+            modelBuilder.Entity("MyMeetUp.Logic.Infrastructure.MyMeetupUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -142,6 +142,14 @@ namespace Rencontres.Metier.Migrations
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(60);
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(60);
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -179,7 +187,7 @@ namespace Rencontres.Metier.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Rencontres.Metier.Modeles.ContenuCharte", b =>
+            modelBuilder.Entity("MyMeetUp.Logic.Modeles.ContenuCharte", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -192,15 +200,17 @@ namespace Rencontres.Metier.Migrations
 
                     b.Property<string>("Contenu");
 
-                    b.Property<DateTime>("CreationLe")
+                    b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("getutcdate()");
 
-                    b.Property<DateTime>("ModificationLe")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("getutcdate()");
+                    b.Property<int>("Position");
 
                     b.Property<int?>("RencontreId");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("getutcdate()");
 
                     b.HasKey("Id");
 
@@ -209,12 +219,13 @@ namespace Rencontres.Metier.Migrations
                     b.ToTable("ContenusChartes");
 
                     b.HasData(
-                        new { Id = 1, Actif = true, Categorie = "Animaux", Contenu = "<ul><li>Les chiens sont tolérés, à condition qu'ils restent attachés ou auprès de vous en permanence.</li><li>Ils ne doivent également pas être bruyants.</li></ul>", CreationLe = new DateTime(2018, 7, 16, 16, 14, 14, 425, DateTimeKind.Utc), ModificationLe = new DateTime(2018, 7, 16, 16, 14, 14, 425, DateTimeKind.Utc) },
-                        new { Id = 2, Actif = true, Categorie = "Spécifique à la Taillade", Contenu = "<ul><li>La tradition est né de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants</li></ul>", CreationLe = new DateTime(2018, 7, 16, 16, 14, 14, 425, DateTimeKind.Utc), ModificationLe = new DateTime(2018, 7, 16, 16, 14, 14, 425, DateTimeKind.Utc), RencontreId = 1 }
+                        new { Id = 1, Actif = true, Categorie = "Animaux", Contenu = "<ul><li>Les chiens sont tolérés, à condition qu'ils restent attachés ou auprès de vous en permanence.</li><li>Ils ne doivent également pas être bruyants.</li></ul>", CreatedAt = new DateTime(2018, 7, 17, 14, 35, 8, 890, DateTimeKind.Utc), Position = 1, UpdatedAt = new DateTime(2018, 7, 17, 14, 35, 8, 890, DateTimeKind.Utc) },
+                        new { Id = 2, Actif = true, Categorie = "Alcool", Contenu = "<ul><li>La consommation d’alcool doit être raisonnée, pour toutes les personnes participantes, quel que soit leur âge, et bien sûr, les parents ou les référents sont invités à être attentifs à cette problématique vis-à-vis des personnes dont ils sont responsables.</li></ul>", CreatedAt = new DateTime(2018, 7, 17, 14, 35, 8, 890, DateTimeKind.Utc), Position = 2, UpdatedAt = new DateTime(2018, 7, 17, 14, 35, 8, 890, DateTimeKind.Utc) },
+                        new { Id = 3, Actif = true, Categorie = "Spécifique à la Taillade", Contenu = "<ul><li>La tradition est née de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants</li></ul>", CreatedAt = new DateTime(2018, 7, 17, 14, 35, 8, 890, DateTimeKind.Utc), Position = 1, RencontreId = 1, UpdatedAt = new DateTime(2018, 7, 17, 14, 35, 8, 890, DateTimeKind.Utc) }
                     );
                 });
 
-            modelBuilder.Entity("Rencontres.Metier.Modeles.Inscription", b =>
+            modelBuilder.Entity("MyMeetUp.Logic.Modeles.Inscription", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -223,59 +234,61 @@ namespace Rencontres.Metier.Migrations
                     b.Property<string>("CodeReservation")
                         .HasMaxLength(20);
 
-                    b.Property<DateTime>("CreationLe")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<DateTime>("ModificationLe")
+                    b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("getutcdate()");
 
                     b.Property<decimal>("MontantVerse");
 
+                    b.Property<int?>("MyMeetupUserId");
+
                     b.Property<int>("RencontreId");
 
                     b.Property<int>("RencontreUserId");
 
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("getutcdate()");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("RencontreId");
+                    b.HasIndex("MyMeetupUserId");
 
-                    b.HasIndex("RencontreUserId");
+                    b.HasIndex("RencontreId");
 
                     b.ToTable("Inscriptions");
                 });
 
-            modelBuilder.Entity("Rencontres.Metier.Modeles.ParametrageApplication", b =>
+            modelBuilder.Entity("MyMeetUp.Logic.Modeles.ParametrageApplication", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreationLe");
-
-                    b.Property<DateTime>("ModificationLe");
+                    b.Property<DateTime>("CreatedAt");
 
                     b.Property<string>("Titre")
                         .IsRequired()
                         .HasMaxLength(80);
+
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.HasKey("Id");
 
                     b.ToTable("ParametrageApplication");
 
                     b.HasData(
-                        new { Id = 1, CreationLe = new DateTime(2018, 7, 16, 16, 14, 14, 426, DateTimeKind.Utc), ModificationLe = new DateTime(2018, 7, 16, 16, 14, 14, 426, DateTimeKind.Utc), Titre = "Rencontres Non Scolarisees" }
+                        new { Id = 1, CreatedAt = new DateTime(2018, 7, 17, 14, 35, 8, 891, DateTimeKind.Utc), Titre = "Rencontres Non Scolarisees", UpdatedAt = new DateTime(2018, 7, 17, 14, 35, 8, 891, DateTimeKind.Utc) }
                     );
                 });
 
-            modelBuilder.Entity("Rencontres.Metier.Modeles.Rencontre", b =>
+            modelBuilder.Entity("MyMeetUp.Logic.Modeles.Rencontre", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreationLe")
+                    b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("getutcdate()");
 
@@ -295,29 +308,29 @@ namespace Rencontres.Metier.Migrations
 
                     b.Property<string>("ImageTitre");
 
-                    b.Property<DateTime>("ModificationLe")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("getutcdate()");
-
                     b.Property<DateTime>("OuvertInscriptionLe");
 
                     b.Property<string>("Titre")
                         .IsRequired()
                         .HasMaxLength(80);
 
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("getutcdate()");
+
                     b.HasKey("Id");
 
                     b.ToTable("Rencontres");
 
                     b.HasData(
-                        new { Id = 1, CreationLe = new DateTime(2018, 7, 16, 16, 14, 14, 424, DateTimeKind.Utc), DateDebut = new DateTime(2018, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), DateFin = new DateTime(2018, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), DescriptionInscrit = @"<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail &agrave; : francois.fonseca@solincite.org</strong></div>
+                        new { Id = 1, CreatedAt = new DateTime(2018, 7, 17, 14, 35, 8, 889, DateTimeKind.Utc), DateDebut = new DateTime(2018, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), DateFin = new DateTime(2018, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), DescriptionInscrit = @"<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail &agrave; : francois.fonseca@solincite.org</strong></div>
 <div>Vous devrez lui indiquer vos&nbsp;<strong>noms/pr&eacute;noms/adresse postale/nb d&rsquo;adultes+d&rsquo;enfants.</strong></div>
 <div><strong>Il n&rsquo;y a qu&rsquo;un seul interlocuteur par logement : un logement est r&eacute;serv&eacute; par une seule famille, c&rsquo;est elle qui fait la r&eacute;servation et paiera la somme totale au village de vacances. </strong>Vous pouvez donc r&eacute;server &agrave; votre nom et trouver d&rsquo;autres familles pour partager, gr&acirc;ce au document Pad mis &agrave; disposition <strong>:&nbsp;</strong><strong><a href=""https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B"">https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B</a></strong></div>
-<div>Ce document servira &agrave; partager toutes les infos sur la rencontre (logements, covoiturage, activit&eacute;s,&hellip;)</div>", DescriptionPublique = "Rencontre près de Casteljaloux(47) du 22 au 29 octobre 2018.", EstVisible = true, ImageTitre = "La-Taillade.jpg", ModificationLe = new DateTime(2018, 7, 16, 16, 14, 14, 424, DateTimeKind.Utc), OuvertInscriptionLe = new DateTime(2018, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Titre = "La Taillade 2018" }
+<div>Ce document servira &agrave; partager toutes les infos sur la rencontre (logements, covoiturage, activit&eacute;s,&hellip;)</div>", DescriptionPublique = "Rencontre près de Casteljaloux(47) du 22 au 29 octobre 2018. Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.", EstVisible = true, ImageTitre = "La-Taillade.jpg", OuvertInscriptionLe = new DateTime(2018, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Titre = "La Taillade 2018", UpdatedAt = new DateTime(2018, 7, 17, 14, 35, 8, 889, DateTimeKind.Utc) }
                     );
                 });
 
-            modelBuilder.Entity("Rencontres.Metier.Modeles.ResponsableRencontre", b =>
+            modelBuilder.Entity("MyMeetUp.Logic.Modeles.ResponsableRencontre", b =>
                 {
                     b.Property<int>("UserId");
 
@@ -332,7 +345,7 @@ namespace Rencontres.Metier.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("Rencontres.Metier.Infrastructure.RencontreRole")
+                    b.HasOne("MyMeetUp.Logic.Infrastructure.MyMeetupRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -340,7 +353,7 @@ namespace Rencontres.Metier.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("Rencontres.Metier.Infrastructure.RencontreUser")
+                    b.HasOne("MyMeetUp.Logic.Infrastructure.MyMeetupUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -348,7 +361,7 @@ namespace Rencontres.Metier.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("Rencontres.Metier.Infrastructure.RencontreUser")
+                    b.HasOne("MyMeetUp.Logic.Infrastructure.MyMeetupUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -356,12 +369,12 @@ namespace Rencontres.Metier.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.HasOne("Rencontres.Metier.Infrastructure.RencontreRole")
+                    b.HasOne("MyMeetUp.Logic.Infrastructure.MyMeetupRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Rencontres.Metier.Infrastructure.RencontreUser")
+                    b.HasOne("MyMeetUp.Logic.Infrastructure.MyMeetupUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -369,40 +382,39 @@ namespace Rencontres.Metier.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("Rencontres.Metier.Infrastructure.RencontreUser")
+                    b.HasOne("MyMeetUp.Logic.Infrastructure.MyMeetupUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Rencontres.Metier.Modeles.ContenuCharte", b =>
+            modelBuilder.Entity("MyMeetUp.Logic.Modeles.ContenuCharte", b =>
                 {
-                    b.HasOne("Rencontres.Metier.Modeles.Rencontre", "Rencontre")
+                    b.HasOne("MyMeetUp.Logic.Modeles.Rencontre", "Rencontre")
                         .WithMany()
                         .HasForeignKey("RencontreId");
                 });
 
-            modelBuilder.Entity("Rencontres.Metier.Modeles.Inscription", b =>
+            modelBuilder.Entity("MyMeetUp.Logic.Modeles.Inscription", b =>
                 {
-                    b.HasOne("Rencontres.Metier.Modeles.Rencontre", "Rencontre")
+                    b.HasOne("MyMeetUp.Logic.Infrastructure.MyMeetupUser", "MyMeetupUser")
+                        .WithMany()
+                        .HasForeignKey("MyMeetupUserId");
+
+                    b.HasOne("MyMeetUp.Logic.Modeles.Rencontre", "Rencontre")
                         .WithMany()
                         .HasForeignKey("RencontreId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Rencontres.Metier.Infrastructure.RencontreUser", "RencontreUser")
-                        .WithMany()
-                        .HasForeignKey("RencontreUserId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Rencontres.Metier.Modeles.ResponsableRencontre", b =>
+            modelBuilder.Entity("MyMeetUp.Logic.Modeles.ResponsableRencontre", b =>
                 {
-                    b.HasOne("Rencontres.Metier.Modeles.Rencontre", "Rencontre")
+                    b.HasOne("MyMeetUp.Logic.Modeles.Rencontre", "Rencontre")
                         .WithMany("Responsables")
                         .HasForeignKey("RencontreId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Rencontres.Metier.Infrastructure.RencontreUser", "User")
+                    b.HasOne("MyMeetUp.Logic.Infrastructure.MyMeetupUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

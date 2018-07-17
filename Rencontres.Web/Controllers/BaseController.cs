@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Rencontres.Metier.Infrastructure;
+using MyMeetUp.Logic.Infrastructure;
 
 namespace Rencontres.Web.Controllers
 {
     public abstract class BaseController:Controller
     {
-        protected RencontresDomaine Domaine;
+        protected MyMeetupDomain Domaine;
 
-        protected BaseController(RencontresDomaine domaine)
+        protected BaseController(MyMeetupDomain domaine)
         {
             Domaine = domaine;
         }

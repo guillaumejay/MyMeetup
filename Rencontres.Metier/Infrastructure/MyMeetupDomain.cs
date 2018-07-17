@@ -1,15 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Rencontres.Metier.Modeles;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using MyMeetUp.Logic.Modeles;
 
-namespace Rencontres.Metier.Infrastructure
+namespace MyMeetUp.Logic.Infrastructure
 {
-    public class RencontresDomaine
+    public class MyMeetupDomain
     {
-        private RencontresContext _context;
+        private readonly MyMeetupContext _context;
 
-        public RencontresDomaine(RencontresContext context)
+        public MyMeetupDomain(MyMeetupContext context)
         {
             _context = context;
         }

@@ -1,8 +1,8 @@
 @using Microsoft.AspNetCore.Identity
-@using Rencontres.Metier.Infrastructure
+@using MyMeetUp.Logic.Infrastructure
 
-@inject SignInManager<RencontreUser> SignInManager
-@inject UserManager<RencontreUser> UserManager
+@inject SignInManager<MyMeetupUser> SignInManager
+@inject UserManager<MyMeetupUser> UserManager
 
 @if (SignInManager.IsSignedIn(User))
 {

@@ -2,10 +2,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Rencontres.Metier.Modeles
+namespace MyMeetUp.Logic.Modeles
 {
     [Table("ContenusChartes")]
-    public class ContenuCharte:EntiteDatee
+    public class ContenuCharte:EntityWithDate
     {
         public ContenuCharte()
         {
@@ -22,5 +22,7 @@ namespace Rencontres.Metier.Modeles
         public int? RencontreId { get; set; }
 
         public virtual Rencontre Rencontre { get; set; }
+
+        public int Position { get; set; }
     }
 }
