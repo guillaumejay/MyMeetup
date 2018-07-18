@@ -36,10 +36,15 @@ namespace Rencontres.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddDbContext<MyMeetupContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("RencontresDb")));
-            
+            //services.AddDbContext<MyMeetupSqlServerContext, MyMeetupSqlServerContext>(cnx =>
+            //    options.UseSqlServer(
+            //        Configuration.GetConnectionString("MeetupDb")));
+            //services.AddDbContext<MyMeetupContext, MyMeetupSqlServerContext>(options  =>
+            //    options.UseSqlServer(
+            //      Configuration.GetConnectionString("MyMeetupDb")));
+            services.AddDbContext<MyMeetupContext, MyMeetupSqlLiteContext>(options =>
+                    options.UseSqlite(
+                        Configuration.GetConnectionString("MyMeetupDb")));
             services.AddIdentity<MyMeetupUser, MyMeetupRole>(options => {
                     options.Password.RequireDigit = true;
                     options.Password.RequiredLength = 4;

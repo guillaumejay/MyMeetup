@@ -1,10 +1,9 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace MyMeetUp.Logic.Migrations
+namespace MyMeetUp.Logic.Migrations.SqliteMigrations
 {
-    public partial class Initial : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +12,7 @@ namespace MyMeetUp.Logic.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true)
@@ -30,7 +29,7 @@ namespace MyMeetUp.Logic.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     EmailConfirmed = table.Column<bool>(nullable: false),
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     PhoneNumberConfirmed = table.Column<bool>(nullable: false),
@@ -56,7 +55,7 @@ namespace MyMeetUp.Logic.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: false),
                     Titre = table.Column<string>(maxLength: 80, nullable: false)
@@ -71,7 +70,7 @@ namespace MyMeetUp.Logic.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     UpdatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     Titre = table.Column<string>(maxLength: 80, nullable: false),
@@ -93,7 +92,7 @@ namespace MyMeetUp.Logic.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     RoleId = table.Column<int>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -114,7 +113,7 @@ namespace MyMeetUp.Logic.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     UserId = table.Column<int>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -199,7 +198,7 @@ namespace MyMeetUp.Logic.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     UpdatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     Categorie = table.Column<string>(maxLength: 80, nullable: true),
@@ -224,7 +223,7 @@ namespace MyMeetUp.Logic.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     UpdatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     RencontreUserId = table.Column<int>(nullable: false),
@@ -278,29 +277,30 @@ namespace MyMeetUp.Logic.Migrations
             migrationBuilder.InsertData(
                 table: "ContenusChartes",
                 columns: new[] { "Id", "Actif", "Categorie", "Contenu", "CreatedAt", "Position", "RencontreId", "UpdatedAt" },
-                values: new object[,]
-                {
-                    { 1, true, "Animaux", "<ul><li>Les chiens sont tolérés, à condition qu'ils restent attachés ou auprès de vous en permanence.</li><li>Ils ne doivent également pas être bruyants.</li></ul>", new DateTime(2018, 7, 17, 14, 35, 8, 890, DateTimeKind.Utc), 1, null, new DateTime(2018, 7, 17, 14, 35, 8, 890, DateTimeKind.Utc) },
-                    { 2, true, "Alcool", "<ul><li>La consommation d’alcool doit être raisonnée, pour toutes les personnes participantes, quel que soit leur âge, et bien sûr, les parents ou les référents sont invités à être attentifs à cette problématique vis-à-vis des personnes dont ils sont responsables.</li></ul>", new DateTime(2018, 7, 17, 14, 35, 8, 890, DateTimeKind.Utc), 2, null, new DateTime(2018, 7, 17, 14, 35, 8, 890, DateTimeKind.Utc) }
-                });
-
-            migrationBuilder.InsertData(
-                table: "ParametrageApplication",
-                columns: new[] { "Id", "CreatedAt", "Titre", "UpdatedAt" },
-                values: new object[] { 1, new DateTime(2018, 7, 17, 14, 35, 8, 891, DateTimeKind.Utc), "Rencontres Non Scolarisees", new DateTime(2018, 7, 17, 14, 35, 8, 891, DateTimeKind.Utc) });
-
-            migrationBuilder.InsertData(
-                table: "Rencontres",
-                columns: new[] { "Id", "CreatedAt", "DateDebut", "DateFin", "DescriptionInscrit", "DescriptionPublique", "EstVisible", "ImageTitre", "OuvertInscriptionLe", "Titre", "UpdatedAt" },
-                values: new object[] { 1, new DateTime(2018, 7, 17, 14, 35, 8, 889, DateTimeKind.Utc), new DateTime(2018, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2018, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), @"<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail &agrave; : francois.fonseca@solincite.org</strong></div>
-<div>Vous devrez lui indiquer vos&nbsp;<strong>noms/pr&eacute;noms/adresse postale/nb d&rsquo;adultes+d&rsquo;enfants.</strong></div>
-<div><strong>Il n&rsquo;y a qu&rsquo;un seul interlocuteur par logement : un logement est r&eacute;serv&eacute; par une seule famille, c&rsquo;est elle qui fait la r&eacute;servation et paiera la somme totale au village de vacances. </strong>Vous pouvez donc r&eacute;server &agrave; votre nom et trouver d&rsquo;autres familles pour partager, gr&acirc;ce au document Pad mis &agrave; disposition <strong>:&nbsp;</strong><strong><a href=""https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B"">https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B</a></strong></div>
-<div>Ce document servira &agrave; partager toutes les infos sur la rencontre (logements, covoiturage, activit&eacute;s,&hellip;)</div>", "Rencontre près de Casteljaloux(47) du 22 au 29 octobre 2018. Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.", true, "La-Taillade.jpg", new DateTime(2018, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "La Taillade 2018", new DateTime(2018, 7, 17, 14, 35, 8, 889, DateTimeKind.Utc) });
+                values: new object[] { 1, true, "Animaux", "<ul><li>Les chiens sont tolérés, à condition qu'ils restent attachés ou auprès de vous en permanence.</li><li>Ils ne doivent également pas être bruyants.</li></ul>", new DateTime(2018, 7, 17, 20, 25, 55, 448, DateTimeKind.Utc), 1, null, new DateTime(2018, 7, 17, 20, 25, 55, 448, DateTimeKind.Utc) });
 
             migrationBuilder.InsertData(
                 table: "ContenusChartes",
                 columns: new[] { "Id", "Actif", "Categorie", "Contenu", "CreatedAt", "Position", "RencontreId", "UpdatedAt" },
-                values: new object[] { 3, true, "Spécifique à la Taillade", "<ul><li>La tradition est née de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants</li></ul>", new DateTime(2018, 7, 17, 14, 35, 8, 890, DateTimeKind.Utc), 1, 1, new DateTime(2018, 7, 17, 14, 35, 8, 890, DateTimeKind.Utc) });
+                values: new object[] { 2, true, "Alcool", "<ul><li>La consommation d’alcool doit être raisonnée, pour toutes les personnes participantes, quel que soit leur âge, et bien sûr, les parents ou les référents sont invités à être attentifs à cette problématique vis-à-vis des personnes dont ils sont responsables.</li></ul>", new DateTime(2018, 7, 17, 20, 25, 55, 448, DateTimeKind.Utc), 2, null, new DateTime(2018, 7, 17, 20, 25, 55, 448, DateTimeKind.Utc) });
+
+            migrationBuilder.InsertData(
+                table: "ParametrageApplication",
+                columns: new[] { "Id", "CreatedAt", "Titre", "UpdatedAt" },
+                values: new object[] { 1, new DateTime(2018, 7, 17, 20, 25, 55, 450, DateTimeKind.Utc), "Rencontres Non Scolarisees", new DateTime(2018, 7, 17, 20, 25, 55, 450, DateTimeKind.Utc) });
+
+            migrationBuilder.InsertData(
+                table: "Rencontres",
+                columns: new[] { "Id", "CreatedAt", "DateDebut", "DateFin", "DescriptionInscrit", "DescriptionPublique", "EstVisible", "ImageTitre", "OuvertInscriptionLe", "Titre", "UpdatedAt" },
+                values: new object[] { 1, new DateTime(2018, 7, 17, 20, 25, 55, 447, DateTimeKind.Utc), new DateTime(2018, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2018, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), @"<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail &agrave; : francois.fonseca@solincite.org</strong></div>
+<div>Vous devrez lui indiquer vos&nbsp;<strong>noms/pr&eacute;noms/adresse postale/nb d&rsquo;adultes+d&rsquo;enfants.</strong></div>
+<div><strong>Il n&rsquo;y a qu&rsquo;un seul interlocuteur par logement : un logement est r&eacute;serv&eacute; par une seule famille, c&rsquo;est elle qui fait la r&eacute;servation et paiera la somme totale au village de vacances. </strong>Vous pouvez donc r&eacute;server &agrave; votre nom et trouver d&rsquo;autres familles pour partager, gr&acirc;ce au document Pad mis &agrave; disposition <strong>:&nbsp;</strong><strong><a href=""https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B"">https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B</a></strong></div>
+<div>Ce document servira &agrave; partager toutes les infos sur la rencontre (logements, covoiturage, activit&eacute;s,&hellip;)</div>", "Rencontre près de Casteljaloux(47) du 22 au 29 octobre 2018. Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.", true, "La-Taillade.jpg", new DateTime(2018, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "La Taillade 2018", new DateTime(2018, 7, 17, 20, 25, 55, 447, DateTimeKind.Utc) });
+
+            migrationBuilder.InsertData(
+                table: "ContenusChartes",
+                columns: new[] { "Id", "Actif", "Categorie", "Contenu", "CreatedAt", "Position", "RencontreId", "UpdatedAt" },
+                values: new object[] { 3, true, "Spécifique à la Taillade", "<ul><li>La tradition est née de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants</li></ul>", new DateTime(2018, 7, 17, 20, 25, 55, 448, DateTimeKind.Utc), 1, 1, new DateTime(2018, 7, 17, 20, 25, 55, 448, DateTimeKind.Utc) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -311,8 +311,7 @@ namespace MyMeetUp.Logic.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
-                unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -338,8 +337,7 @@ namespace MyMeetUp.Logic.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
-                unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_ContenusChartes_RencontreId",

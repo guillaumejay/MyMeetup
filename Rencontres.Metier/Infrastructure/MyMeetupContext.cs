@@ -7,9 +7,9 @@ using MyMeetUp.Logic.Modeles;
 
 namespace MyMeetUp.Logic.Infrastructure
 {
-    public class MyMeetupContext : IdentityDbContext<MyMeetupUser, MyMeetupRole, int>
+    public abstract class MyMeetupContext : IdentityDbContext<MyMeetupUser, MyMeetupRole, int>
     {
-        public MyMeetupContext(DbContextOptions<MyMeetupContext> options) : base(options)
+        protected MyMeetupContext(DbContextOptions options) : base(options)
         {
         }
 

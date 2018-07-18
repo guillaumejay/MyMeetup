@@ -53,7 +53,7 @@
                 </div>
                 <div class="card-body">
                     <h4 class="card-title">@contenu.Categorie</h4>
-                    <p class="card-text">@Html.Raw(contenu.Contenu)</p>
+                    <p class="card-text" style="text-align:left !important">@Html.Raw(contenu.Contenu)</p>
 
                 </div>
                 <div class="card-footer text-muted ">
@@ -115,21 +115,23 @@
     </div>
 </div>
     @section Scripts
-        {
+    {
         <script>
 
             function deroule(i) {
                 $("#Accepte" + i).prop("disabled", true);
                 $("#lblCharte" + i).html("J'ai accepté");
+                $("#lblCharte" + i).css('text-decoration', 'underline');
                 var next = $("#divCharte" + (i + 1));
-                if (next.length > 0)
-                    next.show();
-                else {
-                    $("#divInscription").show();
-                    $('html, body').animate({
-                        scrollTop: $("#divBtnSignin").offset().top
-                    }, 2000);
+                if (next.length == 0) {
+                    next = $("#divInscription");
                 }
+                next.show();
+                $('html, body').animate({
+                        scrollTop: next.offset().top
+                    },
+                    2000);
             }
+        
         </script>
     }

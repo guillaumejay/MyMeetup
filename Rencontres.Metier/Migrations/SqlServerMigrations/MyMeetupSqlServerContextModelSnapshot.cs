@@ -3,21 +3,19 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyMeetUp.Logic.Infrastructure;
 
-namespace MyMeetUp.Logic.Migrations
+namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
 {
-    [DbContext(typeof(MyMeetupContext))]
-    [Migration("20180717143509_Initial")]
-    partial class Initial
+    [DbContext(typeof(MyMeetupSqlServerContext))]
+    partial class MyMeetupSqlServerContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
+                .HasAnnotation("ProductVersion", "2.1.0-rtm-30799")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -221,9 +219,9 @@ namespace MyMeetUp.Logic.Migrations
                     b.ToTable("ContenusChartes");
 
                     b.HasData(
-                        new { Id = 1, Actif = true, Categorie = "Animaux", Contenu = "<ul><li>Les chiens sont tolérés, à condition qu'ils restent attachés ou auprès de vous en permanence.</li><li>Ils ne doivent également pas être bruyants.</li></ul>", CreatedAt = new DateTime(2018, 7, 17, 14, 35, 8, 890, DateTimeKind.Utc), Position = 1, UpdatedAt = new DateTime(2018, 7, 17, 14, 35, 8, 890, DateTimeKind.Utc) },
-                        new { Id = 2, Actif = true, Categorie = "Alcool", Contenu = "<ul><li>La consommation d’alcool doit être raisonnée, pour toutes les personnes participantes, quel que soit leur âge, et bien sûr, les parents ou les référents sont invités à être attentifs à cette problématique vis-à-vis des personnes dont ils sont responsables.</li></ul>", CreatedAt = new DateTime(2018, 7, 17, 14, 35, 8, 890, DateTimeKind.Utc), Position = 2, UpdatedAt = new DateTime(2018, 7, 17, 14, 35, 8, 890, DateTimeKind.Utc) },
-                        new { Id = 3, Actif = true, Categorie = "Spécifique à la Taillade", Contenu = "<ul><li>La tradition est née de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants</li></ul>", CreatedAt = new DateTime(2018, 7, 17, 14, 35, 8, 890, DateTimeKind.Utc), Position = 1, RencontreId = 1, UpdatedAt = new DateTime(2018, 7, 17, 14, 35, 8, 890, DateTimeKind.Utc) }
+                        new { Id = 1, Actif = true, Categorie = "Animaux", Contenu = "<ul><li>Les chiens sont tolérés, à condition qu'ils restent attachés ou auprès de vous en permanence.</li><li>Ils ne doivent également pas être bruyants.</li></ul>", CreatedAt = new DateTime(2018, 7, 17, 20, 19, 6, 841, DateTimeKind.Utc), Position = 1, UpdatedAt = new DateTime(2018, 7, 17, 20, 19, 6, 841, DateTimeKind.Utc) },
+                        new { Id = 2, Actif = true, Categorie = "Alcool", Contenu = "<ul><li>La consommation d’alcool doit être raisonnée, pour toutes les personnes participantes, quel que soit leur âge, et bien sûr, les parents ou les référents sont invités à être attentifs à cette problématique vis-à-vis des personnes dont ils sont responsables.</li></ul>", CreatedAt = new DateTime(2018, 7, 17, 20, 19, 6, 841, DateTimeKind.Utc), Position = 2, UpdatedAt = new DateTime(2018, 7, 17, 20, 19, 6, 841, DateTimeKind.Utc) },
+                        new { Id = 3, Actif = true, Categorie = "Spécifique à la Taillade", Contenu = "<ul><li>La tradition est née de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants</li></ul>", CreatedAt = new DateTime(2018, 7, 17, 20, 19, 6, 841, DateTimeKind.Utc), Position = 1, RencontreId = 1, UpdatedAt = new DateTime(2018, 7, 17, 20, 19, 6, 841, DateTimeKind.Utc) }
                     );
                 });
 
@@ -280,7 +278,7 @@ namespace MyMeetUp.Logic.Migrations
                     b.ToTable("ParametrageApplication");
 
                     b.HasData(
-                        new { Id = 1, CreatedAt = new DateTime(2018, 7, 17, 14, 35, 8, 891, DateTimeKind.Utc), Titre = "Rencontres Non Scolarisees", UpdatedAt = new DateTime(2018, 7, 17, 14, 35, 8, 891, DateTimeKind.Utc) }
+                        new { Id = 1, CreatedAt = new DateTime(2018, 7, 17, 20, 19, 6, 843, DateTimeKind.Utc), Titre = "Rencontres Non Scolarisees", UpdatedAt = new DateTime(2018, 7, 17, 20, 19, 6, 843, DateTimeKind.Utc) }
                     );
                 });
 
@@ -325,10 +323,10 @@ namespace MyMeetUp.Logic.Migrations
                     b.ToTable("Rencontres");
 
                     b.HasData(
-                        new { Id = 1, CreatedAt = new DateTime(2018, 7, 17, 14, 35, 8, 889, DateTimeKind.Utc), DateDebut = new DateTime(2018, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), DateFin = new DateTime(2018, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), DescriptionInscrit = @"<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail &agrave; : francois.fonseca@solincite.org</strong></div>
+                        new { Id = 1, CreatedAt = new DateTime(2018, 7, 17, 20, 19, 6, 840, DateTimeKind.Utc), DateDebut = new DateTime(2018, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), DateFin = new DateTime(2018, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), DescriptionInscrit = @"<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail &agrave; : francois.fonseca@solincite.org</strong></div>
 <div>Vous devrez lui indiquer vos&nbsp;<strong>noms/pr&eacute;noms/adresse postale/nb d&rsquo;adultes+d&rsquo;enfants.</strong></div>
 <div><strong>Il n&rsquo;y a qu&rsquo;un seul interlocuteur par logement : un logement est r&eacute;serv&eacute; par une seule famille, c&rsquo;est elle qui fait la r&eacute;servation et paiera la somme totale au village de vacances. </strong>Vous pouvez donc r&eacute;server &agrave; votre nom et trouver d&rsquo;autres familles pour partager, gr&acirc;ce au document Pad mis &agrave; disposition <strong>:&nbsp;</strong><strong><a href=""https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B"">https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B</a></strong></div>
-<div>Ce document servira &agrave; partager toutes les infos sur la rencontre (logements, covoiturage, activit&eacute;s,&hellip;)</div>", DescriptionPublique = "Rencontre près de Casteljaloux(47) du 22 au 29 octobre 2018. Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.", EstVisible = true, ImageTitre = "La-Taillade.jpg", OuvertInscriptionLe = new DateTime(2018, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Titre = "La Taillade 2018", UpdatedAt = new DateTime(2018, 7, 17, 14, 35, 8, 889, DateTimeKind.Utc) }
+<div>Ce document servira &agrave; partager toutes les infos sur la rencontre (logements, covoiturage, activit&eacute;s,&hellip;)</div>", DescriptionPublique = "Rencontre près de Casteljaloux(47) du 22 au 29 octobre 2018. Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.", EstVisible = true, ImageTitre = "La-Taillade.jpg", OuvertInscriptionLe = new DateTime(2018, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Titre = "La Taillade 2018", UpdatedAt = new DateTime(2018, 7, 17, 20, 19, 6, 840, DateTimeKind.Utc) }
                     );
                 });
 
