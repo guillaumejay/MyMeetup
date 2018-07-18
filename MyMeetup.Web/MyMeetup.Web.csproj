@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <UserSecretsId>aspnet-Rencontres.Web-64DC595D-48EE-4B35-99A1-6380B6CCE6C9</UserSecretsId>
+    <UserSecretsId>aspnet-MyMeetup.Web-64DC595D-48EE-4B35-99A1-6380B6CCE6C9</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Rencontres.Metier\MyMeetup.Logic.csproj" />
+    <ProjectReference Include="..\MyMeetup.Logic\MyMeetup.Logic.csproj" />
   </ItemGroup>
 
   <ItemGroup>

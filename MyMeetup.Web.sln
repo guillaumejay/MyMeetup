@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyMeetup.Logic", "Rencontres.Metier\MyMeetup.Logic.csproj", "{23C1373A-9368-4FCD-8574-141C30A5C28E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyMeetup.Logic", "MyMeetup.Logic\MyMeetup.Logic.csproj", "{23C1373A-9368-4FCD-8574-141C30A5C28E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rencontres.Web", "Rencontres.Web\Rencontres.Web.csproj", "{7EFF1697-A561-4271-9807-98DCFDCA2886}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyMeetup.Web", "MyMeetup.Web\MyMeetup.Web.csproj", "{7EFF1697-A561-4271-9807-98DCFDCA2886}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
