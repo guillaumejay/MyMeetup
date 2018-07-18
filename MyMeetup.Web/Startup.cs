@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyMeetUp.Logic.Infrastructure;
 
-namespace Rencontres.Web
+namespace MyMeetup.Web
 {
     public class Startup
     {
@@ -36,15 +33,14 @@ namespace Rencontres.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            //services.AddDbContext<MyMeetupSqlServerContext, MyMeetupSqlServerContext>(cnx =>
-            //    options.UseSqlServer(
-            //        Configuration.GetConnectionString("MeetupDb")));
+   
             //services.AddDbContext<MyMeetupContext, MyMeetupSqlServerContext>(options  =>
             //    options.UseSqlServer(
             //      Configuration.GetConnectionString("MyMeetupDb")));
             services.AddDbContext<MyMeetupContext, MyMeetupSqlLiteContext>(options =>
                     options.UseSqlite(
                         Configuration.GetConnectionString("MyMeetupDb")));
+
             services.AddIdentity<MyMeetupUser, MyMeetupRole>(options => {
                     options.Password.RequireDigit = true;
                     options.Password.RequiredLength = 4;
@@ -60,7 +56,8 @@ namespace Rencontres.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<MyMeetupUser> userManager,
+            RoleManager<MyMeetupRole> roleManager,MyMeetupContext context)
         {
             if (env.IsDevelopment())
             {
@@ -91,8 +88,10 @@ namespace Rencontres.Web
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            context.Database.Migrate();
             app.UseAuthentication();
-
+            SeedRoles(roleManager);
+            SeedUsers(userManager);
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -129,7 +128,7 @@ namespace Rencontres.Web
                 var user = new MyMeetupUser
                 {
                     UserName = "admin",
-                    Email = "guillaume.jay@gmail.com"
+                    Email = "guillaume.jay@gmail.com", FirstName = "Guillaume",LastName="Jay"
                 };
                 IdentityResult result = userManager.CreateAsync(user, $"admin{DateTime.Now:yyMMdd}").Result;
 

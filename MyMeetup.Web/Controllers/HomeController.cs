@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MyMeetup.Web.Models;
+using MyMeetup.Web.Models.Home;
 using MyMeetUp.Logic.Infrastructure;
-using Rencontres.Web.Models;
-using Rencontres.Web.Models.Home;
 
-namespace Rencontres.Web.Controllers
+namespace MyMeetup.Web.Controllers
 {
     public class HomeController : BaseController
     {
-        public HomeController(MyMeetupDomain domaine) : base(domaine)
+        private UserManager<MyMeetupUser> _userManager;
+
+        public HomeController(MyMeetupDomain domain,UserManager<MyMeetupUser> userManager) : base(domain)
         {
+            userManager = _userManager;
         }
 
         public IActionResult Index()
@@ -21,8 +21,8 @@ namespace Rencontres.Web.Controllers
             int rencontreId = 1;
             var model = new IndexModel
             {
-                Rencontre = Domaine.ObteniRencontre(rencontreId, true),
-                Charter = Domaine.ObtenirChartePour(rencontreId,true)
+                Rencontre = Domain.ObteniRencontre(rencontreId, true),
+                Charter = Domain.ObtenirChartePour(rencontreId,true)
             };
 
             return View(model);
@@ -31,7 +31,7 @@ namespace Rencontres.Web.Controllers
         [HttpPost]
         public void SigninMeetup(SigninMeetupModel model)
         {
-
+            
         }
 
         public IActionResult About()

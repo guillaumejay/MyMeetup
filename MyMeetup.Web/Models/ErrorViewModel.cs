@@ -1,6 +1,4 @@
-using System;
-
-namespace Rencontres.Web.Models
+namespace MyMeetup.Web.Models
 {
     public class ErrorViewModel
     {

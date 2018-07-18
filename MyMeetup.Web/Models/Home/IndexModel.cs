@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MyMeetUp.Logic.Modeles;
+﻿using System.Collections.Generic;
+using MyMeetUp.Logic.Models;
 
-namespace Rencontres.Web.Models.Home
+namespace MyMeetup.Web.Models.Home
 {
     public class IndexModel
     {
 
-        public Rencontre Rencontre { get; set; }
+        public Meetup Rencontre { get; set; }
 
-        public List<ContenuCharte> Charter { get; set; }=new List<ContenuCharte>();
+        public List<CharterContent> Charter { get; set; }=new List<CharterContent>();
     }
 }

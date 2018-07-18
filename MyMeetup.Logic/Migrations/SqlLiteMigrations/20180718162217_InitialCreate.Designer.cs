@@ -6,17 +6,17 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyMeetUp.Logic.Infrastructure;
 
-namespace MyMeetUp.Logic.Migrations.SqliteMigrations
+namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
 {
     [DbContext(typeof(MyMeetupSqlLiteContext))]
-    [Migration("20180717202555_InitialCreate")]
+    [Migration("20180718162217_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.0-rtm-30799");
+                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
@@ -180,25 +180,47 @@ namespace MyMeetUp.Logic.Migrations.SqliteMigrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("MyMeetUp.Logic.Modeles.ContenuCharte", b =>
+            modelBuilder.Entity("MyMeetUp.Logic.Models.AppParameter", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<bool>("Actif");
+                    b.Property<DateTime>("CreatedAt");
 
-                    b.Property<string>("Categorie")
+                    b.Property<string>("Title")
+                        .IsRequired()
                         .HasMaxLength(80);
 
-                    b.Property<string>("Contenu");
+                    b.Property<DateTime>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AppParameter");
+
+                    b.HasData(
+                        new { Id = 1, CreatedAt = new DateTime(2018, 7, 18, 16, 22, 17, 206, DateTimeKind.Utc), Title = "Rencontres Non Scolarisees", UpdatedAt = new DateTime(2018, 7, 18, 16, 22, 17, 206, DateTimeKind.Utc) }
+                    );
+                });
+
+            modelBuilder.Entity("MyMeetUp.Logic.Models.CharterContent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Category")
+                        .HasMaxLength(80);
+
+                    b.Property<string>("Content");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("getutcdate()");
 
-                    b.Property<int>("Position");
+                    b.Property<bool>("IsActive");
 
-                    b.Property<int?>("RencontreId");
+                    b.Property<int?>("MeetupId");
+
+                    b.Property<int>("Position");
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
@@ -206,32 +228,96 @@ namespace MyMeetUp.Logic.Migrations.SqliteMigrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RencontreId");
+                    b.HasIndex("MeetupId");
 
                     b.ToTable("ContenusChartes");
 
                     b.HasData(
-                        new { Id = 1, Actif = true, Categorie = "Animaux", Contenu = "<ul><li>Les chiens sont tolérés, à condition qu'ils restent attachés ou auprès de vous en permanence.</li><li>Ils ne doivent également pas être bruyants.</li></ul>", CreatedAt = new DateTime(2018, 7, 17, 20, 25, 55, 448, DateTimeKind.Utc), Position = 1, UpdatedAt = new DateTime(2018, 7, 17, 20, 25, 55, 448, DateTimeKind.Utc) },
-                        new { Id = 2, Actif = true, Categorie = "Alcool", Contenu = "<ul><li>La consommation d’alcool doit être raisonnée, pour toutes les personnes participantes, quel que soit leur âge, et bien sûr, les parents ou les référents sont invités à être attentifs à cette problématique vis-à-vis des personnes dont ils sont responsables.</li></ul>", CreatedAt = new DateTime(2018, 7, 17, 20, 25, 55, 448, DateTimeKind.Utc), Position = 2, UpdatedAt = new DateTime(2018, 7, 17, 20, 25, 55, 448, DateTimeKind.Utc) },
-                        new { Id = 3, Actif = true, Categorie = "Spécifique à la Taillade", Contenu = "<ul><li>La tradition est née de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants</li></ul>", CreatedAt = new DateTime(2018, 7, 17, 20, 25, 55, 448, DateTimeKind.Utc), Position = 1, RencontreId = 1, UpdatedAt = new DateTime(2018, 7, 17, 20, 25, 55, 448, DateTimeKind.Utc) }
+                        new { Id = 1, Category = "Animaux", Content = "<ul><li>Les chiens sont tolérés, à condition qu'ils restent attachés ou auprès de vous en permanence.</li><li>Ils ne doivent également pas être bruyants.</li></ul>", CreatedAt = new DateTime(2018, 7, 18, 16, 22, 17, 205, DateTimeKind.Utc), IsActive = true, Position = 1, UpdatedAt = new DateTime(2018, 7, 18, 16, 22, 17, 205, DateTimeKind.Utc) },
+                        new { Id = 2, Category = "Alcool", Content = "<ul><li>La consommation d’alcool doit être raisonnée, pour toutes les personnes participantes, quel que soit leur âge, et bien sûr, les parents ou les référents sont invités à être attentifs à cette problématique vis-à-vis des personnes dont ils sont responsables.</li></ul>", CreatedAt = new DateTime(2018, 7, 18, 16, 22, 17, 205, DateTimeKind.Utc), IsActive = true, Position = 2, UpdatedAt = new DateTime(2018, 7, 18, 16, 22, 17, 205, DateTimeKind.Utc) },
+                        new { Id = 3, Category = "Spécifique à la Taillade", Content = "<ul><li>La tradition est née de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants</li></ul>", CreatedAt = new DateTime(2018, 7, 18, 16, 22, 17, 205, DateTimeKind.Utc), IsActive = true, MeetupId = 1, Position = 1, UpdatedAt = new DateTime(2018, 7, 18, 16, 22, 17, 205, DateTimeKind.Utc) }
                     );
                 });
 
-            modelBuilder.Entity("MyMeetUp.Logic.Modeles.Inscription", b =>
+            modelBuilder.Entity("MyMeetUp.Logic.Models.Meetup", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("CodeReservation")
-                        .HasMaxLength(20);
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("getutcdate()");
 
-                    b.Property<decimal>("MontantVerse");
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("Date");
+
+                    b.Property<bool>("IsVisible");
+
+                    b.Property<DateTime?>("OpenForRegistrationOn");
+
+                    b.Property<string>("PublicDescription")
+                        .IsRequired();
+
+                    b.Property<string>("RegisteredDescription")
+                        .IsRequired();
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("Date");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(80);
+
+                    b.Property<string>("TitleImage");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Meetups");
+
+                    b.HasData(
+                        new { Id = 1, CreatedAt = new DateTime(2018, 7, 18, 16, 22, 17, 204, DateTimeKind.Utc), EndDate = new DateTime(2018, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), IsVisible = true, OpenForRegistrationOn = new DateTime(2018, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), PublicDescription = "Rencontre près de Casteljaloux(47) du 22 au 29 octobre 2018. Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.", RegisteredDescription = @"<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail &agrave; : francois.fonseca@solincite.org</strong></div>
+<div>Vous devrez lui indiquer vos&nbsp;<strong>noms/pr&eacute;noms/adresse postale/nb d&rsquo;adultes+d&rsquo;enfants.</strong></div>
+<div><strong>Il n&rsquo;y a qu&rsquo;un seul interlocuteur par logement : un logement est r&eacute;serv&eacute; par une seule famille, c&rsquo;est elle qui fait la r&eacute;servation et paiera la somme totale au village de vacances. </strong>Vous pouvez donc r&eacute;server &agrave; votre nom et trouver d&rsquo;autres familles pour partager, gr&acirc;ce au document Pad mis &agrave; disposition <strong>:&nbsp;</strong><strong><a href=""https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B"">https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B</a></strong></div>
+<div>Ce document servira &agrave; partager toutes les infos sur la rencontre (logements, covoiturage, activit&eacute;s,&hellip;)</div>", StartDate = new DateTime(2018, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), Title = "La Taillade 2018", TitleImage = "La-Taillade.jpg", UpdatedAt = new DateTime(2018, 7, 18, 16, 22, 17, 204, DateTimeKind.Utc) },
+                        new { Id = 2, CreatedAt = new DateTime(2018, 7, 18, 16, 22, 17, 205, DateTimeKind.Utc), EndDate = new DateTime(2019, 3, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), IsVisible = false, PublicDescription = "Rencontre près de Casteljaloux(47) du 22 au 29 octobre 2018. Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.", RegisteredDescription = @"<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail &agrave; : francois.fonseca@solincite.org</strong></div>
+<div>Vous devrez lui indiquer vos&nbsp;<strong>noms/pr&eacute;noms/adresse postale/nb d&rsquo;adultes+d&rsquo;enfants.</strong></div>
+<div><strong>Il n&rsquo;y a qu&rsquo;un seul interlocuteur par logement : un logement est r&eacute;serv&eacute; par une seule famille, c&rsquo;est elle qui fait la r&eacute;servation et paiera la somme totale au village de vacances. </strong>Vous pouvez donc r&eacute;server &agrave; votre nom et trouver d&rsquo;autres familles pour partager, gr&acirc;ce au document Pad mis &agrave; disposition <strong>:&nbsp;</strong><strong><a href=""https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B"">https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B</a></strong></div>
+<div>Ce document servira &agrave; partager toutes les infos sur la rencontre (logements, covoiturage, activit&eacute;s,&hellip;)</div>", StartDate = new DateTime(2019, 3, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), Title = "La Taillade Printemps 2019", TitleImage = "La-Taillade.jpg", UpdatedAt = new DateTime(2018, 7, 18, 16, 22, 17, 205, DateTimeKind.Utc) }
+                    );
+                });
+
+            modelBuilder.Entity("MyMeetUp.Logic.Models.MeetupAdmin", b =>
+                {
+                    b.Property<int>("UserId");
+
+                    b.Property<int>("MeetupId");
+
+                    b.HasKey("UserId", "MeetupId");
+
+                    b.HasAlternateKey("MeetupId", "UserId");
+
+                    b.ToTable("MeetupAdmin");
+                });
+
+            modelBuilder.Entity("MyMeetUp.Logic.Models.Registration", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("getutcdate()");
 
                     b.Property<int?>("MyMeetupUserId");
+
+                    b.Property<decimal>("PaidFees");
+
+                    b.Property<string>("RegistrationCode")
+                        .HasMaxLength(20);
 
                     b.Property<int>("RencontreId");
 
@@ -247,89 +333,7 @@ namespace MyMeetUp.Logic.Migrations.SqliteMigrations
 
                     b.HasIndex("RencontreId");
 
-                    b.ToTable("Inscriptions");
-                });
-
-            modelBuilder.Entity("MyMeetUp.Logic.Modeles.ParametrageApplication", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CreatedAt");
-
-                    b.Property<string>("Titre")
-                        .IsRequired()
-                        .HasMaxLength(80);
-
-                    b.Property<DateTime>("UpdatedAt");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ParametrageApplication");
-
-                    b.HasData(
-                        new { Id = 1, CreatedAt = new DateTime(2018, 7, 17, 20, 25, 55, 450, DateTimeKind.Utc), Titre = "Rencontres Non Scolarisees", UpdatedAt = new DateTime(2018, 7, 17, 20, 25, 55, 450, DateTimeKind.Utc) }
-                    );
-                });
-
-            modelBuilder.Entity("MyMeetUp.Logic.Modeles.Rencontre", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.Property<DateTime>("DateDebut")
-                        .HasColumnType("Date");
-
-                    b.Property<DateTime>("DateFin")
-                        .HasColumnType("Date");
-
-                    b.Property<string>("DescriptionInscrit")
-                        .IsRequired();
-
-                    b.Property<string>("DescriptionPublique")
-                        .IsRequired();
-
-                    b.Property<bool>("EstVisible");
-
-                    b.Property<string>("ImageTitre");
-
-                    b.Property<DateTime>("OuvertInscriptionLe");
-
-                    b.Property<string>("Titre")
-                        .IsRequired()
-                        .HasMaxLength(80);
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("getutcdate()");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Rencontres");
-
-                    b.HasData(
-                        new { Id = 1, CreatedAt = new DateTime(2018, 7, 17, 20, 25, 55, 447, DateTimeKind.Utc), DateDebut = new DateTime(2018, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), DateFin = new DateTime(2018, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), DescriptionInscrit = @"<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail &agrave; : francois.fonseca@solincite.org</strong></div>
-<div>Vous devrez lui indiquer vos&nbsp;<strong>noms/pr&eacute;noms/adresse postale/nb d&rsquo;adultes+d&rsquo;enfants.</strong></div>
-<div><strong>Il n&rsquo;y a qu&rsquo;un seul interlocuteur par logement : un logement est r&eacute;serv&eacute; par une seule famille, c&rsquo;est elle qui fait la r&eacute;servation et paiera la somme totale au village de vacances. </strong>Vous pouvez donc r&eacute;server &agrave; votre nom et trouver d&rsquo;autres familles pour partager, gr&acirc;ce au document Pad mis &agrave; disposition <strong>:&nbsp;</strong><strong><a href=""https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B"">https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B</a></strong></div>
-<div>Ce document servira &agrave; partager toutes les infos sur la rencontre (logements, covoiturage, activit&eacute;s,&hellip;)</div>", DescriptionPublique = "Rencontre près de Casteljaloux(47) du 22 au 29 octobre 2018. Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.", EstVisible = true, ImageTitre = "La-Taillade.jpg", OuvertInscriptionLe = new DateTime(2018, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), Titre = "La Taillade 2018", UpdatedAt = new DateTime(2018, 7, 17, 20, 25, 55, 447, DateTimeKind.Utc) }
-                    );
-                });
-
-            modelBuilder.Entity("MyMeetUp.Logic.Modeles.ResponsableRencontre", b =>
-                {
-                    b.Property<int>("UserId");
-
-                    b.Property<int>("RencontreId");
-
-                    b.HasKey("UserId", "RencontreId");
-
-                    b.HasAlternateKey("RencontreId", "UserId");
-
-                    b.ToTable("ResponsablesRencontres");
+                    b.ToTable("Registrations");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -377,35 +381,35 @@ namespace MyMeetUp.Logic.Migrations.SqliteMigrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("MyMeetUp.Logic.Modeles.ContenuCharte", b =>
+            modelBuilder.Entity("MyMeetUp.Logic.Models.CharterContent", b =>
                 {
-                    b.HasOne("MyMeetUp.Logic.Modeles.Rencontre", "Rencontre")
+                    b.HasOne("MyMeetUp.Logic.Models.Meetup", "Meetup")
                         .WithMany()
-                        .HasForeignKey("RencontreId");
+                        .HasForeignKey("MeetupId");
                 });
 
-            modelBuilder.Entity("MyMeetUp.Logic.Modeles.Inscription", b =>
+            modelBuilder.Entity("MyMeetUp.Logic.Models.MeetupAdmin", b =>
                 {
-                    b.HasOne("MyMeetUp.Logic.Infrastructure.MyMeetupUser", "MyMeetupUser")
-                        .WithMany()
-                        .HasForeignKey("MyMeetupUserId");
-
-                    b.HasOne("MyMeetUp.Logic.Modeles.Rencontre", "Rencontre")
-                        .WithMany()
-                        .HasForeignKey("RencontreId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("MyMeetUp.Logic.Modeles.ResponsableRencontre", b =>
-                {
-                    b.HasOne("MyMeetUp.Logic.Modeles.Rencontre", "Rencontre")
-                        .WithMany("Responsables")
-                        .HasForeignKey("RencontreId")
+                    b.HasOne("MyMeetUp.Logic.Models.Meetup", "Meetup")
+                        .WithMany("MeetupAdmins")
+                        .HasForeignKey("MeetupId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("MyMeetUp.Logic.Infrastructure.MyMeetupUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("MyMeetUp.Logic.Models.Registration", b =>
+                {
+                    b.HasOne("MyMeetUp.Logic.Infrastructure.MyMeetupUser", "MyMeetupUser")
+                        .WithMany()
+                        .HasForeignKey("MyMeetupUserId");
+
+                    b.HasOne("MyMeetUp.Logic.Models.Meetup", "Rencontre")
+                        .WithMany()
+                        .HasForeignKey("RencontreId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

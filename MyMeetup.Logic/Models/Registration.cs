@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using MyMeetUp.Logic.Infrastructure;
 
-namespace MyMeetUp.Logic.Modeles
+namespace MyMeetUp.Logic.Models
 {
-    public class Inscription:EntityWithDate
+    public class Registration:EntityWithDate
     {
         public int RencontreUserId { get; set; }
 
@@ -11,11 +11,11 @@ namespace MyMeetUp.Logic.Modeles
 
         public int RencontreId { get; set; }
 
-        public Rencontre Rencontre { get; set; }
+        public Meetup Rencontre { get; set; }
 
         [StringLength(20)]
-        public string CodeReservation { get; set; }
+        public string RegistrationCode { get; set; }
 
-        public decimal MontantVerse { get; set; }
+        public decimal PaidFees { get; set; }
     }
 }

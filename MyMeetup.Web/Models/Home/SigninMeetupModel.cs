@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Rencontres.Web.Models.Home
+namespace MyMeetup.Web.Models.Home
 {
     public class SigninMeetupModel
     {
@@ -22,6 +17,6 @@ namespace Rencontres.Web.Models.Home
         public string Email { get; set; }
 
         [Required][StringLength(30)]
-        public string PhoneNumher { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }

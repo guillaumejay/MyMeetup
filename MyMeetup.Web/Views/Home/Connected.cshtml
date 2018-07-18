@@ -1,0 +1,15 @@
+﻿@using MyMeetup.Web.Models.Home
+@model MyMeetup.Web.Models.Home.ConnectedModel
+    @{
+        ViewData["Title"] = "Bienvenue !";
+    }
+
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">Bonjour, @Model.CurrentUser.FirstName</h5>
+        <h6 class="card-subtitle mb-2 text-muted">@Model.CurrentUser.Email</h6>
+        <p class="card-text">@Model.NextMeetupText</p>
+    
+    </div>
+</div>
+

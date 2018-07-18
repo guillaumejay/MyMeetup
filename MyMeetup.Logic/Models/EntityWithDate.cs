@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace MyMeetUp.Logic.Modeles
+namespace MyMeetUp.Logic.Models
 {
     public abstract class EntityWithDate
     {
