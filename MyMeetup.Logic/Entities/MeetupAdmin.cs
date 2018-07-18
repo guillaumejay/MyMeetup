@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using MyMeetUp.Logic.Infrastructure;
 
-namespace MyMeetUp.Logic.Models
+namespace MyMeetUp.Logic.Entities
 {
    public class MeetupAdmin
     {

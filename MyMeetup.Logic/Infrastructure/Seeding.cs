@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using MyMeetUp.Logic.Models;
+using MyMeetUp.Logic.Entities;
 
 namespace MyMeetUp.Logic.Infrastructure
 {
@@ -38,25 +39,43 @@ namespace MyMeetUp.Logic.Infrastructure
             {
                 new CharterContent
                 {
-                    Id = 1,
-                    Category = "Animaux",
+    
+                    Category = "Communication sur le respect des lieux",
                     Content =
-                        "<ul><li>Les chiens sont tolérés, à condition qu'ils restent attachés ou auprès de vous en permanence.</li><li>Ils ne doivent également pas être bruyants.</li></ul>",
+                        "Chaque membre de votre famille, présent à la rencontre, doit être informé que le respect des lieux est important pour que nous puissions revenir. Aussi merci de nous prévenir en cas d’éventuels dégâts pour montrer aux gérants notre implication dans la remise en état des lieux.",
                     Position=1
 
                 },
                 new CharterContent
                 {
-                    Id = 2,
-                    Category = "Alcool",
+     
+                    Category = "Animaux",
                     Content =
-                        "<ul><li>La consommation d’alcool doit être raisonnée, pour toutes les personnes participantes, quel que soit leur âge, et bien sûr, les parents ou les référents sont invités à être attentifs à cette problématique vis-à-vis des personnes dont ils sont responsables.</li></ul>",
+                        "<ul><li>Les chiens sont tolérés, à condition qu'ils restent attachés ou auprès de vous en permanence.</li><li>Ils ne doivent également pas être bruyants.</li></ul>",
+                    Position=3
+
+                },
+                new CharterContent
+                {
+         
+                    Category = "Participation financière",
+                    Content =
+                        " Chaque famille participante devra régler 3€ de participation à Rencontres Nonscos : ces paiements permettront à l'association de couvrir ses dépenses d'existence (assurance notamment)",
                     Position=2
 
                 },
                 new CharterContent
                 {
-                    Id = 3,
+             
+                    Category = "Alcool",
+                    Content =
+                        "La consommation d’alcool doit être raisonnée, pour toutes les personnes participantes, quel que soit leur âge, et bien sûr, les parents ou les référents sont invités à être attentifs à cette problématique vis-à-vis des personnes dont ils sont responsables.",
+                    Position=4
+
+                },
+                new CharterContent
+                {
+           
                     Category = "Spécifique à la Taillade",
                     Content =
                         "<ul><li>La tradition est née de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants</li></ul>",
@@ -65,12 +84,47 @@ namespace MyMeetUp.Logic.Infrastructure
 
                 }
             };
-
+            int id = 1;
             foreach (var charte in chartes)
+            {
+                charte.Id = id++;
                 modelBuilder.Entity<CharterContent>().HasData(charte);
+            }
 
             modelBuilder.Entity<AppParameter>().HasData(
                 new AppParameter { Id = 1, Title = "Rencontres Non Scolarisees" });
+        }
+
+        public static void SeedRoles(RoleManager<MyMeetupRole> roleManager)
+        {
+            if (!roleManager.RoleExistsAsync(MyMeetupRole.Participant).Result)
+            {
+                var role = new MyMeetupRole(MyMeetupRole.Participant);
+
+                IdentityResult roleResult = roleManager.CreateAsync(role).Result;
+            }
+
+
+            if (!roleManager.RoleExistsAsync(MyMeetupRole.Administrateur).Result)
+            {
+                var role = new MyMeetupRole(MyMeetupRole.Administrateur);
+                IdentityResult roleResult = roleManager.CreateAsync(role).Result;
+            }
+        }
+
+        public static void SeedUsers(UserManager<MyMeetupUser> userManager)
+        {
+            if (userManager.FindByNameAsync("admin").Result == null)
+            {
+                var user = new MyMeetupUser
+                {
+                    UserName = "admin",
+                    Email = "guillaume.jay@gmail.com",
+                    FirstName = "Guillaume",
+                    LastName = "Jay"
+                };
+                MyMeetupUser.CreateUser(user, MyMeetupRole.Administrateur, $"admin{DateTime.Now:yyMMdd}", userManager);
+            }
         }
     }
 }

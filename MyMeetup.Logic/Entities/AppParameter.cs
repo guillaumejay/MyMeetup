@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MyMeetUp.Logic.Models
+namespace MyMeetUp.Logic.Entities
 {
   public  class AppParameter:EntityWithDate
     {

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MyMeetUp.Logic.Models
+namespace MyMeetUp.Logic.Entities
 {
     [Table("ContenusChartes")]
     public class CharterContent:EntityWithDate

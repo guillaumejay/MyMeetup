@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using MyMeetUp.Logic.Models;
+using MyMeetUp.Logic.Entities;
 
 namespace MyMeetup.Web.Models.Home
 {

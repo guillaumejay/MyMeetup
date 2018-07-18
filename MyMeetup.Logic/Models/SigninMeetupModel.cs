@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MyMeetup.Web.Models.Home
+namespace MyMeetUp.Logic.Models
 {
     public class SigninMeetupModel
     {
@@ -18,5 +18,7 @@ namespace MyMeetup.Web.Models.Home
 
         [Required][StringLength(30)]
         public string PhoneNumber { get; set; }
+
+        public int? MeetupId { get; set; }
     }
 }

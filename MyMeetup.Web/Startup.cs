@@ -90,8 +90,8 @@ namespace MyMeetup.Web
 
             context.Database.Migrate();
             app.UseAuthentication();
-            SeedRoles(roleManager);
-            SeedUsers(userManager);
+            Seeding.SeedRoles(roleManager);
+            Seeding.SeedUsers(userManager);
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -104,42 +104,6 @@ namespace MyMeetup.Web
                
             });
         }
-        public static void SeedRoles(RoleManager<MyMeetupRole> roleManager)
-        {
-            if (!roleManager.RoleExistsAsync(MyMeetupRole.Participant).Result)
-            {
-                var role = new MyMeetupRole(MyMeetupRole.Participant);
-
-                IdentityResult roleResult = roleManager.CreateAsync(role).Result;
-            }
-
-
-            if (!roleManager.RoleExistsAsync(MyMeetupRole.Administrateur).Result)
-            {
-                var role = new MyMeetupRole(MyMeetupRole.Administrateur);
-                IdentityResult roleResult = roleManager.CreateAsync(role).Result;
-            }
-        }
-
-        public static void SeedUsers(UserManager<MyMeetupUser> userManager)
-        {
-            if (userManager.FindByNameAsync("admin").Result == null)
-            {
-                var user = new MyMeetupUser
-                {
-                    UserName = "admin",
-                    Email = "guillaume.jay@gmail.com", FirstName = "Guillaume",LastName="Jay"
-                };
-                IdentityResult result = userManager.CreateAsync(user, $"admin{DateTime.Now:yyMMdd}").Result;
-
-                if (result.Succeeded)
-                {
-                    userManager.AddToRoleAsync(user,
-                        MyMeetupRole.Administrateur).Wait();
-                }
-            }
-
-
-        }
+  
     }
 }

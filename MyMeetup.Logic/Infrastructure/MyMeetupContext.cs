@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using MyMeetUp.Logic.Models;
+using MyMeetUp.Logic.Entities;
 
 namespace MyMeetUp.Logic.Infrastructure
 {
