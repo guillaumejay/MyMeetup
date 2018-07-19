@@ -33,7 +33,7 @@ namespace MyMeetUp.Logic.Entities
 
         public static string CreateCode(MyMeetupUser user, int meetupId)
         {
-            string code = string.Join("",$"{user.Id:0000}{user.Initials}{meetupId:0000}".Reverse());
+            string code = string.Join("",$"{user.Id:0000}{user.Initials}{meetupId:000}".Reverse());
             return code;
         }
     }

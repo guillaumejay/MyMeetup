@@ -31,7 +31,7 @@ namespace MyMeetUp.Logic.Infrastructure
                 EndDate = new DateTime(2019, 03, 29),
                 IsVisible = false,
                 OpenForRegistrationOn = null,
-                PublicDescription = "Rencontre près de Casteljaloux(47) du 22 au 29 octobre 2018. Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.",
+                PublicDescription = "Rencontre près de Casteljaloux(47) du 22 au 29 octobre 2019. Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.",
                 RegisteredDescription = "<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail &agrave; : francois.fonseca@solincite.org</strong></div>\r\n<div>Vous devrez lui indiquer vos&nbsp;<strong>noms/pr&eacute;noms/adresse postale/nb d&rsquo;adultes+d&rsquo;enfants.</strong></div>\r\n<div><strong>Il n&rsquo;y a qu&rsquo;un seul interlocuteur par logement : un logement est r&eacute;serv&eacute; par une seule famille, c&rsquo;est elle qui fait la r&eacute;servation et paiera la somme totale au village de vacances. </strong>Vous pouvez donc r&eacute;server &agrave; votre nom et trouver d&rsquo;autres familles pour partager, gr&acirc;ce au document Pad mis &agrave; disposition <strong>:&nbsp;</strong><strong><a href=\"https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B\">https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B</a></strong></div>\r\n<div>Ce document servira &agrave; partager toutes les infos sur la rencontre (logements, covoiturage, activit&eacute;s,&hellip;)</div>",
                 TitleImage = "La-Taillade.jpg"
             });
@@ -51,7 +51,7 @@ namespace MyMeetUp.Logic.Infrastructure
      
                     Category = "Animaux",
                     Content =
-                        "<ul><li>Les chiens sont tolérés, à condition qu'ils restent attachés ou auprès de vous en permanence.</li><li>Ils ne doivent également pas être bruyants.</li></ul>",
+                        "Les chiens sont tolérés, à condition qu'ils restent attachés ou auprès de vous en permanence.<br/>Ils ne doivent également pas être bruyants.",
                     Position=3
 
                 },
@@ -78,7 +78,7 @@ namespace MyMeetUp.Logic.Infrastructure
            
                     Category = "Spécifique à la Taillade",
                     Content =
-                        "<ul><li>La tradition est née de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants</li></ul>",
+                        "La tradition est née de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants",
                     MeetupId=1,
                     Position=1
 

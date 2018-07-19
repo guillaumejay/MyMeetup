@@ -8,7 +8,7 @@
     <div class="card-body">
         <h5 class="card-title">Bonjour, @Model.CurrentUser.FirstName</h5>
         <h6 class="card-subtitle mb-2 text-muted">@Model.CurrentUser.Email</h6>
-        <p class="card-text">@Model.NextMeetupText</p>
+        <p class="card-text">@Html.Raw(Model.NextMeetupText)</p>
     
     </div>
 </div>

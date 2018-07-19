@@ -23,7 +23,7 @@ namespace MyMeetup.Web.Controllers
             int rencontreId = 1;
             var model = new IndexModel
             {
-                Rencontre = Domain.GetMeetup(rencontreId, true),
+                Meetup = Domain.GetMeetup(rencontreId, true),
                 Charter = Domain.GetCharterFor(rencontreId,true)
             };
 
@@ -56,8 +56,9 @@ namespace MyMeetup.Web.Controllers
             }
             else
             {
+                string regCode = Domain.GetRegistrationCode(cm.CurrentUser.Id, meetup.Id);
                 cm.NextMeetupText =
-                    $"Votre prochaine rencontre est {meetup.Title}, à partir du {meetup.StartDate.ToString("dd MMMM yyyy")}";
+                    $"Votre prochaine rencontre est {meetup.Title}, à partir du {meetup.StartDate:dd MMMM yyyy}<br/>Votre code d'invitation est  :{regCode}";
             }
             return cm;
         }

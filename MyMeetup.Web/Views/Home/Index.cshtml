@@ -13,7 +13,7 @@
 
     <!-- Card image -->
     <div class="view view-cascade overlay">
-        <img class="card-img-top" src="~/images/Uploaded/TitreRencontre/@Model.Rencontre.TitleImage" alt="@Model.Rencontre.Title"
+        <img class="card-img-top" src="~/images/Uploaded/TitreRencontre/@Model.Meetup.TitleImage" alt="@Model.Meetup.Title"
              style="width: 400px; height: 300px;margin-left: auto;margin-right: auto;display: block;">
         <a href="#!">
             <div class="mask rgba-white-slight"></div>
@@ -24,12 +24,12 @@
     <div class="card-body card-body-cascade text-center">
 
         <!-- Title -->
-        <h4 class="card-title"><strong>@Model.Rencontre.Title</strong></h4>
+        <h4 class="card-title"><strong>@Model.Meetup.Title</strong></h4>
         <!-- Subtitle -->
-        <h6 class="font-weight-bold indigo-text py-2">@Model.Rencontre.StartDate.ToString("dd MMM yyyy") - @Model.Rencontre.EndDate.ToString("dd MMM yyyy") </h6>
+        <h6 class="font-weight-bold indigo-text py-2">@Model.Meetup.StartDate.ToString("dd MMM yyyy") - @Model.Meetup.EndDate.ToString("dd MMM yyyy") </h6>
         <!-- Text -->
         <p class="card-text">
-            @Model.Rencontre.PublicDescription
+            @Model.Meetup.PublicDescription
         </p>
 
 
@@ -107,7 +107,7 @@
                             </div>
                         </div>
                     </div>
-                    <input type="hidden" name="@nameof(SigninMeetupModel.MeetupId)" value="@Model.Rencontre.Id" />
+                    <input type="hidden" name="@nameof(SigninMeetupModel.MeetupId)" value="@Model.Meetup.Id" />
                 </form>
 
             </div>

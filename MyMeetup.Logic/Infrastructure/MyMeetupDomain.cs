@@ -30,8 +30,20 @@ namespace MyMeetUp.Logic.Infrastructure
             return q.FirstOrDefault();
         }
 
-        public int Register(MyMeetupUser user, int meetupId)
+        public int? Register(MyMeetupUser user, int meetupId, bool ignoreMeetupRegistrationValidity=false)
         {
+            Meetup m = _context.Meetups.AsNoTracking().FirstOrDefault(x => x.Id == meetupId);
+            if (m == null)
+                return null;
+            if (!ignoreMeetupRegistrationValidity)
+            {
+                if (m.IsVisible == false)
+                    return null;
+                if (m.OpenForRegistrationOn == null)
+                    return null;
+                if (m.OpenForRegistrationOn.Value > DateTime.UtcNow)
+                    return null;
+            }
             Registration r =
                 new Registration(user.Id, meetupId) { RegistrationCode = Registration.CreateCode(user, meetupId) };
             _context.Registrations.Add(r);
@@ -46,7 +58,12 @@ namespace MyMeetUp.Logic.Infrastructure
                 q = q.AsNoTracking();
             return q;
         }
-
+        public string GetRegistrationCode(int userId, int meetupId)
+        {
+            var reg = _context.Registrations.AsNoTracking()
+                .FirstOrDefault(x => x.MeetupId == meetupId && x.UserId == userId);
+            return reg?.RegistrationCode;
+        }
 
         #endregion
 
@@ -60,8 +77,9 @@ namespace MyMeetUp.Logic.Infrastructure
                 meetupId = -1;
             }
 
-            IQueryable<CharterContent> q = _context.CharterContents.Where(x => (x.MeetupId == null || x.MeetupId == meetupId.Value)
-                                                        && x.IsActive);
+            IQueryable<CharterContent> q = _context.CharterContents.Where(x =>
+                (x.MeetupId == null || x.MeetupId == meetupId.Value)
+                && x.IsActive).OrderBy(x => x.MeetupId).ThenBy(x => x.Position);
             if (readOnly)
             {
                 q = q.AsNoTracking();
@@ -73,6 +91,7 @@ namespace MyMeetUp.Logic.Infrastructure
 
         public int AddRegularUser(SigninMeetupModel model, UserManager<MyMeetupUser> userManager)
         {
+            
             MyMeetupUser newUser = MyMeetupUser.From(model);
             int? id = MyMeetupUser.CreateUser(newUser, MyMeetupRole.Participant,
                 newUser.Initials +
@@ -85,5 +104,6 @@ namespace MyMeetUp.Logic.Infrastructure
         }
 
 
+      
     }
 }
