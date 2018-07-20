@@ -7,7 +7,6 @@ namespace MyMeetUp.Logic.Entities
 {
     public class Meetup : EntityWithDate
     {
-
         [StringLength(80)]
         [Required]
         public string Title { get; set; }
@@ -32,6 +31,8 @@ namespace MyMeetUp.Logic.Entities
         public string RegisteredDescription { get; set; }
 
         public string TitleImage { get; set; }
+
+        [NotMapped] public string DefaultDateText => $"Du {StartDate:dd MMM yyy} au {EndDate:dd MMM yyyy}";
 
     }
 }

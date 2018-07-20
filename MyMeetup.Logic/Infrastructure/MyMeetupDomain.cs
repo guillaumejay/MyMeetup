@@ -105,6 +105,30 @@ namespace MyMeetUp.Logic.Infrastructure
         }
 
 
-      
+        public IEnumerable<MeetupAdminShortModel> GetAdminMeetup()
+        {
+            var meetups = _context.Meetups.AsNoTracking();
+            var list = new List<MeetupAdminShortModel>();
+            List<Tuple<int, int>> perMeetup = _context.Registrations.AsNoTracking().GroupBy(x => x.MeetupId)
+                    .Select(group => Tuple.Create(group.Key, group.Count())).ToList();
+                
+            foreach (var m in meetups)
+            {
+                var model = MeetupAdminShortModel.FromMeetup(m);
+                // TODO quick ugly thing
+                model.RegistrationCount=  perMeetup.SingleOrDefault(x => x.Item1 == m.Id)?.Item2 ?? 0;
+                list.Add(model);
+            }
+
+            return list;
+        }
+
+        public List<MyMeetupUser> GetParticipantsFor(int meetupId)
+        {
+            var list = _context.Users
+                .Where(u => _context.Registrations.Where(r => r.MeetupId == meetupId).Select(x => x.UserId).ToList()
+                    .Contains(u.Id)).AsNoTracking().ToList();
+            return list;
+        }
     }
 }

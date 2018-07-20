@@ -11,8 +11,6 @@ namespace MyMeetup.Web.Controllers
 {
     public class HomeController : BaseController
     {
-       
-
         public HomeController(MyMeetupDomain domain,UserManager<MyMeetupUser> userManager) : base(domain,userManager)
         {
           
@@ -30,9 +28,9 @@ namespace MyMeetup.Web.Controllers
             return View(model);
         }
 
-        public IActionResult Connected()
+        public IActionResult MyAccount()
         {
-            return View("Connected", GetConnectedModel());
+            return View("MyAccount", GetMyAccountModel());
 
         }
 
@@ -42,13 +40,13 @@ namespace MyMeetup.Web.Controllers
            int id = Domain.AddRegularUser(model,UserManager);
             var user = UserManager.FindByEmailAsync(model.Email).Result;
              signInManager.SignInAsync(user, isPersistent: true);
-            return View("Connected", GetConnectedModel(user));
+            return View("MyAccount", GetMyAccountModel(user));
         }
 
-        private ConnectedModel GetConnectedModel(MyMeetupUser currentUser=null)
+        private MyAccountModel GetMyAccountModel(MyMeetupUser currentUser=null)
         {
-            ConnectedModel cm=new ConnectedModel();
-            cm.CurrentUser =currentUser?? CurrentUser;
+            MyAccountModel cm =new MyAccountModel(currentUser ?? CurrentUser);
+            
             var meetup = Domain.GetNextMeetupsFor(cm.CurrentUser.Id, true).OrderBy(x => x.StartDate).FirstOrDefault();
             if (meetup == null)
             {

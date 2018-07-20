@@ -26,7 +26,7 @@
         <!-- Title -->
         <h4 class="card-title"><strong>@Model.Meetup.Title</strong></h4>
         <!-- Subtitle -->
-        <h6 class="font-weight-bold indigo-text py-2">@Model.Meetup.StartDate.ToString("dd MMM yyyy") - @Model.Meetup.EndDate.ToString("dd MMM yyyy") </h6>
+        <h6 class="font-weight-bold indigo-text py-2">@Model.Meetup.DefaultDateText</h6>
         <!-- Text -->
         <p class="card-text">
             @Html.Raw(Model.Meetup.PublicDescription)

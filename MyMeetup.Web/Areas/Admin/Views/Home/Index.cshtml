@@ -1,7 +1,48 @@
-﻿
+﻿@using MyMeetup.Web.Areas.Admin.Models
+@model MyMeetup.Web.Areas.Admin.Models.AdminIndexModel
 @{
     ViewData["Title"] = "Administration";
 }
 
 <h2>Bonjour</h2>
 
+<table class="table table-striped table-bordered" cellspacing="0">
+    <thead>
+    <th class="th-sm">
+        Id
+        <i class="fa fa-sort float-right" aria-hidden="true"></i>
+    </th>
+    <th class="th-sm">
+        Titre
+        <i class="fa fa-sort float-right" aria-hidden="true"></i>
+    </th>
+    <th class="th-sm">
+        Nombre d'inscrits
+        <i class="fa fa-sort float-right" aria-hidden="true"></i>
+    </th>
+    <th class="th-sm">
+        Est visible
+        <i class="fa fa-sort float-right" aria-hidden="true"></i>
+    </th>
+    <th class="th-sm">
+        Ouvre pour inscription au
+        <i class="fa fa-sort float-right" aria-hidden="true"></i>
+    </th>
+    </thead>
+    <tbody>
+        @foreach (var meetup in Model.Meetups)
+        {
+            <tr>
+                <td>@meetup.MeetupId</td>
+            
+                <td>@meetup.Title</td>
+            
+                <td>@meetup.RegistrationCount</td>
+            
+                <td>@(meetup.IsVisible == true ? "Oui" : "Non")</td>
+            
+                <td>@meetup.OpenForRegistrationOn</td>
+            </tr>
+        }
+    </tbody>
+</table>

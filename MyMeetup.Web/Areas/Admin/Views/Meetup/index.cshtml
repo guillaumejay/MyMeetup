@@ -1,0 +1,55 @@
+﻿@model MyMeetup.Web.Areas.Admin.Models.AdminMeetupModel
+@{
+    ViewData["Title"] = "Administration de " + Model.Title;
+}
+<div class="card w-100">
+    <div class="card-header primary-color white-text">
+        @Model.Title
+    </div>
+    <div class="card-body">
+        <h3 class="card-title">@Model.DefaultDateText</h3>
+        <p class="card-text">A venir ici : fiche d'édition de la rencontre</p>
+        <a href="#" class="btn btn-primary">Sauvegarder</a>
+        <a href="#" class="btn btn-secondary">Annuler</a>
+    </div>
+</div>
+<div class="card w-100">
+    <div class="card-header primary-color white-text">
+        Participants
+    </div>
+    <div class="card-body">
+        <h3 class="card-title">@Model.Participants.Count inscrit@(Model.Participants.Count > 1 ? "s" : "") </h3>
+        <p class="card-text">
+            <table class="table table-striped table-bordered" cellspacing="0">
+                <thead>
+                <th class="th-sm">
+                    Id
+                    <i class="fa fa-sort float-right" aria-hidden="true"></i>
+                </th>
+                <th class="th-sm">
+                    Nom
+                    <i class="fa fa-sort float-right" aria-hidden="true"></i>
+                </th>
+                <th class="th-sm">
+                    Prénom
+                    <i class="fa fa-sort float-right" aria-hidden="true"></i>
+                </th>
+
+                </thead>
+                <tbody>
+                    @foreach (var user in Model.Participants)
+                    {
+                        <tr>
+                            <td>@user.Id</td>
+
+                            <td>@user.LastName</td>
+
+                            <td>@user.FirstName</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </p>
+
+    </div>
+</div>
