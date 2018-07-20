@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyMeetUp.Logic.Infrastructure;
+using MyMeetUp.Logic.Infrastructure.DataContexts;
 
 namespace MyMeetup.Web
 {

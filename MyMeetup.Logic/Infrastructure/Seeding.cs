@@ -19,7 +19,16 @@ namespace MyMeetUp.Logic.Infrastructure
                 EndDate = new DateTime(2018, 10, 29),
                 IsVisible = true,
                 OpenForRegistrationOn = new DateTime(2018, 2, 1),
-                PublicDescription = "Rencontre près de Casteljaloux(47) du 22 au 29 octobre 2018. Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.",
+                PublicDescription = "Rencontre près de Casteljaloux(47). Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.<br/>"
+                + @"<div>
+<h2><u>Comment s'inscrire &agrave; la rencontre ?</u></h2>
+</div>
+<div>Ne peuvent s'inscrire &agrave; cette rencontre que les personnes qui s'engagent &agrave; respecter la charte mise en place.</div>
+<div><strong>Proc&eacute;dure&nbsp;</strong>:</div>
+<div>1. Vous lisez l'engagement que vous demande la charte</div>
+<div>2. Si la charte vous convient : vous vous engagez &agrave; la respecter en la validant, la signant num&eacute;riquement et en nous donnant vos coordonn&eacute;es : le tout nous sera adress&eacute; directement.</div>
+<div>3. Nous vous confirmons votre pr&eacute;-r&eacute;servation et transmettons au village de vacances de la Taillade votre nom et votre N&deg; de pr&eacute;-r&eacute;servation</div>
+<div>4. Vous pouvez alors contacter le village de vacances pour effectuer votre r&eacute;servation aupr&egrave;s d'eux (en leur rappelant votre N&deg; de pr&eacute;-r&eacute;servation).</div>",
                 RegisteredDescription = "<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail &agrave; : francois.fonseca@solincite.org</strong></div>\r\n<div>Vous devrez lui indiquer vos&nbsp;<strong>noms/pr&eacute;noms/adresse postale/nb d&rsquo;adultes+d&rsquo;enfants.</strong></div>\r\n<div><strong>Il n&rsquo;y a qu&rsquo;un seul interlocuteur par logement : un logement est r&eacute;serv&eacute; par une seule famille, c&rsquo;est elle qui fait la r&eacute;servation et paiera la somme totale au village de vacances. </strong>Vous pouvez donc r&eacute;server &agrave; votre nom et trouver d&rsquo;autres familles pour partager, gr&acirc;ce au document Pad mis &agrave; disposition <strong>:&nbsp;</strong><strong><a href=\"https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B\">https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B</a></strong></div>\r\n<div>Ce document servira &agrave; partager toutes les infos sur la rencontre (logements, covoiturage, activit&eacute;s,&hellip;)</div>",
                 TitleImage = "La-Taillade.jpg"
             });
@@ -31,7 +40,7 @@ namespace MyMeetUp.Logic.Infrastructure
                 EndDate = new DateTime(2019, 03, 29),
                 IsVisible = false,
                 OpenForRegistrationOn = null,
-                PublicDescription = "Rencontre près de Casteljaloux(47) du 22 au 29 octobre 2019. Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.",
+                PublicDescription = "Rencontre près de Casteljaloux(47). Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.",
                 RegisteredDescription = "<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail &agrave; : francois.fonseca@solincite.org</strong></div>\r\n<div>Vous devrez lui indiquer vos&nbsp;<strong>noms/pr&eacute;noms/adresse postale/nb d&rsquo;adultes+d&rsquo;enfants.</strong></div>\r\n<div><strong>Il n&rsquo;y a qu&rsquo;un seul interlocuteur par logement : un logement est r&eacute;serv&eacute; par une seule famille, c&rsquo;est elle qui fait la r&eacute;servation et paiera la somme totale au village de vacances. </strong>Vous pouvez donc r&eacute;server &agrave; votre nom et trouver d&rsquo;autres familles pour partager, gr&acirc;ce au document Pad mis &agrave; disposition <strong>:&nbsp;</strong><strong><a href=\"https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B\">https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B</a></strong></div>\r\n<div>Ce document servira &agrave; partager toutes les infos sur la rencontre (logements, covoiturage, activit&eacute;s,&hellip;)</div>",
                 TitleImage = "La-Taillade.jpg"
             });

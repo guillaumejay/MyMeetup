@@ -276,48 +276,56 @@ namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
             migrationBuilder.InsertData(
                 table: "AppParameter",
                 columns: new[] { "Id", "CreatedAt", "Title", "UpdatedAt" },
-                values: new object[] { 1, new DateTime(2018, 7, 18, 19, 46, 40, 62, DateTimeKind.Utc), "Rencontres Non Scolarisees", new DateTime(2018, 7, 18, 19, 46, 40, 62, DateTimeKind.Utc) });
+                values: new object[] { 1, new DateTime(2018, 7, 20, 4, 30, 31, 921, DateTimeKind.Utc), "Rencontres Non Scolarisees", new DateTime(2018, 7, 20, 4, 30, 31, 921, DateTimeKind.Utc) });
 
             migrationBuilder.InsertData(
                 table: "ContenusChartes",
                 columns: new[] { "Id", "Category", "Content", "CreatedAt", "IsActive", "MeetupId", "Position", "UpdatedAt" },
-                values: new object[] { 1, "Communication sur le respect des lieux", "Chaque membre de votre famille, présent à la rencontre, doit être informé que le respect des lieux est important pour que nous puissions revenir. Aussi merci de nous prévenir en cas d’éventuels dégâts pour montrer aux gérants notre implication dans la remise en état des lieux.", new DateTime(2018, 7, 18, 19, 46, 40, 60, DateTimeKind.Utc), true, null, 1, new DateTime(2018, 7, 18, 19, 46, 40, 60, DateTimeKind.Utc) });
+                values: new object[] { 1, "Communication sur le respect des lieux", "Chaque membre de votre famille, présent à la rencontre, doit être informé que le respect des lieux est important pour que nous puissions revenir. Aussi merci de nous prévenir en cas d’éventuels dégâts pour montrer aux gérants notre implication dans la remise en état des lieux.", new DateTime(2018, 7, 20, 4, 30, 31, 919, DateTimeKind.Utc), true, null, 1, new DateTime(2018, 7, 20, 4, 30, 31, 919, DateTimeKind.Utc) });
 
             migrationBuilder.InsertData(
                 table: "ContenusChartes",
                 columns: new[] { "Id", "Category", "Content", "CreatedAt", "IsActive", "MeetupId", "Position", "UpdatedAt" },
-                values: new object[] { 2, "Animaux", "<ul><li>Les chiens sont tolérés, à condition qu'ils restent attachés ou auprès de vous en permanence.</li><li>Ils ne doivent également pas être bruyants.</li></ul>", new DateTime(2018, 7, 18, 19, 46, 40, 60, DateTimeKind.Utc), true, null, 3, new DateTime(2018, 7, 18, 19, 46, 40, 60, DateTimeKind.Utc) });
+                values: new object[] { 2, "Animaux", "Les chiens sont tolérés, à condition qu'ils restent attachés ou auprès de vous en permanence.<br/>Ils ne doivent également pas être bruyants.", new DateTime(2018, 7, 20, 4, 30, 31, 919, DateTimeKind.Utc), true, null, 3, new DateTime(2018, 7, 20, 4, 30, 31, 919, DateTimeKind.Utc) });
 
             migrationBuilder.InsertData(
                 table: "ContenusChartes",
                 columns: new[] { "Id", "Category", "Content", "CreatedAt", "IsActive", "MeetupId", "Position", "UpdatedAt" },
-                values: new object[] { 3, "Participation financière", " Chaque famille participante devra régler 3€ de participation à Rencontres Nonscos : ces paiements permettront à l'association de couvrir ses dépenses d'existence (assurance notamment)", new DateTime(2018, 7, 18, 19, 46, 40, 60, DateTimeKind.Utc), true, null, 2, new DateTime(2018, 7, 18, 19, 46, 40, 60, DateTimeKind.Utc) });
+                values: new object[] { 3, "Participation financière", " Chaque famille participante devra régler 3€ de participation à Rencontres Nonscos : ces paiements permettront à l'association de couvrir ses dépenses d'existence (assurance notamment)", new DateTime(2018, 7, 20, 4, 30, 31, 919, DateTimeKind.Utc), true, null, 2, new DateTime(2018, 7, 20, 4, 30, 31, 919, DateTimeKind.Utc) });
 
             migrationBuilder.InsertData(
                 table: "ContenusChartes",
                 columns: new[] { "Id", "Category", "Content", "CreatedAt", "IsActive", "MeetupId", "Position", "UpdatedAt" },
-                values: new object[] { 4, "Alcool", "La consommation d’alcool doit être raisonnée, pour toutes les personnes participantes, quel que soit leur âge, et bien sûr, les parents ou les référents sont invités à être attentifs à cette problématique vis-à-vis des personnes dont ils sont responsables.", new DateTime(2018, 7, 18, 19, 46, 40, 60, DateTimeKind.Utc), true, null, 4, new DateTime(2018, 7, 18, 19, 46, 40, 60, DateTimeKind.Utc) });
+                values: new object[] { 4, "Alcool", "La consommation d’alcool doit être raisonnée, pour toutes les personnes participantes, quel que soit leur âge, et bien sûr, les parents ou les référents sont invités à être attentifs à cette problématique vis-à-vis des personnes dont ils sont responsables.", new DateTime(2018, 7, 20, 4, 30, 31, 919, DateTimeKind.Utc), true, null, 4, new DateTime(2018, 7, 20, 4, 30, 31, 919, DateTimeKind.Utc) });
 
             migrationBuilder.InsertData(
                 table: "Meetups",
                 columns: new[] { "Id", "CreatedAt", "EndDate", "IsVisible", "OpenForRegistrationOn", "PublicDescription", "RegisteredDescription", "StartDate", "Title", "TitleImage", "UpdatedAt" },
-                values: new object[] { 1, new DateTime(2018, 7, 18, 19, 46, 40, 57, DateTimeKind.Utc), new DateTime(2018, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), true, new DateTime(2018, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Rencontre près de Casteljaloux(47) du 22 au 29 octobre 2018. Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.", @"<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail &agrave; : francois.fonseca@solincite.org</strong></div>
+                values: new object[] { 1, new DateTime(2018, 7, 20, 4, 30, 31, 917, DateTimeKind.Utc), new DateTime(2018, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), true, new DateTime(2018, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), @"Rencontre près de Casteljaloux(47). Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.<br/><div>
+<h2><u>Comment s'inscrire &agrave; la rencontre ?</u></h2>
+</div>
+<div>Ne peuvent s'inscrire &agrave; cette rencontre que les personnes qui s'engagent &agrave; respecter la charte mise en place.</div>
+<div><strong>Proc&eacute;dure&nbsp;</strong>:</div>
+<div>1. Vous lisez l'engagement que vous demande la charte</div>
+<div>2. Si la charte vous convient : vous vous engagez &agrave; la respecter en la validant, la signant num&eacute;riquement et en nous donnant vos coordonn&eacute;es : le tout nous sera adress&eacute; directement.</div>
+<div>3. Nous vous confirmons votre pr&eacute;-r&eacute;servation et transmettons au village de vacances de la Taillade votre nom et votre N&deg; de pr&eacute;-r&eacute;servation</div>
+<div>4. Vous pouvez alors contacter le village de vacances pour effectuer votre r&eacute;servation aupr&egrave;s d'eux (en leur rappelant votre N&deg; de pr&eacute;-r&eacute;servation).</div>", @"<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail &agrave; : francois.fonseca@solincite.org</strong></div>
 <div>Vous devrez lui indiquer vos&nbsp;<strong>noms/pr&eacute;noms/adresse postale/nb d&rsquo;adultes+d&rsquo;enfants.</strong></div>
 <div><strong>Il n&rsquo;y a qu&rsquo;un seul interlocuteur par logement : un logement est r&eacute;serv&eacute; par une seule famille, c&rsquo;est elle qui fait la r&eacute;servation et paiera la somme totale au village de vacances. </strong>Vous pouvez donc r&eacute;server &agrave; votre nom et trouver d&rsquo;autres familles pour partager, gr&acirc;ce au document Pad mis &agrave; disposition <strong>:&nbsp;</strong><strong><a href=""https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B"">https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B</a></strong></div>
-<div>Ce document servira &agrave; partager toutes les infos sur la rencontre (logements, covoiturage, activit&eacute;s,&hellip;)</div>", new DateTime(2018, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "La Taillade 2018", "La-Taillade.jpg", new DateTime(2018, 7, 18, 19, 46, 40, 57, DateTimeKind.Utc) });
+<div>Ce document servira &agrave; partager toutes les infos sur la rencontre (logements, covoiturage, activit&eacute;s,&hellip;)</div>", new DateTime(2018, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "La Taillade 2018", "La-Taillade.jpg", new DateTime(2018, 7, 20, 4, 30, 31, 917, DateTimeKind.Utc) });
 
             migrationBuilder.InsertData(
                 table: "Meetups",
                 columns: new[] { "Id", "CreatedAt", "EndDate", "IsVisible", "OpenForRegistrationOn", "PublicDescription", "RegisteredDescription", "StartDate", "Title", "TitleImage", "UpdatedAt" },
-                values: new object[] { 2, new DateTime(2018, 7, 18, 19, 46, 40, 60, DateTimeKind.Utc), new DateTime(2019, 3, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), false, null, "Rencontre près de Casteljaloux(47) du 22 au 29 octobre 2018. Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.", @"<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail &agrave; : francois.fonseca@solincite.org</strong></div>
+                values: new object[] { 2, new DateTime(2018, 7, 20, 4, 30, 31, 919, DateTimeKind.Utc), new DateTime(2019, 3, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), false, null, "Rencontre près de Casteljaloux(47). Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.", @"<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail &agrave; : francois.fonseca@solincite.org</strong></div>
 <div>Vous devrez lui indiquer vos&nbsp;<strong>noms/pr&eacute;noms/adresse postale/nb d&rsquo;adultes+d&rsquo;enfants.</strong></div>
 <div><strong>Il n&rsquo;y a qu&rsquo;un seul interlocuteur par logement : un logement est r&eacute;serv&eacute; par une seule famille, c&rsquo;est elle qui fait la r&eacute;servation et paiera la somme totale au village de vacances. </strong>Vous pouvez donc r&eacute;server &agrave; votre nom et trouver d&rsquo;autres familles pour partager, gr&acirc;ce au document Pad mis &agrave; disposition <strong>:&nbsp;</strong><strong><a href=""https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B"">https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B</a></strong></div>
-<div>Ce document servira &agrave; partager toutes les infos sur la rencontre (logements, covoiturage, activit&eacute;s,&hellip;)</div>", new DateTime(2019, 3, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "La Taillade Printemps 2019", "La-Taillade.jpg", new DateTime(2018, 7, 18, 19, 46, 40, 60, DateTimeKind.Utc) });
+<div>Ce document servira &agrave; partager toutes les infos sur la rencontre (logements, covoiturage, activit&eacute;s,&hellip;)</div>", new DateTime(2019, 3, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "La Taillade Printemps 2019", "La-Taillade.jpg", new DateTime(2018, 7, 20, 4, 30, 31, 919, DateTimeKind.Utc) });
 
             migrationBuilder.InsertData(
                 table: "ContenusChartes",
                 columns: new[] { "Id", "Category", "Content", "CreatedAt", "IsActive", "MeetupId", "Position", "UpdatedAt" },
-                values: new object[] { 5, "Spécifique à la Taillade", "<ul><li>La tradition est née de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants</li></ul>", new DateTime(2018, 7, 18, 19, 46, 40, 60, DateTimeKind.Utc), true, 1, 1, new DateTime(2018, 7, 18, 19, 46, 40, 60, DateTimeKind.Utc) });
+                values: new object[] { 5, "Spécifique à la Taillade", "La tradition est née de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants", new DateTime(2018, 7, 20, 4, 30, 31, 919, DateTimeKind.Utc), true, 1, 1, new DateTime(2018, 7, 20, 4, 30, 31, 919, DateTimeKind.Utc) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

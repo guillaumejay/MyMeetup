@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MyMeetUp.Logic.Entities;
 
-namespace MyMeetUp.Logic.Infrastructure
+namespace MyMeetUp.Logic.Infrastructure.DataContexts
 {
     public abstract class MyMeetupContext : IdentityDbContext<MyMeetupUser, MyMeetupRole, int>
     {

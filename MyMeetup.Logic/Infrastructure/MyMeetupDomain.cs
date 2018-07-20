@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MyMeetUp.Logic.Entities;
+using MyMeetUp.Logic.Infrastructure.DataContexts;
 using MyMeetUp.Logic.Models;
 
 namespace MyMeetUp.Logic.Infrastructure
@@ -28,7 +29,7 @@ namespace MyMeetUp.Logic.Infrastructure
             }
 
             return q.FirstOrDefault();
-        }
+        } 
 
         public int? Register(MyMeetupUser user, int meetupId, bool ignoreMeetupRegistrationValidity=false)
         {
