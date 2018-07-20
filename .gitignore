@@ -329,3 +329,4 @@ ASALocalRun/
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
 Rencontres.Web/MeetupLocal.db
+MyMeetup.Web/App_Data/MyMeetupLocal.db

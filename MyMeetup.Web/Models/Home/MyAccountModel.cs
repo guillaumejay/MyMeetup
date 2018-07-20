@@ -6,16 +6,16 @@ using MyMeetUp.Logic.Infrastructure;
 
 namespace MyMeetup.Web.Models.Home
 {
-    public class ConnectedModel
+    public class MyAccountModel
     {
-        public ConnectedModel()
+        public MyAccountModel()
         {
         }
 
         public MyMeetupUser CurrentUser { get; set; }
         public string NextMeetupText { get; set; }
 
-        public ConnectedModel(MyMeetupUser user)
+        public MyAccountModel(MyMeetupUser user)
         {
             CurrentUser = user;
         }
