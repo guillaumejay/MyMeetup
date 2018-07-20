@@ -33,14 +33,14 @@
         @foreach (var meetup in Model.Meetups)
         {
             <tr>
-                <td>@meetup.MeetupId</td>
-            
-                <td>@meetup.Title</td>
-            
+                <td><a href="/admin/meetup?id=@meetup.MeetupId">@meetup.MeetupId</a></td>
+
+                <td><a href="/admin/meetup?id=@meetup.MeetupId">@meetup.Title</a></td>
+
                 <td>@meetup.RegistrationCount</td>
-            
+
                 <td>@(meetup.IsVisible == true ? "Oui" : "Non")</td>
-            
+
                 <td>@meetup.OpenForRegistrationOn</td>
             </tr>
         }

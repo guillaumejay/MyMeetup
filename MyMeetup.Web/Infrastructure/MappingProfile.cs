@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using MyMeetup.Web.Areas.Admin.Models;
+using MyMeetUp.Logic.Entities;
 using MyMeetUp.Logic.Infrastructure;
 
 namespace MyMeetup.Web.Infrastructure
@@ -12,7 +9,7 @@ namespace MyMeetup.Web.Infrastructure
     {
         public MappingProfile()
         {
-            CreateMap<MyMeetupUser, AdminMeetupModel>();
+            CreateMap<Meetup, AdminMeetupModel>();
         }
     }
 }

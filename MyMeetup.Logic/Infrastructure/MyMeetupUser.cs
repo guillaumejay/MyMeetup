@@ -6,6 +6,10 @@ namespace MyMeetUp.Logic.Infrastructure
 {
     public class MyMeetupUser:IdentityUser<int>
     {
+        public MyMeetupUser()
+        {
+        }
+
         [StringLength(60)][Required]
         public string FirstName { get; set; }
 

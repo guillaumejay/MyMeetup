@@ -21,8 +21,6 @@
 
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="wwwroot\lib\kendo\styles\" />
-    <Folder Include="wwwroot\lib\kendo\js\" />
     <Folder Include="wwwroot\lib\MDBootstrap\" />
   </ItemGroup>
 

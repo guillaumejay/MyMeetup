@@ -125,9 +125,9 @@ namespace MyMeetUp.Logic.Infrastructure
 
         public List<MyMeetupUser> GetParticipantsFor(int meetupId)
         {
+            var userIs = _context.Registrations.Where(r => r.MeetupId == meetupId).Select(x => x.UserId).ToList();
             var list = _context.Users
-                .Where(u => _context.Registrations.Where(r => r.MeetupId == meetupId).Select(x => x.UserId).ToList()
-                    .Contains(u.Id)).AsNoTracking().ToList();
+                .Where(u =>userIs.Contains(u.Id)).AsNoTracking().ToList();
             return list;
         }
     }
