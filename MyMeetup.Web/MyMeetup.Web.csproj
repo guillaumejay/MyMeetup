@@ -13,6 +13,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Areas\Admin\Models\Page.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="App_Data\MyMeetupLocal.db">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="7.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="5.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
@@ -21,7 +31,7 @@
 
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="wwwroot\lib\MDBootstrap\" />
+    <Folder Include="wwwroot\lib\NewFolder\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,7 +39,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Areas\Admin\Models\Page.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="Areas\Admin\Views\Shared\_Layout.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\Shared\_ViewImports.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Areas\Admin\Views\_ViewStart.cshtml">

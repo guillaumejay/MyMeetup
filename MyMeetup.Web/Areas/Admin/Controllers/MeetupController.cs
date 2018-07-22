@@ -20,7 +20,7 @@ namespace MyMeetup.Web.Areas.Admin.Controllers
         {
         }
 
-        public IActionResult Index([BindRequired,FromQuery]int  id ,[FromServices] IMapper mapper)
+        public IActionResult Index([BindRequired]int  id ,[FromServices] IMapper mapper)
         {
             var model = mapper.Map<AdminMeetupModel>(Domain.GetMeetup(id, true));
             model.Participants = Domain.GetParticipantsFor(id);
