@@ -1,19 +1,22 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 
 namespace MyMeetUp.Logic.Entities
 {
     [Table("ContenusChartes")]
+    [DebuggerDisplay("{Id} {MeetupId} {Category} {Content}")]
     public class CharterContent:EntityWithDate
     {
         public CharterContent()
         {
             IsActive = true;
         }
-        [StringLength(80)]
+        [StringLength(80)][Required]
         public string Category { get; set; }
 
+        [Required]
         public string Content { get; set; }
 
         [DefaultValue(true)]

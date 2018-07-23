@@ -22,7 +22,7 @@ namespace MyMeetup.Web.Controllers
             var model = new IndexModel
             {
                 Meetup = Domain.GetMeetup(rencontreId, true),
-                Charter = Domain.GetCharterFor(rencontreId,true)
+                Charter = Domain.GetCharterFor(rencontreId,true,true).ToList()
             };
 
             return View(model);
@@ -47,7 +47,7 @@ namespace MyMeetup.Web.Controllers
         {
             MyAccountModel cm =new MyAccountModel(currentUser ?? CurrentUser);
             
-            var meetup = Domain.GetNextMeetupsFor(cm.CurrentUser.Id, true).OrderBy(x => x.StartDate).FirstOrDefault();
+            var meetup = Domain.GetMeetupsFor(cm.CurrentUser.Id, true).OrderBy(x => x.StartDate).FirstOrDefault();
             if (meetup == null)
             {
                 cm.NextMeetupText = "Vous n'avez aucune rencontre de prévue !";

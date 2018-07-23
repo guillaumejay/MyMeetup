@@ -92,7 +92,7 @@ namespace MyMeetup.Web
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            context.Database.Migrate();
+context.Database.Migrate();
             app.UseAuthentication();
             Seeding.SeedRoles(roleManager);
             Seeding.SeedUsers(userManager);
@@ -101,7 +101,7 @@ namespace MyMeetup.Web
             
                 routes.MapRoute(
                     name: "areas",
-                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                    template: "{area:exists}/{controller=Home}/{action=Index}"
                 );
                 routes.MapRoute(
                     name: "default",

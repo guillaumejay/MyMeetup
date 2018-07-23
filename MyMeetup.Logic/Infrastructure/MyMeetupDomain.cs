@@ -19,7 +19,13 @@ namespace MyMeetUp.Logic.Infrastructure
         }
 
         #region Meetup
-
+        public List<MyMeetupUser> GetParticipantsFor(int meetupId)
+        {
+            var userIs = _context.Registrations.Where(r => r.MeetupId == meetupId).Select(x => x.UserId).ToList();
+            var list = _context.Users
+                .Where(u => userIs.Contains(u.Id)).AsNoTracking().ToList();
+            return list;
+        }
         public Meetup GetMeetup(int id, bool readOnly)
         {
             IQueryable<Meetup> q = _context.Meetups.Where(x => x.Id == id);
@@ -52,7 +58,7 @@ namespace MyMeetUp.Logic.Infrastructure
             return r.Id;
         }
 
-        public IQueryable<Meetup> GetNextMeetupsFor(int userId, bool readOnly)
+        public IQueryable<Meetup> GetMeetupsFor(int userId, bool readOnly)
         {
             var q = _context.Registrations.Where(x => x.UserId == userId).Select(x => x.Meetup);
             if (readOnly)
@@ -69,8 +75,28 @@ namespace MyMeetUp.Logic.Infrastructure
         #endregion
 
         #region Charter
+        public int AddOrUpdateCharter(CharterContent charter)
+        {
+            if (charter.Id == 0)
+            {
+                _context.CharterContents.Add(charter);
+            }
+            else
+            {
 
-        public List<CharterContent> GetCharterFor(int? meetupId, bool readOnly)
+                charter.UpdatedAt = DateTime.UtcNow;
+                _context.Update(charter);
+            }
+            _context.SaveChanges();
+            var charters = GetCharterFor(charter.Id, false, false).ThenBy(x => x.UpdatedAt).ToList();
+            for (int i = 0; i < charters.Count(); i++)
+            {
+                charters[i].Position = i + 1;
+            }
+            _context.SaveChanges();
+            return charter.Id;
+        }
+        public IOrderedQueryable<CharterContent> GetCharterFor(int? meetupId, bool onlyActive,bool readOnly)
         {
 
             if (meetupId.HasValue == false)
@@ -79,14 +105,15 @@ namespace MyMeetUp.Logic.Infrastructure
             }
 
             IQueryable<CharterContent> q = _context.CharterContents.Where(x =>
-                (x.MeetupId == null || x.MeetupId == meetupId.Value)
-                && x.IsActive).OrderBy(x => x.MeetupId).ThenBy(x => x.Position);
+                (x.MeetupId == null || x.MeetupId == meetupId.Value));
+            if (onlyActive)
+                q=q.Where(x=>x.IsActive);
             if (readOnly)
             {
                 q = q.AsNoTracking();
             }
 
-            return q.ToList();
+            return q.OrderBy(x => x.MeetupId).ThenBy(x => x.Position);
         }
         #endregion
 
@@ -120,15 +147,12 @@ namespace MyMeetUp.Logic.Infrastructure
                 list.Add(model);
             }
 
+
             return list;
         }
 
-        public List<MyMeetupUser> GetParticipantsFor(int meetupId)
-        {
-            var userIs = _context.Registrations.Where(r => r.MeetupId == meetupId).Select(x => x.UserId).ToList();
-            var list = _context.Users
-                .Where(u =>userIs.Contains(u.Id)).AsNoTracking().ToList();
-            return list;
-        }
+
+
+       
     }
 }

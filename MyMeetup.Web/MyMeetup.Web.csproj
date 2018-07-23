@@ -31,6 +31,7 @@
 
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="wwwroot\lib\tinymce\" />
     <Folder Include="wwwroot\lib\NewFolder\" />
   </ItemGroup>
 
@@ -45,10 +46,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Areas\Admin\Views\Shared\_Layout.cshtml">
+    <Content Update="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Areas\Admin\Views\Shared\_ViewImports.cshtml">
+    <Content Update="Areas\Admin\Views\_ViewImports.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Areas\Admin\Views\_ViewStart.cshtml">
