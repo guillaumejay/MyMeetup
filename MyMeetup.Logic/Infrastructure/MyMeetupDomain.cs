@@ -72,6 +72,43 @@ namespace MyMeetUp.Logic.Infrastructure
             return reg?.RegistrationCode;
         }
 
+        public IEnumerable<MeetupAdminShortModel> GetAdminMeetup()
+        {
+            var meetups = _context.Meetups.AsNoTracking();
+            var list = new List<MeetupAdminShortModel>();
+            List<Tuple<int, int>> perMeetup = _context.Registrations.AsNoTracking().GroupBy(x => x.MeetupId)
+                .Select(group => Tuple.Create(group.Key, group.Count())).ToList();
+
+            foreach (var m in meetups)
+            {
+                var model = MeetupAdminShortModel.FromMeetup(m);
+                // TODO quick ugly thing
+                model.RegistrationCount = perMeetup.SingleOrDefault(x => x.Item1 == m.Id)?.Item2 ?? 0;
+                list.Add(model);
+            }
+
+
+            return list;
+        }
+
+
+        public int AddOrUpdateMeetup(Meetup meetup)
+        {
+            if (meetup.Id == 0)
+            {
+                _context.Meetups.Add(meetup);
+            }
+            else
+            {
+
+                meetup.UpdatedAt = DateTime.UtcNow;
+                _context.Update(meetup);
+            }
+            _context.SaveChanges();
+
+            return meetup.Id;
+        }
+
         #endregion
 
         #region Charter
@@ -132,27 +169,6 @@ namespace MyMeetUp.Logic.Infrastructure
         }
 
 
-        public IEnumerable<MeetupAdminShortModel> GetAdminMeetup()
-        {
-            var meetups = _context.Meetups.AsNoTracking();
-            var list = new List<MeetupAdminShortModel>();
-            List<Tuple<int, int>> perMeetup = _context.Registrations.AsNoTracking().GroupBy(x => x.MeetupId)
-                    .Select(group => Tuple.Create(group.Key, group.Count())).ToList();
-                
-            foreach (var m in meetups)
-            {
-                var model = MeetupAdminShortModel.FromMeetup(m);
-                // TODO quick ugly thing
-                model.RegistrationCount=  perMeetup.SingleOrDefault(x => x.Item1 == m.Id)?.Item2 ?? 0;
-                list.Add(model);
-            }
-
-
-            return list;
-        }
-
-
-
-       
+   
     }
 }

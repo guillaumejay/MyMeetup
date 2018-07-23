@@ -7,7 +7,7 @@ namespace MyMeetup.Web.Areas.Admin.Models
 {
     public class AdminMeetupModel:Meetup
     {
-        public List<MyMeetupUser> Participants { get; set; }=new List<MyMeetupUser>();
+     
 
     }
 }
