@@ -27,7 +27,7 @@ namespace MyMeetup.Web.Areas.Admin.Controllers
         private AdminCharterModel GetModel()
         {
             var charters = Domain.GetCharterFor(null, false, true).ToList();
-            charters.Add(new CharterContent {Position = charters.Count()});
+            charters.Add(new CharterContent {Position = charters.Count()+1});
             return new AdminCharterModel {Contents = charters};
         }
 

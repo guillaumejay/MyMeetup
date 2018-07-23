@@ -7,9 +7,13 @@
 
   <ItemGroup>
     <Compile Remove="Areas\Admin\Data\**" />
+    <Compile Remove="wwwroot\lib\NewFolder\**" />
     <Content Remove="Areas\Admin\Data\**" />
+    <Content Remove="wwwroot\lib\NewFolder\**" />
     <EmbeddedResource Remove="Areas\Admin\Data\**" />
+    <EmbeddedResource Remove="wwwroot\lib\NewFolder\**" />
     <None Remove="Areas\Admin\Data\**" />
+    <None Remove="wwwroot\lib\NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,7 +28,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="7.0.1" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="5.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0" PrivateAssets="All" />
   </ItemGroup>
@@ -32,7 +36,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="wwwroot\lib\tinymce\" />
-    <Folder Include="wwwroot\lib\NewFolder\" />
   </ItemGroup>
 
   <ItemGroup>

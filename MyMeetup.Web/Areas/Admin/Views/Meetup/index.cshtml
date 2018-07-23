@@ -7,12 +7,69 @@
     <div class="card-header primary-color white-text">
         @Model.Title
     </div>
-    <div class="card-body">
-        <h3 class="card-title">@Model.DefaultDateText</h3>
-        <p class="card-text">A venir ici : fiche d'édition de la rencontre</p>
-        <a href="#" class="btn btn-primary">Sauvegarder</a>
-        <a href="#" class="btn btn-secondary">Annuler</a>
-    </div>
+    <form method="post" asp-controller="Meetup" asp-action="Index" id="frmMeetup">
+        <div class="card-body">
+            <h3 class="card-title">@Model.DefaultDateText</h3>
+            <div class="form-row">
+                <input type="hidden" value="@Model.Id" name="Id" />
+                <div class="col-md-6">
+                    <div class="md-form">
+
+                        <input type="text" id="MeetupTitle" class="form-control" required name="@nameof(Model.Title)" maxlength="80"
+                               value="@Model.Title">
+                        <label for="MeetupTitle" class="font-weight-light">Titre</label>
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="meetupVisible" @(Model.IsVisible ? "checked" : "")
+                               onchange="$('#meetupIsVisible').val($(this).is(':checked') ? 'true' : 'false' )" />
+                        <input type="hidden" value="@(Model.IsVisible.ToString())" id="meetupIsVisible" name="@nameof(Model.IsVisible)" />
+                        <label class="custom-control-label" for="meetupVisible">Est Visible</label>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="md-form mt-0">
+                        <input type="date" class="form-control" name="@nameof(Model.StartDate)" id="StartDate"
+                               value="@Model.StartDate.ToString("yyyy-MM-dd")">
+                        <label class="active"  for="StartDate">Date de début</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="md-form mt-0">
+                        <input type="date" class="form-control" name="@nameof(Model.EndDate)" id="EndDate"
+                               value="@Model.EndDate.ToString("yyyy-MM-dd")">
+                        <label class="active"  for="EndDate">Date de fin</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="md-form mt-0">
+                        <input type="date" class="form-control" name="@nameof(Model.OpenForRegistrationOn)" id="OpenRegDate"
+                               value="@(Model.OpenForRegistrationOn?.ToString("yyyy-MM-dd")??string.Empty)">
+                        <label class="active"  for="OpenRegDate">Ouvert Inscription</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                        <label for="PublicDescription">Description publique</label>
+                        <textarea name="@nameof(Model.PublicDescription)" id="PublicDescription">@Model.PublicDescription</textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                        <label for="RegDescription">Description après enregistrement</label>
+                        <textarea name="@nameof(Model.RegisteredDescription)" id="RegDescription">@Model.RegisteredDescription</textarea>
+                </div>
+            </div>
+            <a class="btn btn-primary" onclick="validateForm()">@(Model.Id != 0 ? "Modifier" : "Ajouter")</a>
+            @*<a href="#" class="btn btn-secondary">Annuler</a>*@
+        </div>
+    </form>
 </div>
 <div class="card w-100">
     <div class="card-header primary-color white-text">
@@ -55,7 +112,9 @@
     </div>
 </div>
 @section scripts
-    {
+{
+    <script src="~/lib/tinymce/js/tinymce.min.js"></script>
+
     <script type="text/javascript" src="~/lib/MDBootstrap/js/addons/datatables.min.js"></script>
     <script>
         $(function() {
@@ -90,6 +149,17 @@
                     }
                 }
             });
+            tinymce.init({
+                selector: 'textarea',
+                language: 'fr_FR',
+                height : "250"
+            });
         });
+        
+
+        function validateForm(id) {
+            tinyMCE.triggerSave();
+            document.getElementById('frmMeetup').submit();
+        }
     </script>
 }
