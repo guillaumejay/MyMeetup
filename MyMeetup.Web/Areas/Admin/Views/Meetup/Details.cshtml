@@ -7,7 +7,7 @@
     <div class="card-header primary-color white-text">
         @Model.Title
     </div>
-    <form method="post" asp-controller="Meetup" asp-action="Index" id="frmMeetup">
+    <form method="post" asp-controller="Meetup" asp-action="DetailsMeetup" id="frmMeetup">
         <div class="card-body">
             <h3 class="card-title">@Model.DefaultDateText</h3>
             <div class="form-row">
@@ -36,34 +36,34 @@
                     <div class="md-form mt-0">
                         <input type="date" class="form-control" name="@nameof(Model.StartDate)" id="StartDate"
                                value="@Model.StartDate.ToString("yyyy-MM-dd")">
-                        <label class="active"  for="StartDate">Date de début</label>
+                        <label class="active" for="StartDate">Date de début</label>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="md-form mt-0">
                         <input type="date" class="form-control" name="@nameof(Model.EndDate)" id="EndDate"
                                value="@Model.EndDate.ToString("yyyy-MM-dd")">
-                        <label class="active"  for="EndDate">Date de fin</label>
+                        <label class="active" for="EndDate">Date de fin</label>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="md-form mt-0">
                         <input type="date" class="form-control" name="@nameof(Model.OpenForRegistrationOn)" id="OpenRegDate"
                                value="@(Model.OpenForRegistrationOn?.ToString("yyyy-MM-dd")??string.Empty)">
-                        <label class="active"  for="OpenRegDate">Ouvert Inscription</label>
+                        <label class="active" for="OpenRegDate">Ouvert Inscription</label>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                        <label for="PublicDescription">Description publique</label>
-                        <textarea required name="@nameof(Model.PublicDescription)" id="PublicDescription">@Model.PublicDescription</textarea>
+                    <label for="PublicDescription">Description publique</label>
+                    <textarea required name="@nameof(Model.PublicDescription)" id="PublicDescription">@Model.PublicDescription</textarea>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                        <label for="RegDescription">Description après enregistrement</label>
-                        <textarea required name="@nameof(Model.RegisteredDescription)" id="RegDescription">@Model.RegisteredDescription</textarea>
+                    <label for="RegDescription">Description après enregistrement</label>
+                    <textarea required name="@nameof(Model.RegisteredDescription)" id="RegDescription">@Model.RegisteredDescription</textarea>
                 </div>
             </div>
             <a class="btn btn-primary" onclick="validateForm()">@(Model.Id != 0 ? "Modifier" : "Ajouter")</a>
@@ -71,25 +71,30 @@
         </div>
     </form>
 </div>
-
+<h2>Charte particulière à la rencontre</h2>
+@await Html.PartialAsync("_CharterEdit", Model.Contents)
 @section scripts
-{
+    {
     <script src="~/lib/tinymce/js/tinymce.min.js"></script>
 
     <script>
-        $(function() {
-          
+        $(function () {
+
             tinymce.init({
                 selector: 'textarea',
                 language: 'fr_FR',
-                height : "250"
+                height: "250"
             });
         });
-        
+
 
         function validateForm(id) {
             tinyMCE.triggerSave();
-            document.getElementById('frmMeetup').submit();
+
+            if (id != undefined)
+                document.getElementById('frmCharter' + id).submit();
+            else
+                document.getElementById('frmMeetup').submit();
         }
     </script>
 }

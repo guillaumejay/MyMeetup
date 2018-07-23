@@ -22,7 +22,7 @@ namespace MyMeetup.Web.Controllers
             var model = new IndexModel
             {
                 Meetup = Domain.GetMeetup(rencontreId, true),
-                Charter = Domain.GetCharterFor(rencontreId,true,true).ToList()
+                Charter = Domain.GetCharterFor(rencontreId,false,true,true).ToList()
             };
 
             return View(model);

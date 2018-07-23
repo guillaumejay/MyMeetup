@@ -1,0 +1,56 @@
+﻿@model List<MyMeetUp.Logic.Entities.CharterContent>
+@foreach (var content in Model)
+{
+    var controller = ViewContext.RouteData.Values["Controller"];
+    var action = ViewContext.RouteData.Values["Action"];
+    <div class="card" style="margin-bottom: 10px">
+        <div class="card-body">
+            <form method="post" asp-controller="@controller" asp-action="@action" id="@("frmCharter" + content.Id)">
+                <div class="form-row">
+                    <input type="hidden" value="@content.Id" name="Id" />
+                    @if (content.MeetupId.HasValue)
+                    {
+                        <input type="hidden" value="@content.MeetupId" name="MeetupId" />
+                    }
+                    <div class="col-md-8">
+                        <div class="md-form">
+
+                            <input type="text" id="@("txtCategory" + content.Id)" class="form-control" required name="Category" maxlength="80"
+                                   value="@content.Category">
+                            <label for="@("txtCategory" + content.Id)" class="font-weight-light">Catégorie</label>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="custom-control custom-checkbox">
+
+                            <input type="checkbox" class="custom-control-input" id="@("chkActive" + content.Id)" @(content.IsActive ? "checked" : "")
+                                   onchange="$('#@("IsActive" + content.Id)').val($(this).is(':checked') ? 'true' : 'false' )" />
+                            <input type="hidden" value="@(content.IsActive.ToString())" id="@("IsActive" + content.Id)" name="IsActive" />
+                            <label class="custom-control-label" for="@("chkActive" + content.Id)">Actif</label>
+
+                        </div>
+                    </div>
+                </div>
+
+                <textarea required name="@(nameof(content.Content))" id="@("content" + content.Id)">@content.Content</textarea>
+                @*<span asp-validation-for="@(nameof(content.Content))" class="text-danger"></span>*@
+                <div class="form-row">
+                    <div class="col-md-4">
+                        <div class="md-form">
+                            <input type="text" id="@("Position" + content.Id)" class="form-control" required name="Position" maxlength="80"
+                                   value="@content.Position">
+                            <label for="@("Position" + content.Id)" class="font-weight-light">Position</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6"></div>
+                    <div class="col-md-2">
+                        <a class="btn btn-primary" onclick="validateForm(@(content.Id))">@(content.Id != 0 ? "Modifier" : "Ajouter")</a>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+}

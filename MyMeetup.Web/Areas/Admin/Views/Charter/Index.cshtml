@@ -5,81 +5,25 @@
 @section header
     {
     <environment include="Development">
-        @*<link href="~/lib/froala/css/froala_editor.min.css" rel='stylesheet' type='text/css' />
-            <link href="~/lib/froala/css/froala_style.min.css" rel='stylesheet' type='text/css' />*@
     </environment>
     <environment exclude="Development">
-        @*<link href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.8.4/css/froala_editor.min.css' rel='stylesheet' type='text/css' />
-            <link href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.8.4/css/froala_style.min.css' rel='stylesheet' type='text/css' />*@
     </environment>
 }
 <h2>Charte commune</h2>
-@foreach (var content in Model.Contents)
+@await Html.PartialAsync("_CharterEdit",Model.Contents)
 
-{
-    <div class="card" style="margin-bottom: 10px">
-        <div class="card-body">
-            <form method="post" asp-controller="Charter" asp-action="Index" id="@("frmCharter" + content.Id)">
-                <div class="form-row">
-                    <input type="hidden" value="@content.Id" name="Id" />
-                    <div class="col-md-8">
-                        <div class="md-form">
-
-                            <input type="text" id="@("txtCategory" + content.Id)" class="form-control" required name="Category" maxlength="80"
-                                   value="@content.Category">
-                            <label for="@("txtCategory" + content.Id)" class="font-weight-light">Catégorie</label>
-
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="custom-control custom-checkbox">
-
-                            <input type="checkbox" class="custom-control-input" id="@("chkActive" + content.Id)" @(content.IsActive ? "checked" : "")
-                                   onchange="$('#@("IsActive" + content.Id)').val($(this).is(':checked') ? 'true' : 'false' )" />
-                            <input type="hidden" value="@(content.IsActive.ToString())"  id="@("IsActive" + content.Id)" name="IsActive" />
-                            <label class="custom-control-label" for="@("chkActive" + content.Id)">Actif</label>
-
-                        </div>
-                    </div>
-                </div>
-
-                <textarea required name="@(nameof(content.Content))" id="@("content" + content.Id)">@content.Content</textarea>
-                @*<span asp-validation-for="@(nameof(content.Content))" class="text-danger"></span>*@
-                <div class="form-row">
-                    <div class="col-md-4">
-                        <div class="md-form">
-                            <input type="text" id="@("Position" + content.Id)" class="form-control" required name="Position" maxlength="80"
-                                   value="@content.Position">
-                            <label for="@("Position" + content.Id)" class="font-weight-light">Position</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6"></div>
-                    <div class="col-md-2">
-                        <a class="btn btn-primary" onclick="validateForm(@(content.Id))">@(content.Id != 0 ? "Modifier" : "Ajouter")</a>
-                        
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
-}
 
 @section Scripts
-{
+    {
     <script src="~/lib/tinymce/js/tinymce.min.js"></script>
     <environment include="Development">
-       
-
-        @*<script type='text/javascript' src='~/lib/froala/js/froala_editor.min.js'></script>*@
         @*<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>*@
+            <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>*@
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
-        @*<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.8.4/js/froala_editor.min.js'></script>*@
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
+        @*<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>*@
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
     <script>
@@ -92,8 +36,8 @@
 
         function validateForm(id) {
             tinyMCE.triggerSave();
-            document.getElementById('frmCharter'+ id).submit();
+            document.getElementById('frmCharter' + id).submit();
         }
-    
+
     </script>
 }

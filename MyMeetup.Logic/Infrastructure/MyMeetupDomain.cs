@@ -35,9 +35,9 @@ namespace MyMeetUp.Logic.Infrastructure
             }
 
             return q.FirstOrDefault();
-        } 
+        }
 
-        public int? Register(MyMeetupUser user, int meetupId, bool ignoreMeetupRegistrationValidity=false)
+        public int? Register(MyMeetupUser user, int meetupId, bool ignoreMeetupRegistrationValidity = false)
         {
             Meetup m = _context.Meetups.AsNoTracking().FirstOrDefault(x => x.Id == meetupId);
             if (m == null)
@@ -125,7 +125,9 @@ namespace MyMeetUp.Logic.Infrastructure
                 _context.Update(charter);
             }
             _context.SaveChanges();
-            var charters = GetCharterFor(charter.Id, false, false).ThenBy(x => x.UpdatedAt).ToList();
+            var qcharters = GetCharterFor(charter.MeetupId, true, false, false);
+
+            var charters = qcharters.ThenBy(x => x.UpdatedAt).ToList();
             for (int i = 0; i < charters.Count(); i++)
             {
                 charters[i].Position = i + 1;
@@ -133,18 +135,24 @@ namespace MyMeetUp.Logic.Infrastructure
             _context.SaveChanges();
             return charter.Id;
         }
-        public IOrderedQueryable<CharterContent> GetCharterFor(int? meetupId, bool onlyActive,bool readOnly)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="meetupId"></param>
+        /// <param name="exclusive">only return those corresponding to meetupId</param>
+        /// <param name="onlyActive"></param>
+        /// <param name="readOnly"></param>
+        /// <returns></returns>
+        public IOrderedQueryable<CharterContent> GetCharterFor(int? meetupId, bool exclusive, bool onlyActive, bool readOnly)
         {
-
-            if (meetupId.HasValue == false)
-            {
-                meetupId = -1;
-            }
-
-            IQueryable<CharterContent> q = _context.CharterContents.Where(x =>
-                (x.MeetupId == null || x.MeetupId == meetupId.Value));
+            IQueryable<CharterContent> q;
+            if (exclusive)
+                q = _context.CharterContents.Where(x => x.MeetupId == meetupId);
+            else
+                q = _context.CharterContents.Where(x =>
+                 (x.MeetupId == null || x.MeetupId == meetupId.Value));
             if (onlyActive)
-                q=q.Where(x=>x.IsActive);
+                q = q.Where(x => x.IsActive);
             if (readOnly)
             {
                 q = q.AsNoTracking();
@@ -156,7 +164,7 @@ namespace MyMeetUp.Logic.Infrastructure
 
         public int AddRegularUser(SigninMeetupModel model, UserManager<MyMeetupUser> userManager)
         {
-            
+
             MyMeetupUser newUser = MyMeetupUser.From(model);
             int? id = MyMeetupUser.CreateUser(newUser, MyMeetupRole.Participant,
                 newUser.Initials +
@@ -169,6 +177,6 @@ namespace MyMeetUp.Logic.Infrastructure
         }
 
 
-   
+
     }
 }

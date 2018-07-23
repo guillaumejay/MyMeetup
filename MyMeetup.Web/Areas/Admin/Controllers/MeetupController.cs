@@ -32,7 +32,7 @@ namespace MyMeetup.Web.Areas.Admin.Controllers
 
         public IActionResult Details([BindRequired]int  id ,[FromServices] IMapper mapper)
         {
-            var model = CreateModel(id, mapper);
+            var model = GetMeetupDetailModel(id, mapper);
             return View(model);
         }
 
@@ -42,10 +42,12 @@ namespace MyMeetup.Web.Areas.Admin.Controllers
             return View(model);
         }
 
-        private AdminMeetupModel CreateModel(int id, IMapper mapper)
+        private AdminMeetupModel GetMeetupDetailModel(int id, IMapper mapper)
         {
             var model = mapper.Map<AdminMeetupModel>(Domain.GetMeetup(id, true));
-    
+            var charters = Domain.GetCharterFor(id,true, false, true).ToList();
+            charters.Add(new CharterContent { Position = charters.Count() + 1,MeetupId= id });
+            model.Contents = charters;
             return model;
         }
         private ParticipantsMeetupModel CreateModel(int id)
@@ -59,15 +61,26 @@ namespace MyMeetup.Web.Areas.Admin.Controllers
             return model;
         }
         [HttpPost]
-        public IActionResult Details(Meetup meetup, [FromServices] IMapper mapper)
+        public IActionResult DetailsMeetup(Meetup meetup, [FromServices] IMapper mapper)
         {
             if (!ModelState.IsValid)
             {
-                return View(CreateModel(meetup.Id, mapper));
+                return View("Details", GetMeetupDetailModel(meetup.Id, mapper));
             }
             int id = Domain.AddOrUpdateMeetup(meetup);
-            var model = CreateModel(id, mapper);
-            return View(model);
+            var model = GetMeetupDetailModel(id, mapper);
+            return View("Details", model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Details(CharterContent charter, [FromServices] IMapper mapper)
+        {
+            if (!ModelState.IsValid)
+                return View( GetMeetupDetailModel(charter.MeetupId.Value,mapper));
+            Domain.AddOrUpdateCharter(charter);
+
+            return View(GetMeetupDetailModel(charter.MeetupId.Value, mapper));
         }
     }
 }
