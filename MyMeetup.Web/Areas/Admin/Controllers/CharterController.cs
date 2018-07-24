@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyMeetup.Web.Areas.Admin.Models;
@@ -12,6 +13,7 @@ using MyMeetUp.Logic.Infrastructure;
 namespace MyMeetup.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = MyMeetupRole.Administrateur)]
     public class CharterController : BaseController
     {
         public CharterController(MyMeetupDomain domain, UserManager<MyMeetupUser> userManager) : base(domain, userManager)

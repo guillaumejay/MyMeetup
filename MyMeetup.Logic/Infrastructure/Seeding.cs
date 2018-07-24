@@ -132,8 +132,24 @@ namespace MyMeetUp.Logic.Infrastructure
                     FirstName = "Guillaume",
                     LastName = "Jay"
                 };
-                MyMeetupUser.CreateUser(user, MyMeetupRole.Administrateur, $"admin{DateTime.Now:yyMMdd}", userManager);
+                string pwd = $"admin{DateTime.Now:yyMMdd}";
+                MyMeetupUser.CreateUser(user, MyMeetupRole.Administrateur, pwd, userManager);
             }
+            if (userManager.FindByNameAsync("lorijay").Result == null)
+            {
+                var user = new MyMeetupUser
+                {
+                    UserName = "lorijay",
+                    Email = "laurie.gj@gmail.com",
+                    FirstName = "Lori",
+                    LastName = "Jay",
+                    LockoutEnabled = false
+                };
+                string pwd = $"lj{DateTime.Now:yyMMdd}";
+                MyMeetupUser.CreateUser(user, MyMeetupRole.Administrateur, pwd, userManager);
+            }
+            // mathilde.garioud@riseup.net>
+            // samara@joy.lautre.net
         }
     }
 }
