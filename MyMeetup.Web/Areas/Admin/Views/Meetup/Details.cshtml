@@ -12,6 +12,7 @@
             <h3 class="card-title">@Model.DefaultDateText</h3>
             <div class="form-row">
                 <input type="hidden" value="@Model.Id" name="Id" />
+                <input type="hidden" value="@Model.TitleImage" name="@nameof(Model.TitleImage)" />
                 <div class="col-md-6">
                     <div class="md-form">
 
@@ -57,13 +58,13 @@
             <div class="row">
                 <div class="col">
                     <label for="PublicDescription">Description publique</label>
-                    <textarea required name="@nameof(Model.PublicDescription)" id="PublicDescription">@Model.PublicDescription</textarea>
+                    <textarea class="meetupTextArea" required name="@nameof(Model.PublicDescription)" id="PublicDescription">@Model.PublicDescription</textarea>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                     <label for="RegDescription">Description après enregistrement</label>
-                    <textarea required name="@nameof(Model.RegisteredDescription)" id="RegDescription">@Model.RegisteredDescription</textarea>
+                    <textarea class="meetupTextArea" required name="@nameof(Model.RegisteredDescription)" id="RegDescription">@Model.RegisteredDescription</textarea>
                 </div>
             </div>
             <a class="btn btn-primary" onclick="validateForm()">@(Model.Id != 0 ? "Modifier" : "Ajouter")</a>
@@ -79,12 +80,8 @@
 
     <script>
         $(function () {
-
-            tinymce.init({
-                selector: 'textarea',
-                language: 'fr_FR',
-                height: "250"
-            });
+            initMCE({ selector:'.meetupTextArea', height:"250"});
+            initMCE({ selector: '.charterTxtArea'});
         });
 
 

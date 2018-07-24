@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using MyMeetUp.Logic.Infrastructure.DataContexts;
 
-namespace MyMeetUp.Logic.Infrastructure
+namespace MyMeetUp.Logic.Infrastructure.DataContexts
 {
 
     public class MeetupContextFactory : IDesignTimeDbContextFactory<MyMeetupSqlServerContext>

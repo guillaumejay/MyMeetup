@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyMeetUp.Logic.Infrastructure.DataContexts;
 
-namespace MyMeetUp.Logic.Infrastructure
+namespace MyMeetUp.Logic.Infrastructure.DataContexts
 {
     /// <summary>
     ///  Add-Migration InitialCreate -Context MyMeetupSqlLiteContext -OutputDir Migrations\SqlLiteMigrations

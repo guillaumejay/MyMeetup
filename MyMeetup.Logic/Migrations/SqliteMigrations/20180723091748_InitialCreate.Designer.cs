@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyMeetUp.Logic.Infrastructure;
+using MyMeetUp.Logic.Infrastructure.DataContexts;
 
 namespace MyMeetUp.Logic.Migrations.SqliteMigrations
 {

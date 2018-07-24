@@ -28,10 +28,8 @@
     </environment>
     <script>
         $(function () {
-            tinymce.init({
-                selector: 'textarea',
-                language: 'fr_FR'
-            });
+            initMCE({selector:'textarea'});
+            
         });
 
         function validateForm(id) {

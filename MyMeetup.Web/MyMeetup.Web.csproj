@@ -17,6 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="bundleconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Areas\Admin\Models\Page.xaml" />
   </ItemGroup>
 
@@ -36,6 +40,10 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="wwwroot\lib\tinymce\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bundleconfig.json" />
   </ItemGroup>
 
   <ItemGroup>

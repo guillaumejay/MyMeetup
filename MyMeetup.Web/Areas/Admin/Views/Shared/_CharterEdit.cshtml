@@ -33,7 +33,7 @@
                     </div>
                 </div>
 
-                <textarea required name="@(nameof(content.Content))" id="@("content" + content.Id)">@content.Content</textarea>
+                <textarea required class="charterTxtArea" name="@(nameof(content.Content))" id="@("content" + content.Id)">@content.Content</textarea>
                 @*<span asp-validation-for="@(nameof(content.Content))" class="text-danger"></span>*@
                 <div class="form-row">
                     <div class="col-md-4">
@@ -45,7 +45,7 @@
                     </div>
                     <div class="col-md-6"></div>
                     <div class="col-md-2">
-                        <a class="btn btn-primary" onclick="validateForm(@(content.Id))">@(content.Id != 0 ? "Modifier" : "Ajouter")</a>
+                        <a class="btn btn-primary" onclick="validateForm(@(content.Id))">@(content.Id != 0 ? "Sauver" : "Ajouter")</a>
 
                     </div>
                 </div>

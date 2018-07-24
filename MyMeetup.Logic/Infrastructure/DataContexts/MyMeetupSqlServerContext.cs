@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
-using MyMeetUp.Logic.Infrastructure.DataContexts;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace MyMeetUp.Logic.Infrastructure
+namespace MyMeetUp.Logic.Infrastructure.DataContexts
 {
     //Add-Migration InitialCreate -Context MyMeetupSqlServerContext -OutputDir Migrations\SqlServerMigrations
     public class MyMeetupSqlServerContext:MyMeetupContext

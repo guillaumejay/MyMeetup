@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MyMeetUp.Logic.Entities;
+﻿using MyMeetUp.Logic.Entities;
 
 namespace MyMeetUp.Logic.Models
 {

@@ -67,6 +67,7 @@ namespace MyMeetup.Web.Areas.Admin.Controllers
             {
                 return View("Details", GetMeetupDetailModel(meetup.Id, mapper));
             }
+
             int id = Domain.AddOrUpdateMeetup(meetup);
             var model = GetMeetupDetailModel(id, mapper);
             return View("Details", model);

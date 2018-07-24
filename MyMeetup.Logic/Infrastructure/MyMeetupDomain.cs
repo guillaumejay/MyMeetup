@@ -127,7 +127,7 @@ namespace MyMeetUp.Logic.Infrastructure
             _context.SaveChanges();
             var qcharters = GetCharterFor(charter.MeetupId, true, false, false);
 
-            var charters = qcharters.ThenBy(x => x.UpdatedAt).ToList();
+            var charters = qcharters.ThenByDescending(x => x.UpdatedAt).ToList();
             for (int i = 0; i < charters.Count(); i++)
             {
                 charters[i].Position = i + 1;
