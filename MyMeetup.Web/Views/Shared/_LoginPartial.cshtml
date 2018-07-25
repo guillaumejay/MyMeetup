@@ -7,20 +7,15 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
-            </li>
-            <li>
+
+                <a asp-area="Identity" asp-page="/Account/Manage/Index" class="text-white-50" style="margin-left:20px" title="Gestion">Mon compte</a>
                 <button type="submit" class="btn btn-warning">D&#xE9;connexion</button>
-            </li>
-        </ul>
     </form>
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
         <li><a asp-area="Identity" asp-page="/Account/Register">Register</a></li>
-        <li><a asp-area="Identity" asp-page="/Account/Login">Connexion</a></li>
+        <li><a asp-area="Identity" asp-page="/Account/Login">C disconnexion</a></li>
     </ul>
 }

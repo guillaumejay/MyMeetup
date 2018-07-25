@@ -100,7 +100,7 @@ namespace MyMeetUp.Logic.Infrastructure
             }
             else
             {
-                meetup.CreatedAt = _context.Meetups.First(x => x.Id == meetup.Id).CreatedAt;
+                meetup.CreatedAt = _context.Meetups.AsNoTracking().First(x => x.Id == meetup.Id).CreatedAt;
                 meetup.UpdatedAt = DateTime.UtcNow;
                 _context.Update(meetup);
             }
@@ -120,7 +120,7 @@ namespace MyMeetUp.Logic.Infrastructure
             }
             else
             {
-                charter.CreatedAt = _context.CharterContents.First(x => x.Id == charter.Id).CreatedAt;
+                charter.CreatedAt = _context.CharterContents.AsNoTracking().First(x => x.Id == charter.Id).CreatedAt;
                 charter.UpdatedAt = DateTime.UtcNow;
                 _context.Update(charter);
             }
