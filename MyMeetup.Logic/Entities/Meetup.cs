@@ -34,7 +34,7 @@ namespace MyMeetUp.Logic.Entities
 
         public string TitleImage { get; set; }
 
-        [NotMapped] public string DefaultDateText => $"Du {StartDate:dd MMM yyy} au {EndDate:dd MMM yyyy}";
+        [NotMapped] public string DefaultDateText => $"Du {StartDate:dddd dd MMM yyy} au {EndDate:dddd dd MMM yyyy}";
 
     }
 }

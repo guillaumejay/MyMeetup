@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MyMeetup.Web.Infrastructure;
 using MyMeetUp.Logic.Infrastructure;
 using MyMeetUp.Logic.Infrastructure.DataContexts;
 
@@ -54,6 +56,7 @@ namespace MyMeetup.Web
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
             services.AddScoped<MyMeetupDomain>();
+            services.AddTransient<IEmailSender, EmailSender>();
             services.AddAutoMapper();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

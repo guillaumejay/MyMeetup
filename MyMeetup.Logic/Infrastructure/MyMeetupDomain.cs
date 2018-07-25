@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MyMeetUp.Logic.Entities;
 using MyMeetUp.Logic.Infrastructure.DataContexts;
 using MyMeetUp.Logic.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MyMeetUp.Logic.Infrastructure
 {
@@ -21,8 +21,8 @@ namespace MyMeetUp.Logic.Infrastructure
         #region Meetup
         public List<MyMeetupUser> GetParticipantsFor(int meetupId)
         {
-            var userIs = _context.Registrations.Where(r => r.MeetupId == meetupId).Select(x => x.UserId).ToList();
-            var list = _context.Users
+            List<int> userIs = _context.Registrations.Where(r => r.MeetupId == meetupId).Select(x => x.UserId).ToList();
+            List<MyMeetupUser> list = _context.Users
                 .Where(u => userIs.Contains(u.Id)).AsNoTracking().ToList();
             return list;
         }
@@ -37,51 +37,65 @@ namespace MyMeetUp.Logic.Infrastructure
             return q.FirstOrDefault();
         }
 
-        public int? Register(MyMeetupUser user, int meetupId, bool ignoreMeetupRegistrationValidity = false)
+        public Registration Register(MyMeetupUser user, int meetupId, bool ignoreMeetupRegistrationValidity = false)
         {
             Meetup m = _context.Meetups.AsNoTracking().FirstOrDefault(x => x.Id == meetupId);
             if (m == null)
+            {
                 return null;
+            }
+
             if (!ignoreMeetupRegistrationValidity)
             {
                 if (m.IsVisible == false)
+                {
                     return null;
+                }
+
                 if (m.OpenForRegistrationOn == null)
+                {
                     return null;
+                }
+
                 if (m.OpenForRegistrationOn.Value > DateTime.UtcNow)
+                {
                     return null;
+                }
             }
             Registration r =
                 new Registration(user.Id, meetupId) { RegistrationCode = Registration.CreateCode(user, meetupId) };
             _context.Registrations.Add(r);
             _context.SaveChanges();
-            return r.Id;
+            return r;
         }
 
         public IQueryable<Meetup> GetMeetupsFor(int userId, bool readOnly)
         {
-            var q = _context.Registrations.Where(x => x.UserId == userId).Select(x => x.Meetup);
+            IQueryable<Meetup> q = _context.Registrations.Where(x => x.UserId == userId).Select(x => x.Meetup);
             if (readOnly)
+            {
                 q = q.AsNoTracking();
+            }
+
             return q;
         }
         public string GetRegistrationCode(int userId, int meetupId)
         {
-            var reg = _context.Registrations.AsNoTracking()
+            Registration reg = _context.Registrations.AsNoTracking()
                 .FirstOrDefault(x => x.MeetupId == meetupId && x.UserId == userId);
             return reg?.RegistrationCode;
         }
 
         public IEnumerable<MeetupAdminShortModel> GetAdminMeetup()
         {
-            var meetups = _context.Meetups.AsNoTracking();
-            var list = new List<MeetupAdminShortModel>();
+            IQueryable<Meetup> meetups = _context.Meetups.AsNoTracking();
+            List<MeetupAdminShortModel> list = new List<MeetupAdminShortModel>();
             List<Tuple<int, int>> perMeetup = _context.Registrations.AsNoTracking().GroupBy(x => x.MeetupId)
                 .Select(group => Tuple.Create(group.Key, group.Count())).ToList();
 
-            foreach (var m in meetups)
+            foreach (Meetup m in meetups)
             {
-                var model = MeetupAdminShortModel.FromMeetup(m);
+                MeetupAdminShortModel model = MeetupAdminShortModel.FromMeetup(m);
                 // TODO quick ugly thing
                 model.RegistrationCount = perMeetup.SingleOrDefault(x => x.Item1 == m.Id)?.Item2 ?? 0;
                 list.Add(model);
@@ -125,9 +139,9 @@ namespace MyMeetUp.Logic.Infrastructure
                 _context.Update(charter);
             }
             _context.SaveChanges();
-            var qcharters = GetCharterFor(charter.MeetupId, true, false, false);
+            IOrderedQueryable<CharterContent> qcharters = GetCharterFor(charter.MeetupId, true, false, false);
 
-            var charters = qcharters.ThenByDescending(x => x.UpdatedAt).ToList();
+            List<CharterContent> charters = qcharters.ThenByDescending(x => x.UpdatedAt).ToList();
             for (int i = 0; i < charters.Count(); i++)
             {
                 charters[i].Position = i + 1;
@@ -147,12 +161,20 @@ namespace MyMeetUp.Logic.Infrastructure
         {
             IQueryable<CharterContent> q;
             if (exclusive)
+            {
                 q = _context.CharterContents.Where(x => x.MeetupId == meetupId);
+            }
             else
+            {
                 q = _context.CharterContents.Where(x =>
                  (x.MeetupId == null || x.MeetupId == meetupId.Value));
+            }
+
             if (onlyActive)
+            {
                 q = q.Where(x => x.IsActive);
+            }
+
             if (readOnly)
             {
                 q = q.AsNoTracking();
@@ -162,18 +184,19 @@ namespace MyMeetUp.Logic.Infrastructure
         }
         #endregion
 
-        public int AddRegularUser(SigninMeetupModel model, UserManager<MyMeetupUser> userManager)
+        public ResultAddRegularUser AddRegularUser(SigninMeetupModel model, UserManager<MyMeetupUser> userManager)
         {
-
+          ResultAddRegularUser rau=new ResultAddRegularUser();
             MyMeetupUser newUser = MyMeetupUser.From(model);
-            int? id = MyMeetupUser.CreateUser(newUser, MyMeetupRole.Participant,
-                newUser.Initials +
-                DateTime.Now.ToString("HHmmss"), userManager);
-            if (id.HasValue && model.MeetupId.HasValue)
+            rau.UserId = MyMeetupUser.CreateUser(newUser, MyMeetupRole.Participant,
+                   newUser.Initials +
+                   DateTime.Now.ToString("HHmmss"), userManager);
+            if (rau.UserOk && model.MeetupId.HasValue)
             {
-                Register(newUser, model.MeetupId.Value);
+                rau.RegistrationCode = Register(newUser, model.MeetupId.Value).RegistrationCode;
             }
-            return id.Value;
+
+            return rau;
         }
 
 

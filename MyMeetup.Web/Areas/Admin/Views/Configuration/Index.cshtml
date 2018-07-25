@@ -1,0 +1,25 @@
+﻿@using MyMeetup.Web.Areas.Admin.Models
+@model MyMeetup.Web.Areas.Admin.Models.ConfigurationModel
+@{
+    ViewData["Title"] = "Configuration";
+}
+
+<h2>Configuration</h2>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Rappel Configuration Email
+            </div>
+            <div class="card-body">
+
+                <p class="card-text">
+                    Serveur Smtp : @Model.SmtpServer<br />
+                    Login Smtp : @Model.SmtpLogin<br />
+                    Password Smtp : @Model.SmtpPassword
+                </p>
+
+            </div>
+        </div>
+    </div>
+</div>
