@@ -37,7 +37,7 @@ namespace MyMeetup.Web.Controllers
             };
             return model;
         }
-
+        [HttpGet]
         public IActionResult MyAccount()
         {
             return View("MyAccount", GetMyAccountModel());
@@ -55,7 +55,7 @@ namespace MyMeetup.Web.Controllers
                 MyMeetupEmail email = new MyMeetupEmail("Nouvel inscrit", 
                     configuration["emailContact"], configuration["emailContact"]);
                 //TODO Ugly template
-                email.Body = $"{model.FirstName} {model.Name} - {model.Email} {model.Email}";
+                email.Body = $"{model.FirstName} {model.Name} - {model.Email} {model.PhoneNumber}";
                 if (!string.IsNullOrEmpty(result.RegistrationCode))
                 {
                     var meetup = Domain.GetMeetup(model.MeetupId.Value, true);
