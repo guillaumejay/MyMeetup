@@ -25,7 +25,18 @@
                     Prénom
                     <i class="fa fa-sort float-right" aria-hidden="true"></i>
                 </th>
-
+                <th class="th-sm">
+                    Email
+                    <i class="fa fa-sort float-right" aria-hidden="true"></i>
+                </th>
+                <th class="th-sm">
+                    Code
+                    <i class="fa fa-sort float-right" aria-hidden="true"></i>
+                </th>
+                <th class="th-sm">
+                    Inscrit
+                    <i class="fa fa-sort float-right" aria-hidden="true"></i>
+                </th>
                 </thead>
                 <tbody>
                     @foreach (var user in Model.Participants)
@@ -36,6 +47,10 @@
                             <td>@user.LastName</td>
 
                             <td>@user.FirstName</td>
+
+                            <td>@user.Email</td>
+                            <td>@user.RegCode </td>
+                            <td>@user.RegisteredOn.ToString("dd/MM/yy hh:mm") </td>
                         </tr>
                     }
                 </tbody>
@@ -51,6 +66,7 @@
     <script>
         $(function() {
             $("#dtParticipants").DataTable({
+                "paging": false,
                 "language": {
                     "sProcessing":     "Traitement en cours...",
                     "sSearch":         "Rechercher&nbsp;:",

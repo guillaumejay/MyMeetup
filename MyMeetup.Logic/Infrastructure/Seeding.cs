@@ -100,8 +100,6 @@ namespace MyMeetUp.Logic.Infrastructure
                 modelBuilder.Entity<CharterContent>().HasData(charte);
             }
 
-            modelBuilder.Entity<AppParameter>().HasData(
-                new AppParameter { Id = 1, Title = "Rencontres Non Scolarisees" });
         }
 
         public static void SeedRoles(RoleManager<MyMeetupRole> roleManager)
@@ -162,8 +160,19 @@ namespace MyMeetUp.Logic.Infrastructure
                 string pwd = $"mg{DateTime.Now:yyMMdd}";
                 MyMeetupUser.CreateUser(user, MyMeetupRole.Administrateur, pwd, userManager);
             }
-            // mathilde.garioud@riseup.net>
-            // samara@joy.lautre.net
+            if (userManager.FindByNameAsync("samara@joy.lautre.net").Result == null)
+            {
+                var user = new MyMeetupUser
+                {
+                    UserName = "samara@joy.lautre.net",
+                    Email = "samara@joy.lautre.net",
+                    FirstName = "Samara",
+                    LastName = "Courteville",
+                    LockoutEnabled = false
+                };
+                string pwd = $"sc{DateTime.Now:yyMMdd}";
+                MyMeetupUser.CreateUser(user, MyMeetupRole.Administrateur, pwd, userManager);
+            }
         }
     }
 }

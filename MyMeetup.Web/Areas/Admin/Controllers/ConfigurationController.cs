@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,8 @@ namespace MyMeetup.Web.Areas.Admin.Controllers
     public class ConfigurationController : BaseController
     {
         private IConfiguration _configuration;
-        public ConfigurationController(MyMeetupDomain domain, UserManager<MyMeetupUser> userManager,IConfiguration configuration) : base(domain, userManager)
+        public ConfigurationController(MyMeetupDomain domain, UserManager<MyMeetupUser> userManager,IConfiguration configuration,TelemetryClient telemtryClient) : base(domain, userManager,telemtryClient)
+
         {
             _configuration = configuration;
         }

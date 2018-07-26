@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,7 @@ using MyMeetup.Web.Areas.Admin.Models;
 using MyMeetup.Web.Controllers;
 using MyMeetUp.Logic.Entities;
 using MyMeetUp.Logic.Infrastructure;
+using MyMeetUp.Logic.Models;
 
 namespace MyMeetup.Web.Areas.Admin.Controllers
 {
@@ -19,8 +21,8 @@ namespace MyMeetup.Web.Areas.Admin.Controllers
     [Authorize(Roles=MyMeetupRole.Administrateur)]
     public class MeetupController:BaseController
     {
-        public MeetupController(MyMeetupDomain domain, UserManager<MyMeetupUser> userManager) : base(domain,
-            userManager)
+        public MeetupController(MyMeetupDomain domain, UserManager<MyMeetupUser> userManager, TelemetryClient telemetryClient) : base(domain,
+            userManager,telemetryClient)
         {
         }
 
@@ -52,14 +54,31 @@ namespace MyMeetup.Web.Areas.Admin.Controllers
             model.Contents = charters;
             return model;
         }
-        private ParticipantsMeetupModel CreateModel(int id)
+        private ParticipantsMeetupModel CreateModel(int meetupId)
         {
-            var m = Domain.GetMeetup(id, true);
+            var m = Domain.GetMeetup(meetupId, true);
+            List<MyMeetupUser> participants = Domain.GetParticipantsFor(meetupId);
             var model = new ParticipantsMeetupModel
             {
                 Title = m.Title,
-                Participants = Domain.GetParticipantsFor(id)
+                
             };
+            List<Registration> regs = Domain.GetRegistrationsFor(meetupId, true).ToList();
+            foreach (var user in participants)
+            {
+                var info = new RegisteredUserModel
+                {
+                    Email = user.Email,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Id = user.Id
+                };
+                var reg = regs.First(x => x.UserId == user.Id);
+                info.RegCode = reg.RegistrationCode;
+                info.RegisteredOn = reg.CreatedAt;
+                info.RegistrationId = reg.Id;
+                model.Participants.Add(info);
+            }
             return model;
         }
         [HttpPost]

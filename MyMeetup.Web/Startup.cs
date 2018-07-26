@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Globalization;
 using AutoMapper;
+using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.Channel;
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -59,6 +62,9 @@ namespace MyMeetup.Web
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddAutoMapper();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<TelemetryClient>();
+            TelemetryConfiguration.Active.TelemetryInitializers.Add(new MyTelemetryInitializer(services));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -110,6 +116,28 @@ context.Database.Migrate();
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+        public class MyTelemetryInitializer : ITelemetryInitializer
+        {
+            private readonly IHttpContextAccessor _httpContextAccessor;
+
+            public MyTelemetryInitializer(IServiceCollection services)
+            {
+                var serviceProvider = services.BuildServiceProvider();
+                _httpContextAccessor = serviceProvider.GetRequiredService<IHttpContextAccessor>();
+            }
+
+            public void Initialize(ITelemetry telemetry)
+            {
+                var context = _httpContextAccessor.HttpContext;
+                if (context.User.Identity.IsAuthenticated)
+                {
+                    var userName = context.User.Identity.Name;
+
+                    telemetry.Context.User.Id = userName;
+                    telemetry.Context.User.AuthenticatedUserId = userName;
+                }
+            }
         }
     }
 }

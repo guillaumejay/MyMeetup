@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.ApplicationInsights;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyMeetup.Web.Areas.Admin.Models;
@@ -11,13 +12,13 @@ namespace MyMeetup.Web.Areas.Admin.Controllers
     [Area("Admin")]
     public class HomeController : BaseController
     {
-        public HomeController(MyMeetupDomain domain, UserManager<MyMeetupUser> userManager) : base(domain, userManager)
+        public HomeController(MyMeetupDomain domain, UserManager<MyMeetupUser> userManager, TelemetryClient telemtryClient) : base(domain, userManager, telemtryClient)
         {
         }
 
         public IActionResult Index()
         {
-            AdminIndexModel aim=new AdminIndexModel();
+            AdminIndexModel aim = new AdminIndexModel();
             aim.Meetups.AddRange(Domain.GetAdminMeetup());
             // When I said I was a specially crafted software, I was not joking...
 

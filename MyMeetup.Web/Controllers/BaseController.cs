@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.ApplicationInsights;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyMeetUp.Logic.Infrastructure;
@@ -8,12 +9,14 @@ namespace MyMeetup.Web.Controllers
 {
     public abstract class BaseController:Controller
     {
+        protected readonly TelemetryClient _telemetryClient;
         protected MyMeetupDomain Domain;
         protected UserManager<MyMeetupUser> UserManager;
-        protected BaseController(MyMeetupDomain domain, UserManager<MyMeetupUser> userManager)
+        protected BaseController(MyMeetupDomain domain, UserManager<MyMeetupUser> userManager, TelemetryClient telemetryClient)
         {
             Domain = domain;
             UserManager = userManager;
+            _telemetryClient = telemetryClient;
         }
 
        // protected int? CurrentId => User.Identity.GetUserId();

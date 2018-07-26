@@ -8,6 +8,7 @@ using MyMeetUp.Logic.Infrastructure;
 using MyMeetUp.Logic.Models;
 using System.Diagnostics;
 using System.Linq;
+using Microsoft.ApplicationInsights;
 using MyMeetup.Web.Infrastructure;
 
 namespace MyMeetup.Web.Controllers
@@ -15,7 +16,7 @@ namespace MyMeetup.Web.Controllers
     public class HomeController : BaseController
     {
         public int CurrentRencontreId = 1;
-        public HomeController(MyMeetupDomain domain, UserManager<MyMeetupUser> userManager) : base(domain, userManager)
+        public HomeController(MyMeetupDomain domain, UserManager<MyMeetupUser> userManager,TelemetryClient telemetryClient) : base(domain, userManager,telemetryClient)
         {
 
         }
@@ -38,9 +39,9 @@ namespace MyMeetup.Web.Controllers
             return model;
         }
         [HttpGet]
-        public IActionResult MyAccount()
+        public IActionResult MyAccount([FromServices]IConfiguration configuration)
         {
-            return View("MyAccount", GetMyAccountModel());
+            return View("MyAccount", GetMyAccountModel(configuration));
 
         }
 
@@ -62,16 +63,25 @@ namespace MyMeetup.Web.Controllers
                     email.Body += Environment.NewLine +
                                   $"Il s'est inscrit à {meetup.Title} et son code d'enregistrement est {result.RegistrationCode}";
                 }
-                se.SendSmtpEmail(EmailSender.GetSettings(configuration), email);
 
-                signInManager.SignInAsync(user, isPersistent: true);
-                return View("MyAccount", GetMyAccountModel(user));
+                try
+                {
+                    se.SendSmtpEmail(EmailSender.GetSettings(configuration), email);
+                }
+                catch (Exception e)
+                {
+                    _telemetryClient.TrackException(e);
+                }
+                
+
+             //   signInManager.SignInAsync(user, isPersistent: true);
+                return View("MyAccount", GetMyAccountModel(configuration,user));
             }
 
             return View("Index", CreateIndexModel(CurrentRencontreId));
         }
 
-        private MyAccountModel GetMyAccountModel(MyMeetupUser currentUser = null)
+        private MyAccountModel GetMyAccountModel( IConfiguration configuration,MyMeetupUser currentUser = null)
         {
             MyAccountModel cm = new MyAccountModel(currentUser ?? CurrentUser);
 
@@ -84,7 +94,8 @@ namespace MyMeetup.Web.Controllers
             {
                 string regCode = Domain.GetRegistrationCode(cm.CurrentUser.Id, meetup.Id);
                 cm.NextMeetupText =
-                    $"Votre prochaine rencontre est {meetup.Title}, à partir du {meetup.StartDate:dd MMMM yyyy}<br/>Votre code d'invitation est  :{regCode}";
+                    $"Votre prochaine rencontre est {meetup.Title}, à partir du {meetup.StartDate:dd MMMM yyyy}"
+                    + $"<br/>Nous ({configuration["emailContact"]}) vous contacterons prochainement";
             }
             return cm;
         }

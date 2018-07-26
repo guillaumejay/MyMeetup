@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +17,7 @@ namespace MyMeetup.Web.Areas.Admin.Controllers
     [Authorize(Roles = MyMeetupRole.Administrateur)]
     public class CharterController : BaseController
     {
-        public CharterController(MyMeetupDomain domain, UserManager<MyMeetupUser> userManager) : base(domain, userManager)
+        public CharterController(MyMeetupDomain domain, UserManager<MyMeetupUser> userManager, TelemetryClient telemetryClient) : base(domain, userManager,telemetryClient)
         {
         }
 

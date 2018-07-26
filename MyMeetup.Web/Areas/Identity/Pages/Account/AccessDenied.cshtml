@@ -6,5 +6,12 @@
 
 <header>
     <h1 class="text-danger">@ViewData["Title"]</h1>
-    <p class="text-danger">You do not have access to this resource.</p>
+    <p class="text-danger">Vous n'êtes pas autorisé ici</p>
+
+    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
+
+        <a asp-area="Identity" asp-page="/Account/Manage/Index" class="text-white-50" style="margin-left:20px" title="Gestion">Mon compte</a>
+        <button type="submit" class="btn btn-warning">D&#xE9;connexion</button>
+    </form>
+
 </header>

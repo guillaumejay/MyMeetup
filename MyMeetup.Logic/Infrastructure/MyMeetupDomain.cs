@@ -200,6 +200,15 @@ namespace MyMeetUp.Logic.Infrastructure
         }
 
 
+        public IQueryable<Registration> GetRegistrationsFor(int meetupId, bool readOnly)
+        {
+            var q = _context.Registrations.Where(x => x.MeetupId == meetupId);
+            if (readOnly)
+            {
+                q = q.AsNoTracking();
+            }
 
+            return q;
+        }
     }
 }
