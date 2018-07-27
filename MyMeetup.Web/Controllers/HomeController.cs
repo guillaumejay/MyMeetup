@@ -108,7 +108,7 @@ namespace MyMeetup.Web.Controllers
                 string regCode = Domain.GetRegistrationCode(cm.CurrentUser.Id, meetup.Id);
                 cm.NextMeetupText =
                     $"Tu es préinscrit-e à {meetup.Title}, à partir du {meetup.StartDate:dd MMMM yyyy}.<br/>" +
-                $"Nous vous confirmerons très prochainement cette pré-inscription, par mail (envoyé à {cm.CurrentUser.Email})."
+                $"Nous te confirmerons très prochainement cette pré-inscription, par mail (envoyé à {cm.CurrentUser.Email})."
                     +
                     "<br/>contact@rencontresnonscos.org";
 
