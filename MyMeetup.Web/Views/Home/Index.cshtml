@@ -76,21 +76,28 @@
     <div class="col-sm-12">
         <div class="card text-center" >
             <div class="card-header success-color white-text">
-                Finalisons ton inscription
+                Finalisons ta pré-inscription
             </div>
             <div class="card-body">
-                <form method="post" asp-action="SignInMeetup" asp-controller="Home" id="meetup-form">
+                <form method="post" asp-action="Index" asp-controller="Home" id="meetup-form" novalidate class="needs-validation" > 
                     <div class="form-row">
                         <div class="col">
                             <div class="md-form">
-                                <input type="text" class="form-control" maxlength="50" id="inputFirstName" name="firstName">
+                                <input type="text" class="form-control" maxlength="50" required  id="inputFirstName" name="firstName" re>
                                 <label for="inputFirstName">Prénom</label>
+                                <div class="invalid-feedback">
+                                    Ne sois pas timide !
+                                </div>
                             </div>
                         </div>
                         <div class="col">
                             <div class="md-form">
-                                <input type="text" required maxlength="50" class="form-control" id="inputName" name="name">
+                                <input type="text" required maxlength="50" required class="form-control" id="inputName" name="name">
                                 <label for="inputName">Nom</label>
+                            
+                                <div class="invalid-feedback">
+                                    Ne sois pas timide !
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -99,12 +106,18 @@
                             <div class="md-form">
                                 <input type="email" required maxlength="50" class="form-control" id="inputEmail" name="email">
                                 <label for="inputEmail">Email</label>
+                                <div class="invalid-feedback">
+                                   Nous avons besoin de te contacter !
+                                </div>
                             </div>
                         </div>
                         <div class="col">
                             <div class="md-form">
-                                <input type="text" class="form-control" id="inputPhone" name="phoneNumber">
+                                <input type="text" class="form-control" required id="inputPhone" name="phoneNumber">
                                 <label for="inputPhone">Téléphone</label>
+                                <div class="invalid-feedback">
+                                    Nous avons besoin de te contacter !
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -113,7 +126,7 @@
 
             </div>
             <div id ="divBtnSignin" class="card-footer text-muted success-color white-text">
-                <a class="btn btn-success"onclick="document.getElementById('meetup-form').submit();">Je m'inscris</a>
+                <a class="btn btn-success"onclick="MySubmit()">Je me pré-inscris</a>
             </div>
         </div>
     </div>
@@ -121,7 +134,20 @@
     @section Scripts
     {
         <script>
+            $(function () {
+            
+            });
+            function MySubmit() {
+                var form = document.getElementById('meetup-form');
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                } else {
+                    form.submit();
+                }
+                form.classList.add('was-validated');
 
+            }
             function deroule(i) {
                 $("#Accepte" + i).prop("disabled", true);
                 $("#lblCharte" + i).html("J'ai accepté");
@@ -136,6 +162,6 @@
                     },
                     2000);
             }
-        
+
         </script>
     }

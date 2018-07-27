@@ -16,17 +16,16 @@ namespace MyMeetup.Web.Controllers
     public class HomeController : BaseController
     {
         public int CurrentRencontreId = 1;
-        public HomeController(MyMeetupDomain domain, UserManager<MyMeetupUser> userManager,TelemetryClient telemetryClient) : base(domain, userManager,telemetryClient)
+        public HomeController(MyMeetupDomain domain, UserManager<MyMeetupUser> userManager, TelemetryClient telemetryClient) : base(domain, userManager, telemetryClient)
         {
 
         }
 
         public IActionResult Index()
         {
-            int rencontreId = CurrentRencontreId;
-            IndexModel model = CreateIndexModel(rencontreId);
+            
 
-            return View(model);
+            return View(CreateIndexModel(CurrentRencontreId));
         }
 
         private IndexModel CreateIndexModel(int rencontreId)
@@ -46,14 +45,25 @@ namespace MyMeetup.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult SigninMeetup(SigninMeetupModel model, [FromServices]SignInManager<MyMeetupUser> signInManager, [FromServices]IConfiguration configuration)
+        public ActionResult Index(SigninMeetupModel model, [FromServices]SignInManager<MyMeetupUser> signInManager, [FromServices]IConfiguration configuration)
         {
-          var result = Domain.AddRegularUser(model, UserManager);
+            if (!ModelState.IsValid)
+            {
+                return View("Index",CreateIndexModel(CurrentRencontreId));
+
+            }
+
+            MyMeetupUser user = UserManager.FindByEmailAsync(model.Email.Trim()).Result;
+            if (user != null)
+            {
+                return View("MyAccount", GetMyAccountModel(configuration, user));
+            }
+            var result = Domain.AddRegularUser(model, UserManager);
             if (result.UserOk)
             {
-                MyMeetupUser user = UserManager.FindByEmailAsync(model.Email).Result;
+                user = UserManager.FindByEmailAsync(model.Email).Result;
                 SendEmail se = new SendEmail();
-                MyMeetupEmail email = new MyMeetupEmail("Nouvel inscrit", 
+                MyMeetupEmail email = new MyMeetupEmail("Nouvel inscrit",
                     configuration["emailContact"], configuration["emailContact"]);
                 //TODO Ugly template
                 email.Body = $"{model.FirstName} {model.Name} - {model.Email} {model.PhoneNumber}";
@@ -66,22 +76,25 @@ namespace MyMeetup.Web.Controllers
 
                 try
                 {
-                    se.SendSmtpEmail(EmailSender.GetSettings(configuration), email);
+                    if (!Debugger.IsAttached)
+                    {
+                        se.SendSmtpEmail(EmailSender.GetSettings(configuration), email);
+                    }
                 }
                 catch (Exception e)
                 {
                     _telemetryClient.TrackException(e);
                 }
-                
 
-             //   signInManager.SignInAsync(user, isPersistent: true);
-                return View("MyAccount", GetMyAccountModel(configuration,user));
+
+                //   signInManager.SignInAsync(user, isPersistent: true);
+                return View("MyAccount", GetMyAccountModel(configuration, user));
             }
 
             return View("Index", CreateIndexModel(CurrentRencontreId));
         }
 
-        private MyAccountModel GetMyAccountModel( IConfiguration configuration,MyMeetupUser currentUser = null)
+        private MyAccountModel GetMyAccountModel(IConfiguration configuration, MyMeetupUser currentUser = null)
         {
             MyAccountModel cm = new MyAccountModel(currentUser ?? CurrentUser);
 
@@ -94,11 +107,11 @@ namespace MyMeetup.Web.Controllers
             {
                 string regCode = Domain.GetRegistrationCode(cm.CurrentUser.Id, meetup.Id);
                 cm.NextMeetupText =
-                    $"Vous venez de vous pré-inscrire à: {meetup.Title}, à partir du {meetup.StartDate:dd MMMM yyyy}.<br/>"+
+                    $"Tu es préinscrit-e à {meetup.Title}, à partir du {meetup.StartDate:dd MMMM yyyy}.<br/>" +
                 $"Nous vous confirmerons très prochainement cette pré-inscription, par mail (envoyé à {cm.CurrentUser.Email})."
                     +
                     "<br/>contact@rencontresnonscos.org";
-                    
+
             }
             return cm;
         }

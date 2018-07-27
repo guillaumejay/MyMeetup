@@ -39,7 +39,7 @@ namespace MyMeetUp.Logic.Infrastructure
                 FirstName=model.FirstName.Trim(),
                 LastName = model.Name.Trim(),
                 Email=model.Email.Trim(),
-                PhoneNumber = model.PhoneNumber.Trim(),
+                PhoneNumber = model.PhoneNumber?.Trim(),
                 UserName = model.Email.Trim(),
             };
         }
