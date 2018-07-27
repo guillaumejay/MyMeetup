@@ -61,7 +61,7 @@ namespace MyMeetup.Web.Controllers
                 {
                     var meetup = Domain.GetMeetup(model.MeetupId.Value, true);
                     email.Body += Environment.NewLine +
-                                  $"Il s'est inscrit à {meetup.Title} et son code d'enregistrement est {result.RegistrationCode}";
+                                  $"Inscrit(e) à {meetup.Title} et son code d'enregistrement est {result.RegistrationCode}";
                 }
 
                 try
@@ -94,8 +94,11 @@ namespace MyMeetup.Web.Controllers
             {
                 string regCode = Domain.GetRegistrationCode(cm.CurrentUser.Id, meetup.Id);
                 cm.NextMeetupText =
-                    $"Votre prochaine rencontre est {meetup.Title}, à partir du {meetup.StartDate:dd MMMM yyyy}"
-                    + $"<br/>Nous ({configuration["emailContact"]}) vous contacterons prochainement";
+                    $"Vous venez de vous pré-inscrire à: {meetup.Title}, à partir du {meetup.StartDate:dd MMMM yyyy}.<br/>"+
+                $"Nous vous confirmerons très prochainement cette pré-inscription, par mail (envoyé à {cm.CurrentUser.Email})."
+                    +
+                    "<br/>contact@rencontresnonscos.org";
+                    
             }
             return cm;
         }
