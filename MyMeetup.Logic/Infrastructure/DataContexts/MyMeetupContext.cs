@@ -11,6 +11,8 @@ namespace MyMeetUp.Logic.Infrastructure.DataContexts
         {
         }
 
+        public DbSet<AppParameter> AppParameters { get; set; }
+
         public DbSet<CharterContent> CharterContents { get; set; }
         public DbSet<Registration> Registrations { get; set; }
 
@@ -33,7 +35,7 @@ namespace MyMeetUp.Logic.Infrastructure.DataContexts
                     .Property(nameof(EntityWithDate.UpdatedAt))
                     .HasDefaultValueSql("getutcdate()");
             }
-            Seeding.SeedData(modelBuilder);
+            Seeding.SeedDataByMigration(modelBuilder);
         }
 
  

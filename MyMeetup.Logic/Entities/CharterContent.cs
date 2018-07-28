@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace MyMeetUp.Logic.Entities
 {
-    [Table("ContenusChartes")]
+    [Table("CharterContents")]
     [DebuggerDisplay("{Id} {MeetupId} {Category} {Content}")]
     public class CharterContent:EntityWithDate
     {

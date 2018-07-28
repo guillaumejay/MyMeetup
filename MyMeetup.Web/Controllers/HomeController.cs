@@ -65,7 +65,7 @@ namespace MyMeetup.Web.Controllers
                 SendEmail se = new SendEmail();
                 MyMeetupEmail email = new MyMeetupEmail("Nouvel inscrit",
                     configuration["emailContact"], configuration["emailContact"]);
-                //TODO Ugly template
+                //TODO Ugly, should be templated
                 email.Body = $"{model.FirstName} {model.Name} - {model.Email} {model.PhoneNumber}";
                 if (!string.IsNullOrEmpty(result.RegistrationCode))
                 {

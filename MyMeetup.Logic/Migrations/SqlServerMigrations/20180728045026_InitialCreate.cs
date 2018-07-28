@@ -9,18 +9,18 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AppParameter",
+                name: "AppParameters",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedAt = table.Column<DateTime>(nullable: false),
-                    UpdatedAt = table.Column<DateTime>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
+                    UpdatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     Title = table.Column<string>(maxLength: 80, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AppParameter", x => x.Id);
+                    table.PrimaryKey("PK_AppParameters", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -195,7 +195,7 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ContenusChartes",
+                name: "CharterContents",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -210,9 +210,9 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ContenusChartes", x => x.Id);
+                    table.PrimaryKey("PK_CharterContents", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ContenusChartes_Meetups_MeetupId",
+                        name: "FK_CharterContents_Meetups_MeetupId",
                         column: x => x.MeetupId,
                         principalTable: "Meetups",
                         principalColumn: "Id",
@@ -220,7 +220,7 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MeetupAdmin",
+                name: "MeetupAdmins",
                 columns: table => new
                 {
                     UserId = table.Column<int>(nullable: false),
@@ -228,16 +228,16 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MeetupAdmin", x => new { x.UserId, x.MeetupId });
-                    table.UniqueConstraint("AK_MeetupAdmin_MeetupId_UserId", x => new { x.MeetupId, x.UserId });
+                    table.PrimaryKey("PK_MeetupAdmins", x => new { x.UserId, x.MeetupId });
+                    table.UniqueConstraint("AK_MeetupAdmins_MeetupId_UserId", x => new { x.MeetupId, x.UserId });
                     table.ForeignKey(
-                        name: "FK_MeetupAdmin_Meetups_MeetupId",
+                        name: "FK_MeetupAdmins_Meetups_MeetupId",
                         column: x => x.MeetupId,
                         principalTable: "Meetups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MeetupAdmin_AspNetUsers_UserId",
+                        name: "FK_MeetupAdmins_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -275,40 +275,31 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
                 });
 
             migrationBuilder.InsertData(
-                table: "AppParameter",
-                columns: new[] { "Id", "CreatedAt", "Title", "UpdatedAt" },
-                values: new object[] { 1, new DateTime(2018, 7, 26, 11, 44, 25, 809, DateTimeKind.Utc), "Rencontres Non Scolarisees", new DateTime(2018, 7, 26, 11, 44, 25, 809, DateTimeKind.Utc) });
-
-            migrationBuilder.InsertData(
-                table: "ContenusChartes",
+                table: "CharterContents",
                 columns: new[] { "Id", "Category", "Content", "CreatedAt", "IsActive", "MeetupId", "Position", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, "Communication sur le respect des lieux", "Chaque membre de votre famille, présent à la rencontre, doit être informé que le respect des lieux est important pour que nous puissions revenir. Aussi merci de nous prévenir en cas d’éventuels dégâts pour montrer aux gérants notre implication dans la remise en état des lieux.", new DateTime(2018, 7, 26, 11, 44, 25, 808, DateTimeKind.Utc), true, null, 1, new DateTime(2018, 7, 26, 11, 44, 25, 808, DateTimeKind.Utc) },
-                    { 2, "Animaux", "Les chiens sont tolérés, à condition qu'ils restent attachés ou auprès de vous en permanence.<br/>Ils ne doivent également pas être bruyants.", new DateTime(2018, 7, 26, 11, 44, 25, 808, DateTimeKind.Utc), true, null, 3, new DateTime(2018, 7, 26, 11, 44, 25, 808, DateTimeKind.Utc) },
-                    { 4, "Alcool", "La consommation d’alcool doit être raisonnée, pour toutes les personnes participantes, quel que soit leur âge, et bien sûr, les parents ou les référents sont invités à être attentifs à cette problématique vis-à-vis des personnes dont ils sont responsables.", new DateTime(2018, 7, 26, 11, 44, 25, 808, DateTimeKind.Utc), true, null, 4, new DateTime(2018, 7, 26, 11, 44, 25, 808, DateTimeKind.Utc) }
+                    { 1, "Communication sur le respect des lieux", "Chaque membre de votre famille, présent à la rencontre, doit être informé que le respect des lieux est important pour que nous puissions revenir. Aussi merci de nous prévenir en cas d’éventuels dégâts pour montrer aux gérants notre implication dans la remise en état des lieux.", new DateTime(2018, 7, 28, 4, 50, 26, 759, DateTimeKind.Utc), true, null, 1, new DateTime(2018, 7, 28, 4, 50, 26, 759, DateTimeKind.Utc) },
+                    { 2, "Animaux", "Les chiens sont tolérés, à condition qu'ils restent attachés ou auprès de vous en permanence.<br/>Ils ne doivent également pas être bruyants.", new DateTime(2018, 7, 28, 4, 50, 26, 759, DateTimeKind.Utc), true, null, 3, new DateTime(2018, 7, 28, 4, 50, 26, 759, DateTimeKind.Utc) },
+                    { 3, "Participation financière", " Chaque famille participante devra régler 3€ de participation à Rencontres Nonscos : ces paiements permettront à l'association de couvrir ses dépenses d'existence (assurance notamment)", new DateTime(2018, 7, 28, 4, 50, 26, 759, DateTimeKind.Utc), true, null, 2, new DateTime(2018, 7, 28, 4, 50, 26, 759, DateTimeKind.Utc) },
+                    { 4, "Alcool", "La consommation d’alcool doit être raisonnée, pour toutes les personnes participantes, quel que soit leur âge, et bien sûr, les parents ou les référents sont invités à être attentifs à cette problématique vis-à-vis des personnes dont ils sont responsables.", new DateTime(2018, 7, 28, 4, 50, 26, 759, DateTimeKind.Utc), true, null, 4, new DateTime(2018, 7, 28, 4, 50, 26, 759, DateTimeKind.Utc) }
                 });
 
             migrationBuilder.InsertData(
                 table: "Meetups",
                 columns: new[] { "Id", "CreatedAt", "EndDate", "IsVisible", "OpenForRegistrationOn", "PublicDescription", "RegisteredDescription", "StartDate", "Title", "TitleImage", "UpdatedAt" },
-                values: new object[,]
-                {
-                    { 1, new DateTime(2018, 7, 26, 11, 44, 25, 807, DateTimeKind.Utc), new DateTime(2018, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), true, new DateTime(2018, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), @"Rencontre près de Casteljaloux(47). Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.<br/><div>
-                <h2><u>Comment s'inscrire &agrave; la rencontre ?</u></h2>
-                </div>
-                <div>Ne peuvent s'inscrire &agrave; cette rencontre que les personnes qui s'engagent &agrave; respecter la charte mise en place.</div>
-                <div><strong>Proc&eacute;dure&nbsp;</strong>:</div>
-                <div>1. Vous lisez l'engagement que vous demande la charte</div>
-                <div>2. Si la charte vous convient : vous vous engagez &agrave; la respecter en la validant, la signant num&eacute;riquement et en nous donnant vos coordonn&eacute;es : le tout nous sera adress&eacute; directement.</div>
-                <div><strong>Il n&rsquo;y a qu&rsquo;un seul interlocuteur par logement : un logement est r&eacute;serv&eacute; par une seule famille, c&rsquo;est elle qui fait la r&eacute;servation et paiera la somme totale au village de vacances. </strong>Vous pouvez donc r&eacute;server &agrave; votre nom et trouver d&rsquo;autres familles pour partager, gr&acirc;ce au document Pad mis &agrave; disposition <strong>:&nbsp;</strong><strong></strong></div>", new DateTime(2018, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "La Taillade 2018", "La-Taillade.jpg",
-                        new DateTime(2018, 7, 26, 11, 44, 25, 807, DateTimeKind.Utc) }
-                });
+                values: new object[] { 1, new DateTime(2018, 7, 28, 4, 50, 26, 758, DateTimeKind.Utc), new DateTime(2018, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), true, new DateTime(2018, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), @"Rencontre près de Casteljaloux(47). Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.<br/><div>
+<h2><u>Comment s'inscrire &agrave; la rencontre ?</u></h2>
+</div>
+<div>Ne peuvent s'inscrire &agrave; cette rencontre que les personnes qui s'engagent &agrave; respecter la charte mise en place.</div>
+<div><strong>Proc&eacute;dure&nbsp;</strong>:</div>
+<div>1. Vous lisez l'engagement que vous demande la charte</div>
+<div>2. Si la charte vous convient : vous vous engagez &agrave; la respecter en la validant, la signant num&eacute;riquement et en nous donnant vos coordonn&eacute;es : le tout nous sera adress&eacute; directement.</div>", "<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail <div><strong>", new DateTime(2018, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "La Taillade 2018", "La-Taillade.jpg", new DateTime(2018, 7, 28, 4, 50, 26, 758, DateTimeKind.Utc) });
 
             migrationBuilder.InsertData(
-                table: "ContenusChartes",
+                table: "CharterContents",
                 columns: new[] { "Id", "Category", "Content", "CreatedAt", "IsActive", "MeetupId", "Position", "UpdatedAt" },
-                values: new object[] { 5, "Spécifique à la Taillade", "La tradition est née de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants", new DateTime(2018, 7, 26, 11, 44, 25, 808, DateTimeKind.Utc), true, 1, 1, new DateTime(2018, 7, 26, 11, 44, 25, 808, DateTimeKind.Utc) });
+                values: new object[] { 5, "Spécifique à la Taillade", "La tradition est née de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants", new DateTime(2018, 7, 28, 4, 50, 26, 759, DateTimeKind.Utc), true, 1, 1, new DateTime(2018, 7, 28, 4, 50, 26, 759, DateTimeKind.Utc) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -350,8 +341,8 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ContenusChartes_MeetupId",
-                table: "ContenusChartes",
+                name: "IX_CharterContents_MeetupId",
+                table: "CharterContents",
                 column: "MeetupId");
 
             migrationBuilder.CreateIndex(
@@ -368,7 +359,7 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AppParameter");
+                name: "AppParameters");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -386,10 +377,10 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "ContenusChartes");
+                name: "CharterContents");
 
             migrationBuilder.DropTable(
-                name: "MeetupAdmin");
+                name: "MeetupAdmins");
 
             migrationBuilder.DropTable(
                 name: "Registrations");

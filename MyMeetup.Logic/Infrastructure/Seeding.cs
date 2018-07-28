@@ -3,13 +3,25 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using MyMeetUp.Logic.Entities;
+using MyMeetUp.Logic.Infrastructure.DataContexts;
 
 namespace MyMeetUp.Logic.Infrastructure
 {
    public static class Seeding
     {
-        public static void SeedData(ModelBuilder modelBuilder)
+        public  static void SeedData(MyMeetupContext context)
+        {
+            if (context.AppParameters.Any() == false)
+            {
+                AppParameter ap = new AppParameter { Title="MyMeetup"};
+                context.AppParameters.Add(ap);
+                context.SaveChanges();
+            }
+        }
+
+        public static void SeedDataByMigration(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Meetup>().HasData(new Meetup
             {

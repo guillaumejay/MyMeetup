@@ -18,6 +18,18 @@ namespace MyMeetUp.Logic.Infrastructure
             _context = context;
         }
 
+        public AppParameter GetAppParameter(bool @readOnly)
+        {
+            //TODO : add caching
+            var q= _context.AppParameters.AsQueryable();
+            if (readOnly)
+            {
+                q = q.AsNoTracking();
+
+            }
+            return q.First();
+        }
+
         #region Meetup
         public List<MyMeetupUser> GetParticipantsFor(int meetupId)
         {

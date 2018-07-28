@@ -1,7 +1,11 @@
-﻿using Microsoft.ApplicationInsights;
+﻿using System;
+using System.Threading;
+using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using MyMeetUp.Logic.Entities;
 using MyMeetUp.Logic.Infrastructure;
 
 
@@ -21,5 +25,13 @@ namespace MyMeetup.Web.Controllers
 
        // protected int? CurrentId => User.Identity.GetUserId();
         protected MyMeetupUser CurrentUser=>  UserManager.GetUserAsync(HttpContext.User).Result;
+
+        protected Lazy<AppParameter> Parameters => new Lazy<AppParameter>(() => { return Domain.GetAppParameter(true); });
+       
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            base.OnActionExecuting(context);
+            ViewBag.AppTitle = Parameters.Value.Title;
+        }
     }
 }

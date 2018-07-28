@@ -2,16 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MyMeetUp.Logic.Infrastructure;
 using MyMeetUp.Logic.Infrastructure.DataContexts;
 
-namespace MyMeetUp.Logic.Migrations.SqliteMigrations
+namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
 {
     [DbContext(typeof(MyMeetupSqlLiteContext))]
-    partial class MyMeetupSqlLiteContextModelSnapshot : ModelSnapshot
+    [Migration("20180728044222_InitialCreation")]
+    partial class InitialCreation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,21 +104,21 @@ namespace MyMeetUp.Logic.Migrations.SqliteMigrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("CreatedAt");
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("getutcdate()");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(80);
 
-                    b.Property<DateTime>("UpdatedAt");
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("getutcdate()");
 
                     b.HasKey("Id");
 
-                    b.ToTable("AppParameter");
-
-                    b.HasData(
-                        new { Id = 1, CreatedAt = new DateTime(2018, 7, 23, 9, 17, 48, 360, DateTimeKind.Utc), Title = "Rencontres Non Scolarisees", UpdatedAt = new DateTime(2018, 7, 23, 9, 17, 48, 360, DateTimeKind.Utc) }
-                    );
+                    b.ToTable("AppParameters");
                 });
 
             modelBuilder.Entity("MyMeetUp.Logic.Entities.CharterContent", b =>
@@ -150,14 +151,14 @@ namespace MyMeetUp.Logic.Migrations.SqliteMigrations
 
                     b.HasIndex("MeetupId");
 
-                    b.ToTable("ContenusChartes");
+                    b.ToTable("CharterContents");
 
                     b.HasData(
-                        new { Id = 1, Category = "Communication sur le respect des lieux", Content = "Chaque membre de votre famille, présent à la rencontre, doit être informé que le respect des lieux est important pour que nous puissions revenir. Aussi merci de nous prévenir en cas d’éventuels dégâts pour montrer aux gérants notre implication dans la remise en état des lieux.", CreatedAt = new DateTime(2018, 7, 23, 9, 17, 48, 358, DateTimeKind.Utc), IsActive = true, Position = 1, UpdatedAt = new DateTime(2018, 7, 23, 9, 17, 48, 358, DateTimeKind.Utc) },
-                        new { Id = 2, Category = "Animaux", Content = "Les chiens sont tolérés, à condition qu'ils restent attachés ou auprès de vous en permanence.<br/>Ils ne doivent également pas être bruyants.", CreatedAt = new DateTime(2018, 7, 23, 9, 17, 48, 358, DateTimeKind.Utc), IsActive = true, Position = 3, UpdatedAt = new DateTime(2018, 7, 23, 9, 17, 48, 358, DateTimeKind.Utc) },
-                        new { Id = 3, Category = "Participation financière", Content = " Chaque famille participante devra régler 3€ de participation à Rencontres Nonscos : ces paiements permettront à l'association de couvrir ses dépenses d'existence (assurance notamment)", CreatedAt = new DateTime(2018, 7, 23, 9, 17, 48, 358, DateTimeKind.Utc), IsActive = true, Position = 2, UpdatedAt = new DateTime(2018, 7, 23, 9, 17, 48, 358, DateTimeKind.Utc) },
-                        new { Id = 4, Category = "Alcool", Content = "La consommation d’alcool doit être raisonnée, pour toutes les personnes participantes, quel que soit leur âge, et bien sûr, les parents ou les référents sont invités à être attentifs à cette problématique vis-à-vis des personnes dont ils sont responsables.", CreatedAt = new DateTime(2018, 7, 23, 9, 17, 48, 358, DateTimeKind.Utc), IsActive = true, Position = 4, UpdatedAt = new DateTime(2018, 7, 23, 9, 17, 48, 358, DateTimeKind.Utc) },
-                        new { Id = 5, Category = "Spécifique à la Taillade", Content = "La tradition est née de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants", CreatedAt = new DateTime(2018, 7, 23, 9, 17, 48, 358, DateTimeKind.Utc), IsActive = true, MeetupId = 1, Position = 1, UpdatedAt = new DateTime(2018, 7, 23, 9, 17, 48, 358, DateTimeKind.Utc) }
+                        new { Id = 1, Category = "Communication sur le respect des lieux", Content = "Chaque membre de votre famille, présent à la rencontre, doit être informé que le respect des lieux est important pour que nous puissions revenir. Aussi merci de nous prévenir en cas d’éventuels dégâts pour montrer aux gérants notre implication dans la remise en état des lieux.", CreatedAt = new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc), IsActive = true, Position = 1, UpdatedAt = new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc) },
+                        new { Id = 2, Category = "Animaux", Content = "Les chiens sont tolérés, à condition qu'ils restent attachés ou auprès de vous en permanence.<br/>Ils ne doivent également pas être bruyants.", CreatedAt = new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc), IsActive = true, Position = 3, UpdatedAt = new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc) },
+                        new { Id = 3, Category = "Participation financière", Content = " Chaque famille participante devra régler 3€ de participation à Rencontres Nonscos : ces paiements permettront à l'association de couvrir ses dépenses d'existence (assurance notamment)", CreatedAt = new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc), IsActive = true, Position = 2, UpdatedAt = new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc) },
+                        new { Id = 4, Category = "Alcool", Content = "La consommation d’alcool doit être raisonnée, pour toutes les personnes participantes, quel que soit leur âge, et bien sûr, les parents ou les référents sont invités à être attentifs à cette problématique vis-à-vis des personnes dont ils sont responsables.", CreatedAt = new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc), IsActive = true, Position = 4, UpdatedAt = new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc) },
+                        new { Id = 5, Category = "Spécifique à la Taillade", Content = "La tradition est née de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants", CreatedAt = new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc), IsActive = true, MeetupId = 1, Position = 1, UpdatedAt = new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc) }
                     );
                 });
 
@@ -201,22 +202,13 @@ namespace MyMeetUp.Logic.Migrations.SqliteMigrations
                     b.ToTable("Meetups");
 
                     b.HasData(
-                        new { Id = 1, CreatedAt = new DateTime(2018, 7, 23, 9, 17, 48, 358, DateTimeKind.Utc), EndDate = new DateTime(2018, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), IsVisible = true, OpenForRegistrationOn = new DateTime(2018, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), PublicDescription = @"Rencontre près de Casteljaloux(47). Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.<br/><div>
+                        new { Id = 1, CreatedAt = new DateTime(2018, 7, 28, 4, 42, 22, 198, DateTimeKind.Utc), EndDate = new DateTime(2018, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), IsVisible = true, OpenForRegistrationOn = new DateTime(2018, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), PublicDescription = @"Rencontre près de Casteljaloux(47). Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.<br/><div>
 <h2><u>Comment s'inscrire &agrave; la rencontre ?</u></h2>
 </div>
 <div>Ne peuvent s'inscrire &agrave; cette rencontre que les personnes qui s'engagent &agrave; respecter la charte mise en place.</div>
 <div><strong>Proc&eacute;dure&nbsp;</strong>:</div>
 <div>1. Vous lisez l'engagement que vous demande la charte</div>
-<div>2. Si la charte vous convient : vous vous engagez &agrave; la respecter en la validant, la signant num&eacute;riquement et en nous donnant vos coordonn&eacute;es : le tout nous sera adress&eacute; directement.</div>
-<div>3. Nous vous confirmons votre pr&eacute;-r&eacute;servation et transmettons au village de vacances de la Taillade votre nom et votre N&deg; de pr&eacute;-r&eacute;servation</div>
-<div>4. Vous pouvez alors contacter le village de vacances pour effectuer votre r&eacute;servation aupr&egrave;s d'eux (en leur rappelant votre N&deg; de pr&eacute;-r&eacute;servation).</div>", RegisteredDescription = @"<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail &agrave; : francois.fonseca@solincite.org</strong></div>
-<div>Vous devrez lui indiquer vos&nbsp;<strong>noms/pr&eacute;noms/adresse postale/nb d&rsquo;adultes+d&rsquo;enfants.</strong></div>
-<div><strong>Il n&rsquo;y a qu&rsquo;un seul interlocuteur par logement : un logement est r&eacute;serv&eacute; par une seule famille, c&rsquo;est elle qui fait la r&eacute;servation et paiera la somme totale au village de vacances. </strong>Vous pouvez donc r&eacute;server &agrave; votre nom et trouver d&rsquo;autres familles pour partager, gr&acirc;ce au document Pad mis &agrave; disposition <strong>:&nbsp;</strong><strong><a href=""https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B"">https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B</a></strong></div>
-<div>Ce document servira &agrave; partager toutes les infos sur la rencontre (logements, covoiturage, activit&eacute;s,&hellip;)</div>", StartDate = new DateTime(2018, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), Title = "La Taillade 2018", TitleImage = "La-Taillade.jpg", UpdatedAt = new DateTime(2018, 7, 23, 9, 17, 48, 358, DateTimeKind.Utc) },
-                        new { Id = 2, CreatedAt = new DateTime(2018, 7, 23, 9, 17, 48, 358, DateTimeKind.Utc), EndDate = new DateTime(2019, 3, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), IsVisible = false, PublicDescription = "Rencontre près de Casteljaloux(47). Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.", RegisteredDescription = @"<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail &agrave; : francois.fonseca@solincite.org</strong></div>
-<div>Vous devrez lui indiquer vos&nbsp;<strong>noms/pr&eacute;noms/adresse postale/nb d&rsquo;adultes+d&rsquo;enfants.</strong></div>
-<div><strong>Il n&rsquo;y a qu&rsquo;un seul interlocuteur par logement : un logement est r&eacute;serv&eacute; par une seule famille, c&rsquo;est elle qui fait la r&eacute;servation et paiera la somme totale au village de vacances. </strong>Vous pouvez donc r&eacute;server &agrave; votre nom et trouver d&rsquo;autres familles pour partager, gr&acirc;ce au document Pad mis &agrave; disposition <strong>:&nbsp;</strong><strong><a href=""https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B"">https://semestriel.framapad.org/p/LaTaillade_qfmnV6VC4B</a></strong></div>
-<div>Ce document servira &agrave; partager toutes les infos sur la rencontre (logements, covoiturage, activit&eacute;s,&hellip;)</div>", StartDate = new DateTime(2019, 3, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), Title = "La Taillade Printemps 2019", TitleImage = "La-Taillade.jpg", UpdatedAt = new DateTime(2018, 7, 23, 9, 17, 48, 358, DateTimeKind.Utc) }
+<div>2. Si la charte vous convient : vous vous engagez &agrave; la respecter en la validant, la signant num&eacute;riquement et en nous donnant vos coordonn&eacute;es : le tout nous sera adress&eacute; directement.</div>", RegisteredDescription = "<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail <div><strong>", StartDate = new DateTime(2018, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), Title = "La Taillade 2018", TitleImage = "La-Taillade.jpg", UpdatedAt = new DateTime(2018, 7, 28, 4, 42, 22, 198, DateTimeKind.Utc) }
                     );
                 });
 
@@ -230,7 +222,7 @@ namespace MyMeetUp.Logic.Migrations.SqliteMigrations
 
                     b.HasAlternateKey("MeetupId", "UserId");
 
-                    b.ToTable("MeetupAdmin");
+                    b.ToTable("MeetupAdmins");
                 });
 
             modelBuilder.Entity("MyMeetUp.Logic.Entities.Registration", b =>

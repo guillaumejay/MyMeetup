@@ -1,25 +1,25 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace MyMeetUp.Logic.Migrations.SqliteMigrations
+namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialCreation : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AppParameter",
+                name: "AppParameters",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    CreatedAt = table.Column<DateTime>(nullable: false),
-                    UpdatedAt = table.Column<DateTime>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
+                    UpdatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     Title = table.Column<string>(maxLength: 80, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AppParameter", x => x.Id);
+                    table.PrimaryKey("PK_AppParameters", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -194,7 +194,7 @@ namespace MyMeetUp.Logic.Migrations.SqliteMigrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ContenusChartes",
+                name: "CharterContents",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -209,9 +209,9 @@ namespace MyMeetUp.Logic.Migrations.SqliteMigrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ContenusChartes", x => x.Id);
+                    table.PrimaryKey("PK_CharterContents", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ContenusChartes_Meetups_MeetupId",
+                        name: "FK_CharterContents_Meetups_MeetupId",
                         column: x => x.MeetupId,
                         principalTable: "Meetups",
                         principalColumn: "Id",
@@ -219,7 +219,7 @@ namespace MyMeetUp.Logic.Migrations.SqliteMigrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MeetupAdmin",
+                name: "MeetupAdmins",
                 columns: table => new
                 {
                     UserId = table.Column<int>(nullable: false),
@@ -227,16 +227,16 @@ namespace MyMeetUp.Logic.Migrations.SqliteMigrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MeetupAdmin", x => new { x.UserId, x.MeetupId });
-                    table.UniqueConstraint("AK_MeetupAdmin_MeetupId_UserId", x => new { x.MeetupId, x.UserId });
+                    table.PrimaryKey("PK_MeetupAdmins", x => new { x.UserId, x.MeetupId });
+                    table.UniqueConstraint("AK_MeetupAdmins_MeetupId_UserId", x => new { x.MeetupId, x.UserId });
                     table.ForeignKey(
-                        name: "FK_MeetupAdmin_Meetups_MeetupId",
+                        name: "FK_MeetupAdmins_Meetups_MeetupId",
                         column: x => x.MeetupId,
                         principalTable: "Meetups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MeetupAdmin_AspNetUsers_UserId",
+                        name: "FK_MeetupAdmins_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -274,48 +274,40 @@ namespace MyMeetUp.Logic.Migrations.SqliteMigrations
                 });
 
             migrationBuilder.InsertData(
-                table: "AppParameter",
-                columns: new[] { "Id", "CreatedAt", "Title", "UpdatedAt" },
-                values: new object[] { 1, new DateTime(2018, 7, 23, 9, 17, 48, 360, DateTimeKind.Utc), "Rencontres Non Scolarisees", new DateTime(2018, 7, 23, 9, 17, 48, 360, DateTimeKind.Utc) });
+                table: "CharterContents",
+                columns: new[] { "Id", "Category", "Content", "CreatedAt", "IsActive", "MeetupId", "Position", "UpdatedAt" },
+                values: new object[] { 1, "Communication sur le respect des lieux", "Chaque membre de votre famille, présent à la rencontre, doit être informé que le respect des lieux est important pour que nous puissions revenir. Aussi merci de nous prévenir en cas d’éventuels dégâts pour montrer aux gérants notre implication dans la remise en état des lieux.", new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc), true, null, 1, new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc) });
 
             migrationBuilder.InsertData(
-                table: "ContenusChartes",
+                table: "CharterContents",
                 columns: new[] { "Id", "Category", "Content", "CreatedAt", "IsActive", "MeetupId", "Position", "UpdatedAt" },
-                values: new object[] { 1, "Communication sur le respect des lieux", "Chaque membre de votre famille, présent à la rencontre, doit être informé que le respect des lieux est important pour que nous puissions revenir. Aussi merci de nous prévenir en cas d’éventuels dégâts pour montrer aux gérants notre implication dans la remise en état des lieux.", new DateTime(2018, 7, 23, 9, 17, 48, 358, DateTimeKind.Utc), true, null, 1, new DateTime(2018, 7, 23, 9, 17, 48, 358, DateTimeKind.Utc) });
+                values: new object[] { 2, "Animaux", "Les chiens sont tolérés, à condition qu'ils restent attachés ou auprès de vous en permanence.<br/>Ils ne doivent également pas être bruyants.", new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc), true, null, 3, new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc) });
 
             migrationBuilder.InsertData(
-                table: "ContenusChartes",
+                table: "CharterContents",
                 columns: new[] { "Id", "Category", "Content", "CreatedAt", "IsActive", "MeetupId", "Position", "UpdatedAt" },
-                values: new object[] { 2, "Animaux", "Les chiens sont tolérés, à condition qu'ils restent attachés ou auprès de vous en permanence.<br/>Ils ne doivent également pas être bruyants.", new DateTime(2018, 7, 23, 9, 17, 48, 358, DateTimeKind.Utc), true, null, 3, new DateTime(2018, 7, 23, 9, 17, 48, 358, DateTimeKind.Utc) });
+                values: new object[] { 3, "Participation financière", " Chaque famille participante devra régler 3€ de participation à Rencontres Nonscos : ces paiements permettront à l'association de couvrir ses dépenses d'existence (assurance notamment)", new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc), true, null, 2, new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc) });
 
-        
             migrationBuilder.InsertData(
-                table: "ContenusChartes",
+                table: "CharterContents",
                 columns: new[] { "Id", "Category", "Content", "CreatedAt", "IsActive", "MeetupId", "Position", "UpdatedAt" },
-                values: new object[] { 4, "Alcool", "La consommation d’alcool doit être raisonnée, pour toutes les personnes participantes, quel que soit leur âge, et bien sûr, les parents ou les référents sont invités à être attentifs à cette problématique vis-à-vis des personnes dont ils sont responsables.", new DateTime(2018, 7, 23, 9, 17, 48, 358, DateTimeKind.Utc), true, null, 4, new DateTime(2018, 7, 23, 9, 17, 48, 358, DateTimeKind.Utc) });
+                values: new object[] { 4, "Alcool", "La consommation d’alcool doit être raisonnée, pour toutes les personnes participantes, quel que soit leur âge, et bien sûr, les parents ou les référents sont invités à être attentifs à cette problématique vis-à-vis des personnes dont ils sont responsables.", new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc), true, null, 4, new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc) });
 
             migrationBuilder.InsertData(
                 table: "Meetups",
                 columns: new[] { "Id", "CreatedAt", "EndDate", "IsVisible", "OpenForRegistrationOn", "PublicDescription", "RegisteredDescription", "StartDate", "Title", "TitleImage", "UpdatedAt" },
-                values: new object[] { 1, new DateTime(2018, 7, 23, 9, 17, 48, 358, DateTimeKind.Utc), new DateTime(2018, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), true,
-                    new DateTime(2018, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), @"Rencontre près de Casteljaloux(47). Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.<br/><div>
+                values: new object[] { 1, new DateTime(2018, 7, 28, 4, 42, 22, 198, DateTimeKind.Utc), new DateTime(2018, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), true, new DateTime(2018, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), @"Rencontre près de Casteljaloux(47). Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.<br/><div>
 <h2><u>Comment s'inscrire &agrave; la rencontre ?</u></h2>
 </div>
 <div>Ne peuvent s'inscrire &agrave; cette rencontre que les personnes qui s'engagent &agrave; respecter la charte mise en place.</div>
 <div><strong>Proc&eacute;dure&nbsp;</strong>:</div>
 <div>1. Vous lisez l'engagement que vous demande la charte</div>
-<div>2. Si la charte vous convient : vous vous engagez &agrave; la respecter en la validant, la signant num&eacute;riquement et en nous donnant vos coordonn&eacute;es : le tout nous sera adress&eacute; directement.</div>
-<div>3. Nous vous confirmons votre pr&eacute;-r&eacute;servation et transmettons au village de vacances de la Taillade votre nom et votre N&deg; de pr&eacute;-r&eacute;servation</div>
-<div>4. Vous pouvez alors contacter le village de vacances pour effectuer votre r&eacute;servation aupr&egrave;s d'eux (en leur rappelant votre N&deg; de pr&eacute;-r&eacute;servation).</div>",
-                    @"<div>Vous devrez lui indiquer vos&nbsp;<strong>noms/pr&eacute;noms/adresse postale/nb d&rsquo;adultes+d&rsquo;enfants.</strong></div>
-<div>:&nbsp;</strong></div>
-<div>Ce document servira &agrave; partager toutes les infos sur la rencontre (logements, covoiturage, activit&eacute;s,&hellip;)</div>", new DateTime(2018, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "La Taillade 2018", "La-Taillade.jpg", new DateTime(2018, 7, 23, 9, 17, 48, 358, DateTimeKind.Utc) });
+<div>2. Si la charte vous convient : vous vous engagez &agrave; la respecter en la validant, la signant num&eacute;riquement et en nous donnant vos coordonn&eacute;es : le tout nous sera adress&eacute; directement.</div>", "<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail <div><strong>", new DateTime(2018, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "La Taillade 2018", "La-Taillade.jpg", new DateTime(2018, 7, 28, 4, 42, 22, 198, DateTimeKind.Utc) });
 
-            
             migrationBuilder.InsertData(
-                table: "ContenusChartes",
+                table: "CharterContents",
                 columns: new[] { "Id", "Category", "Content", "CreatedAt", "IsActive", "MeetupId", "Position", "UpdatedAt" },
-                values: new object[] { 5, "Spécifique à la Taillade", "La tradition est née de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants", new DateTime(2018, 7, 23, 9, 17, 48, 358, DateTimeKind.Utc), true, 1, 1, new DateTime(2018, 7, 23, 9, 17, 48, 358, DateTimeKind.Utc) });
+                values: new object[] { 5, "Spécifique à la Taillade", "La tradition est née de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants", new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc), true, 1, 1, new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -355,8 +347,8 @@ namespace MyMeetUp.Logic.Migrations.SqliteMigrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_ContenusChartes_MeetupId",
-                table: "ContenusChartes",
+                name: "IX_CharterContents_MeetupId",
+                table: "CharterContents",
                 column: "MeetupId");
 
             migrationBuilder.CreateIndex(
@@ -373,7 +365,7 @@ namespace MyMeetUp.Logic.Migrations.SqliteMigrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AppParameter");
+                name: "AppParameters");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -391,10 +383,10 @@ namespace MyMeetUp.Logic.Migrations.SqliteMigrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "ContenusChartes");
+                name: "CharterContents");
 
             migrationBuilder.DropTable(
-                name: "MeetupAdmin");
+                name: "MeetupAdmins");
 
             migrationBuilder.DropTable(
                 name: "Registrations");

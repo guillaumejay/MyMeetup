@@ -4,6 +4,7 @@ using MyMeetUp.Logic.Infrastructure;
 
 namespace MyMeetUp.Logic.Entities
 {
+    [Table("MeetupAdmins")]
    public class MeetupAdmin
     {
         [Key(),Column(Order = 0)]

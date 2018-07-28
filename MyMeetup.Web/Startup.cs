@@ -40,7 +40,7 @@ namespace MyMeetup.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-   
+
             //services.AddDbContext<MyMeetupContext, MyMeetupSqlServerContext>(options  =>
             //    options.UseSqlServer(
             //      Configuration.GetConnectionString("MyMeetupDb")));
@@ -48,13 +48,14 @@ namespace MyMeetup.Web
                     options.UseSqlite(
                         Configuration.GetConnectionString("MyMeetupDb")));
 
-            services.AddIdentity<MyMeetupUser, MyMeetupRole>(options => {
-                    options.Password.RequireDigit = true;
-                    options.Password.RequiredLength = 4;
-                    options.Password.RequireNonAlphanumeric = false;
-                    options.Password.RequireUppercase = false;
-                    options.Password.RequireLowercase = false;
-                })
+            services.AddIdentity<MyMeetupUser, MyMeetupRole>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 4;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+            })
                 .AddEntityFrameworkStores<MyMeetupContext>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
@@ -69,9 +70,9 @@ namespace MyMeetup.Web
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<MyMeetupUser> userManager,
-            RoleManager<MyMeetupRole> roleManager,MyMeetupContext context)
+            RoleManager<MyMeetupRole> roleManager, MyMeetupContext context)
         {
-        
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -101,13 +102,14 @@ namespace MyMeetup.Web
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-context.Database.Migrate();
+            context.Database.Migrate();
             app.UseAuthentication();
             Seeding.SeedRoles(roleManager);
             Seeding.SeedUsers(userManager);
+            Seeding.SeedData(context);
             app.UseMvc(routes =>
             {
-            
+
                 routes.MapRoute(
                     name: "areas",
                     template: "{area:exists}/{controller=Home}/{action=Index}"

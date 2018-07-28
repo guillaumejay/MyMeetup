@@ -18,68 +18,68 @@
     @RenderSection("header", required: false)
 </head>
 <body>
-<!--Navbar-->
-<nav class="navbar navbar-expand-lg navbar-dark primary-color sticky-top">
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark primary-color sticky-top">
 
-    <!-- Navbar brand -->
-    <a class="navbar-brand" asp-controller="Home" asp-action="Index">Administration</a>
+        <!-- Navbar brand -->
+        <a class="navbar-brand" asp-controller="Home" asp-action="Index">Administration</a>
 
-    <!-- Collapse button -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav"
-            aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+        <!-- Collapse button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="basicExampleNav">
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse" id="basicExampleNav">
 
-        <!-- Links -->
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item @(controller=="meetup"?"active":"")">
-                <a asp-area="admin" asp-controller="Meetup" asp-action="index" class="nav-link" ><i class="fa fa-users" aria-hidden="true"></i>Rencontres</a>
-            </li>
-            <li class="nav-item  @(controller=="charter"?"active":"")">
-                <a asp-area="admin" asp-controller="Charter" asp-action="index" class="nav-link"><i class="fa fa-gavel"></i> Charte</a>
-            </li>
-            <li class="nav-item  @(controller=="configuration"?"active":"")">
-                <a asp-area="admin" asp-controller="Configuration" asp-action="index" class="nav-link"> <i class="fa fa-cog"></i>Configuration</a>
-            </li>
-        </ul>
-        <a href="\" class="white-text" target="_blank">Page d'accueil (non admin)</a>
-        <partial name="_LoginPartial" />
+            <!-- Links -->
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item @(controller=="meetup"?"active":"")">
+                    <a asp-area="admin" asp-controller="Meetup" asp-action="index" class="nav-link"><i class="fa fa-users" aria-hidden="true"></i>Rencontres</a>
+                </li>
+                <li class="nav-item  @(controller=="charter"?"active":"")">
+                    <a asp-area="admin" asp-controller="Charter" asp-action="index" class="nav-link"><i class="fa fa-gavel"></i> Charte</a>
+                </li>
+                <li class="nav-item  @(controller=="configuration"?"active":"")">
+                    <a asp-area="admin" asp-controller="Configuration" asp-action="index" class="nav-link"> <i class="fa fa-cog"></i>Configuration</a>
+                </li>
+            </ul>
+            <a href="\" class="white-text" target="_blank">Page d'accueil (non admin)</a>
+            <partial name="_LoginPartial" />
         </div>
-    <!-- Collapsible content -->
+        <!-- Collapsible content -->
 
-</nav>
-<!--/.Navbar-->
+    </nav>
+    <!--/.Navbar-->
 
 
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2018 - MyMeetup</p>
+            <p>&copy; 2018 - @ViewBag.AppTitle</p>
         </footer>
     </div>
-    
-<!-- JQuery -->
-<script type="text/javascript" src="~/lib/mdbootstrap/js/jquery-3.3.1.min.js"></script>
-<!-- Bootstrap tooltips -->
-<script type="text/javascript" src="~/lib/mdbootstrap/js/popper.min.js"></script>
-<!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="~/lib/mdbootstrap/js/bootstrap.min.js"></script>
-<!-- MDB core JavaScript -->
-<script type="text/javascript" src="~/lib/mdbootstrap/js/mdb.min.js"></script>
 
-<environment include="Development">
-    @*<script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>*@
-    <script src="~/js/site.js" asp-append-version="true"></script>
-</environment>
-<environment exclude="Development">
+    <!-- JQuery -->
+    <script type="text/javascript" src="~/lib/mdbootstrap/js/jquery-3.3.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="~/lib/mdbootstrap/js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="~/lib/mdbootstrap/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="~/lib/mdbootstrap/js/mdb.min.js"></script>
 
-    <script src="~/js/site.min.js" asp-append-version="true"></script>
-</environment>
+    <environment include="Development">
+        @*<script src="~/lib/jquery/dist/jquery.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>*@
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
 
 
     @RenderSection("Scripts", required: false)
