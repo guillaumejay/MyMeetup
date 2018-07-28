@@ -10,7 +10,7 @@ namespace MyMeetUp.Logic.Infrastructure.DataContexts
         {
             var optionsBuilder = new DbContextOptionsBuilder<MyMeetupContext>();
             optionsBuilder.UseSqlite(
-                "Data Source=MyMeetupLocal.db;");
+                "Data Source=App_Data\\MyMeetupLocal.db;");
 
             return new MyMeetupSqlLiteContext(optionsBuilder.Options);
         }
