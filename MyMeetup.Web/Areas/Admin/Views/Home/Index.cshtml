@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Administration";
 }
-<link href="~/lib/mdbootstrap/css/addons/datatables.min.css" rel="stylesheet">
+<script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
 <h2>Bonjour&nbsp;@Html.Raw(Model.HelloText)</h2>
 
 <table class="table table-striped table-bordered table-hover" cellspacing="0" id="dtMeetups">
@@ -54,7 +54,7 @@
 
 @section scripts
     {
-    <script type="text/javascript" src="~/lib/MDBootstrap/js/addons/datatables.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/datatables.min.js"></script>
     <script>
         $(function () {
             $("#dtMeetups").DataTable({
