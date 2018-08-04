@@ -72,6 +72,7 @@ namespace MyMeetup.Web.Controllers
                     var meetup = Domain.GetMeetup(model.MeetupId.Value, true);
                     email.Body += Environment.NewLine +
                                   $"Inscrit(e) à {meetup.Title} et son code d'enregistrement est {result.RegistrationCode}";
+                    email.ReplyTo = model.Email;
                 }
 
                 try
