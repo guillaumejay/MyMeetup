@@ -132,6 +132,8 @@ namespace MyMeetup.Web
             public void Initialize(ITelemetry telemetry)
             {
                 var context = _httpContextAccessor.HttpContext;
+                if (context == null)
+                    return;
                 if (context.User.Identity.IsAuthenticated)
                 {
                     var userName = context.User.Identity.Name;
