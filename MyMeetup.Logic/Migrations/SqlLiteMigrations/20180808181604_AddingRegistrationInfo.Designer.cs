@@ -2,30 +2,26 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyMeetUp.Logic.Infrastructure.DataContexts;
 
-namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
+namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
 {
-    [DbContext(typeof(MyMeetupSqlServerContext))]
-    [Migration("20180728045026_InitialCreate")]
-    partial class InitialCreate
+    [DbContext(typeof(MyMeetupSqlLiteContext))]
+    [Migration("20180808181604_AddingRegistrationInfo")]
+    partial class AddingRegistrationInfo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 
@@ -43,8 +39,7 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 
@@ -107,8 +102,7 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
             modelBuilder.Entity("MyMeetUp.Logic.Entities.AppParameter", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -130,8 +124,7 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
             modelBuilder.Entity("MyMeetUp.Logic.Entities.CharterContent", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Category")
                         .IsRequired()
@@ -161,19 +154,18 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
                     b.ToTable("CharterContents");
 
                     b.HasData(
-                        new { Id = 1, Category = "Communication sur le respect des lieux", Content = "Chaque membre de votre famille, présent à la rencontre, doit être informé que le respect des lieux est important pour que nous puissions revenir. Aussi merci de nous prévenir en cas d’éventuels dégâts pour montrer aux gérants notre implication dans la remise en état des lieux.", CreatedAt = new DateTime(2018, 7, 28, 4, 50, 26, 759, DateTimeKind.Utc), IsActive = true, Position = 1, UpdatedAt = new DateTime(2018, 7, 28, 4, 50, 26, 759, DateTimeKind.Utc) },
-                        new { Id = 2, Category = "Animaux", Content = "Les chiens sont tolérés, à condition qu'ils restent attachés ou auprès de vous en permanence.<br/>Ils ne doivent également pas être bruyants.", CreatedAt = new DateTime(2018, 7, 28, 4, 50, 26, 759, DateTimeKind.Utc), IsActive = true, Position = 3, UpdatedAt = new DateTime(2018, 7, 28, 4, 50, 26, 759, DateTimeKind.Utc) },
-                        new { Id = 3, Category = "Participation financière", Content = " Chaque famille participante devra régler 3€ de participation à Rencontres Nonscos : ces paiements permettront à l'association de couvrir ses dépenses d'existence (assurance notamment)", CreatedAt = new DateTime(2018, 7, 28, 4, 50, 26, 759, DateTimeKind.Utc), IsActive = true, Position = 2, UpdatedAt = new DateTime(2018, 7, 28, 4, 50, 26, 759, DateTimeKind.Utc) },
-                        new { Id = 4, Category = "Alcool", Content = "La consommation d’alcool doit être raisonnée, pour toutes les personnes participantes, quel que soit leur âge, et bien sûr, les parents ou les référents sont invités à être attentifs à cette problématique vis-à-vis des personnes dont ils sont responsables.", CreatedAt = new DateTime(2018, 7, 28, 4, 50, 26, 759, DateTimeKind.Utc), IsActive = true, Position = 4, UpdatedAt = new DateTime(2018, 7, 28, 4, 50, 26, 759, DateTimeKind.Utc) },
-                        new { Id = 5, Category = "Spécifique à la Taillade", Content = "La tradition est née de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants", CreatedAt = new DateTime(2018, 7, 28, 4, 50, 26, 759, DateTimeKind.Utc), IsActive = true, MeetupId = 1, Position = 1, UpdatedAt = new DateTime(2018, 7, 28, 4, 50, 26, 759, DateTimeKind.Utc) }
+                        new { Id = 1, Category = "Communication sur le respect des lieux", Content = "Chaque membre de votre famille, présent à la rencontre, doit être informé que le respect des lieux est important pour que nous puissions revenir. Aussi merci de nous prévenir en cas d’éventuels dégâts pour montrer aux gérants notre implication dans la remise en état des lieux.", CreatedAt = new DateTime(2018, 8, 8, 18, 16, 4, 87, DateTimeKind.Utc), IsActive = true, Position = 1, UpdatedAt = new DateTime(2018, 8, 8, 18, 16, 4, 87, DateTimeKind.Utc) },
+                        new { Id = 2, Category = "Animaux", Content = "Les chiens sont tolérés, à condition qu'ils restent attachés ou auprès de vous en permanence.<br/>Ils ne doivent également pas être bruyants.", CreatedAt = new DateTime(2018, 8, 8, 18, 16, 4, 87, DateTimeKind.Utc), IsActive = true, Position = 3, UpdatedAt = new DateTime(2018, 8, 8, 18, 16, 4, 87, DateTimeKind.Utc) },
+                        new { Id = 3, Category = "Participation financière", Content = " Chaque famille participante devra régler 3€ de participation à Rencontres Nonscos : ces paiements permettront à l'association de couvrir ses dépenses d'existence (assurance notamment)", CreatedAt = new DateTime(2018, 8, 8, 18, 16, 4, 87, DateTimeKind.Utc), IsActive = true, Position = 2, UpdatedAt = new DateTime(2018, 8, 8, 18, 16, 4, 87, DateTimeKind.Utc) },
+                        new { Id = 4, Category = "Alcool", Content = "La consommation d’alcool doit être raisonnée, pour toutes les personnes participantes, quel que soit leur âge, et bien sûr, les parents ou les référents sont invités à être attentifs à cette problématique vis-à-vis des personnes dont ils sont responsables.", CreatedAt = new DateTime(2018, 8, 8, 18, 16, 4, 87, DateTimeKind.Utc), IsActive = true, Position = 4, UpdatedAt = new DateTime(2018, 8, 8, 18, 16, 4, 87, DateTimeKind.Utc) },
+                        new { Id = 5, Category = "Spécifique à la Taillade", Content = "La tradition est née de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants", CreatedAt = new DateTime(2018, 8, 8, 18, 16, 4, 87, DateTimeKind.Utc), IsActive = true, MeetupId = 1, Position = 1, UpdatedAt = new DateTime(2018, 8, 8, 18, 16, 4, 87, DateTimeKind.Utc) }
                     );
                 });
 
             modelBuilder.Entity("MyMeetUp.Logic.Entities.Meetup", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -210,13 +202,13 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
                     b.ToTable("Meetups");
 
                     b.HasData(
-                        new { Id = 1, CreatedAt = new DateTime(2018, 7, 28, 4, 50, 26, 758, DateTimeKind.Utc), EndDate = new DateTime(2018, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), IsVisible = true, OpenForRegistrationOn = new DateTime(2018, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), PublicDescription = @"Rencontre près de Casteljaloux(47). Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.<br/><div>
+                        new { Id = 1, CreatedAt = new DateTime(2018, 8, 8, 18, 16, 4, 87, DateTimeKind.Utc), EndDate = new DateTime(2018, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), IsVisible = true, OpenForRegistrationOn = new DateTime(2018, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), PublicDescription = @"Rencontre près de Casteljaloux(47). Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.<br/><div>
 <h2><u>Comment s'inscrire &agrave; la rencontre ?</u></h2>
 </div>
 <div>Ne peuvent s'inscrire &agrave; cette rencontre que les personnes qui s'engagent &agrave; respecter la charte mise en place.</div>
 <div><strong>Proc&eacute;dure&nbsp;</strong>:</div>
 <div>1. Vous lisez l'engagement que vous demande la charte</div>
-<div>2. Si la charte vous convient : vous vous engagez &agrave; la respecter en la validant, la signant num&eacute;riquement et en nous donnant vos coordonn&eacute;es : le tout nous sera adress&eacute; directement.</div>", RegisteredDescription = "<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail <div><strong>", StartDate = new DateTime(2018, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), Title = "La Taillade 2018", TitleImage = "La-Taillade.jpg", UpdatedAt = new DateTime(2018, 7, 28, 4, 50, 26, 758, DateTimeKind.Utc) }
+<div>2. Si la charte vous convient : vous vous engagez &agrave; la respecter en la validant, la signant num&eacute;riquement et en nous donnant vos coordonn&eacute;es : le tout nous sera adress&eacute; directement.</div>", RegisteredDescription = "<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail <div><strong>", StartDate = new DateTime(2018, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), Title = "La Taillade 2018", TitleImage = "La-Taillade.jpg", UpdatedAt = new DateTime(2018, 8, 8, 18, 16, 4, 87, DateTimeKind.Utc) }
                     );
                 });
 
@@ -236,8 +228,7 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
             modelBuilder.Entity("MyMeetUp.Logic.Entities.Registration", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -245,10 +236,17 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
 
                     b.Property<int>("MeetupId");
 
+                    b.Property<string>("Notes")
+                        .HasMaxLength(250);
+
                     b.Property<decimal>("PaidFees");
+
+                    b.Property<int?>("ReferentUserId");
 
                     b.Property<string>("RegistrationCode")
                         .HasMaxLength(20);
+
+                    b.Property<int>("RegistrationStatus");
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
@@ -260,6 +258,8 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
 
                     b.HasIndex("MeetupId");
 
+                    b.HasIndex("ReferentUserId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Registrations");
@@ -268,8 +268,7 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
             modelBuilder.Entity("MyMeetUp.Logic.Infrastructure.MyMeetupRole", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -284,8 +283,7 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
                 });
@@ -293,8 +291,7 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
             modelBuilder.Entity("MyMeetUp.Logic.Infrastructure.MyMeetupUser", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
 
@@ -344,8 +341,7 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -421,6 +417,10 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
                         .WithMany()
                         .HasForeignKey("MeetupId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MyMeetUp.Logic.Infrastructure.MyMeetupUser", "ReferentUser")
+                        .WithMany()
+                        .HasForeignKey("ReferentUserId");
 
                     b.HasOne("MyMeetUp.Logic.Infrastructure.MyMeetupUser", "User")
                         .WithMany()
