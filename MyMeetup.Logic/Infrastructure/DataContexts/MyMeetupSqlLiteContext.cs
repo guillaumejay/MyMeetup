@@ -3,7 +3,7 @@
 namespace MyMeetUp.Logic.Infrastructure.DataContexts
 {
     /// <summary>
-    ///  Add-Migration InitialCreate -Context MyMeetupSqlLiteContext -OutputDir Migrations\SqlLiteMigrations
+    ///  Add-Migration  -Context MyMeetupSqlLiteContext -OutputDir Migrations\SqlLiteMigrations
     /// </summary>
     public class MyMeetupSqlLiteContext:MyMeetupContext
     {

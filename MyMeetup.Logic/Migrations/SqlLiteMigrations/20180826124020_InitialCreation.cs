@@ -58,7 +58,8 @@ namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
                     ConcurrencyStamp = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
                     FirstName = table.Column<string>(maxLength: 60, nullable: false),
-                    LastName = table.Column<string>(maxLength: 60, nullable: false)
+                    LastName = table.Column<string>(maxLength: 60, nullable: false),
+                    IsOkToGetMeetupsInfo = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -254,7 +255,11 @@ namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
                     UserId = table.Column<int>(nullable: false),
                     MeetupId = table.Column<int>(nullable: false),
                     RegistrationCode = table.Column<string>(maxLength: 20, nullable: true),
-                    PaidFees = table.Column<decimal>(nullable: false)
+                    ReferentUserId = table.Column<int>(nullable: true),
+                    NumberOfPersons = table.Column<int>(nullable: false),
+                    PaidFees = table.Column<decimal>(nullable: false),
+                    RegistrationStatus = table.Column<int>(nullable: false),
+                    Notes = table.Column<string>(maxLength: 250, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -266,48 +271,18 @@ namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_Registrations_AspNetUsers_ReferentUserId",
+                        column: x => x.ReferentUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Registrations_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.InsertData(
-                table: "CharterContents",
-                columns: new[] { "Id", "Category", "Content", "CreatedAt", "IsActive", "MeetupId", "Position", "UpdatedAt" },
-                values: new object[] { 1, "Communication sur le respect des lieux", "Chaque membre de votre famille, présent à la rencontre, doit être informé que le respect des lieux est important pour que nous puissions revenir. Aussi merci de nous prévenir en cas d’éventuels dégâts pour montrer aux gérants notre implication dans la remise en état des lieux.", new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc), true, null, 1, new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc) });
-
-            migrationBuilder.InsertData(
-                table: "CharterContents",
-                columns: new[] { "Id", "Category", "Content", "CreatedAt", "IsActive", "MeetupId", "Position", "UpdatedAt" },
-                values: new object[] { 2, "Animaux", "Les chiens sont tolérés, à condition qu'ils restent attachés ou auprès de vous en permanence.<br/>Ils ne doivent également pas être bruyants.", new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc), true, null, 3, new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc) });
-
-            migrationBuilder.InsertData(
-                table: "CharterContents",
-                columns: new[] { "Id", "Category", "Content", "CreatedAt", "IsActive", "MeetupId", "Position", "UpdatedAt" },
-                values: new object[] { 3, "Participation financière", " Chaque famille participante devra régler 3€ de participation à Rencontres Nonscos : ces paiements permettront à l'association de couvrir ses dépenses d'existence (assurance notamment)", new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc), true, null, 2, new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc) });
-
-            migrationBuilder.InsertData(
-                table: "CharterContents",
-                columns: new[] { "Id", "Category", "Content", "CreatedAt", "IsActive", "MeetupId", "Position", "UpdatedAt" },
-                values: new object[] { 4, "Alcool", "La consommation d’alcool doit être raisonnée, pour toutes les personnes participantes, quel que soit leur âge, et bien sûr, les parents ou les référents sont invités à être attentifs à cette problématique vis-à-vis des personnes dont ils sont responsables.", new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc), true, null, 4, new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc) });
-
-            migrationBuilder.InsertData(
-                table: "Meetups",
-                columns: new[] { "Id", "CreatedAt", "EndDate", "IsVisible", "OpenForRegistrationOn", "PublicDescription", "RegisteredDescription", "StartDate", "Title", "TitleImage", "UpdatedAt" },
-                values: new object[] { 1, new DateTime(2018, 7, 28, 4, 42, 22, 198, DateTimeKind.Utc), new DateTime(2018, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), true, new DateTime(2018, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), @"Rencontre près de Casteljaloux(47). Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.<br/><div>
-<h2><u>Comment s'inscrire &agrave; la rencontre ?</u></h2>
-</div>
-<div>Ne peuvent s'inscrire &agrave; cette rencontre que les personnes qui s'engagent &agrave; respecter la charte mise en place.</div>
-<div><strong>Proc&eacute;dure&nbsp;</strong>:</div>
-<div>1. Vous lisez l'engagement que vous demande la charte</div>
-<div>2. Si la charte vous convient : vous vous engagez &agrave; la respecter en la validant, la signant num&eacute;riquement et en nous donnant vos coordonn&eacute;es : le tout nous sera adress&eacute; directement.</div>", "<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail <div><strong>", new DateTime(2018, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "La Taillade 2018", "La-Taillade.jpg", new DateTime(2018, 7, 28, 4, 42, 22, 198, DateTimeKind.Utc) });
-
-            migrationBuilder.InsertData(
-                table: "CharterContents",
-                columns: new[] { "Id", "Category", "Content", "CreatedAt", "IsActive", "MeetupId", "Position", "UpdatedAt" },
-                values: new object[] { 5, "Spécifique à la Taillade", "La tradition est née de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants", new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc), true, 1, 1, new DateTime(2018, 7, 28, 4, 42, 22, 199, DateTimeKind.Utc) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -355,6 +330,11 @@ namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
                 name: "IX_Registrations_MeetupId",
                 table: "Registrations",
                 column: "MeetupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Registrations_ReferentUserId",
+                table: "Registrations",
+                column: "ReferentUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Registrations_UserId",

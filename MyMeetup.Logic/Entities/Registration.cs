@@ -36,6 +36,8 @@ namespace MyMeetUp.Logic.Entities
         [ForeignKey(nameof(ReferentUserId))]
         public MyMeetupUser ReferentUser { get; set; }
 
+        public int NumberOfPersons { get; set; }
+
         public decimal PaidFees { get; set; }
 
         public static string CreateCode(MyMeetupUser user, int meetupId)

@@ -9,8 +9,8 @@ using MyMeetUp.Logic.Infrastructure.DataContexts;
 namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
 {
     [DbContext(typeof(MyMeetupSqlLiteContext))]
-    [Migration("20180808181604_AddingRegistrationInfo")]
-    partial class AddingRegistrationInfo
+    [Migration("20180826124020_InitialCreation")]
+    partial class InitialCreation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -152,14 +152,6 @@ namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
                     b.HasIndex("MeetupId");
 
                     b.ToTable("CharterContents");
-
-                    b.HasData(
-                        new { Id = 1, Category = "Communication sur le respect des lieux", Content = "Chaque membre de votre famille, présent à la rencontre, doit être informé que le respect des lieux est important pour que nous puissions revenir. Aussi merci de nous prévenir en cas d’éventuels dégâts pour montrer aux gérants notre implication dans la remise en état des lieux.", CreatedAt = new DateTime(2018, 8, 8, 18, 16, 4, 87, DateTimeKind.Utc), IsActive = true, Position = 1, UpdatedAt = new DateTime(2018, 8, 8, 18, 16, 4, 87, DateTimeKind.Utc) },
-                        new { Id = 2, Category = "Animaux", Content = "Les chiens sont tolérés, à condition qu'ils restent attachés ou auprès de vous en permanence.<br/>Ils ne doivent également pas être bruyants.", CreatedAt = new DateTime(2018, 8, 8, 18, 16, 4, 87, DateTimeKind.Utc), IsActive = true, Position = 3, UpdatedAt = new DateTime(2018, 8, 8, 18, 16, 4, 87, DateTimeKind.Utc) },
-                        new { Id = 3, Category = "Participation financière", Content = " Chaque famille participante devra régler 3€ de participation à Rencontres Nonscos : ces paiements permettront à l'association de couvrir ses dépenses d'existence (assurance notamment)", CreatedAt = new DateTime(2018, 8, 8, 18, 16, 4, 87, DateTimeKind.Utc), IsActive = true, Position = 2, UpdatedAt = new DateTime(2018, 8, 8, 18, 16, 4, 87, DateTimeKind.Utc) },
-                        new { Id = 4, Category = "Alcool", Content = "La consommation d’alcool doit être raisonnée, pour toutes les personnes participantes, quel que soit leur âge, et bien sûr, les parents ou les référents sont invités à être attentifs à cette problématique vis-à-vis des personnes dont ils sont responsables.", CreatedAt = new DateTime(2018, 8, 8, 18, 16, 4, 87, DateTimeKind.Utc), IsActive = true, Position = 4, UpdatedAt = new DateTime(2018, 8, 8, 18, 16, 4, 87, DateTimeKind.Utc) },
-                        new { Id = 5, Category = "Spécifique à la Taillade", Content = "La tradition est née de faire des trous autour du barbecue, il est important de les reboucher au départ des enfants", CreatedAt = new DateTime(2018, 8, 8, 18, 16, 4, 87, DateTimeKind.Utc), IsActive = true, MeetupId = 1, Position = 1, UpdatedAt = new DateTime(2018, 8, 8, 18, 16, 4, 87, DateTimeKind.Utc) }
-                    );
                 });
 
             modelBuilder.Entity("MyMeetUp.Logic.Entities.Meetup", b =>
@@ -200,16 +192,6 @@ namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
                     b.HasKey("Id");
 
                     b.ToTable("Meetups");
-
-                    b.HasData(
-                        new { Id = 1, CreatedAt = new DateTime(2018, 8, 8, 18, 16, 4, 87, DateTimeKind.Utc), EndDate = new DateTime(2018, 10, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), IsVisible = true, OpenForRegistrationOn = new DateTime(2018, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), PublicDescription = @"Rencontre près de Casteljaloux(47). Situé dans un écrin de forêt, les hébergements se répartissent entre gîtes, landettes, emplacements pour tentes et camions, et quelques yourtes.<br/><div>
-<h2><u>Comment s'inscrire &agrave; la rencontre ?</u></h2>
-</div>
-<div>Ne peuvent s'inscrire &agrave; cette rencontre que les personnes qui s'engagent &agrave; respecter la charte mise en place.</div>
-<div><strong>Proc&eacute;dure&nbsp;</strong>:</div>
-<div>1. Vous lisez l'engagement que vous demande la charte</div>
-<div>2. Si la charte vous convient : vous vous engagez &agrave; la respecter en la validant, la signant num&eacute;riquement et en nous donnant vos coordonn&eacute;es : le tout nous sera adress&eacute; directement.</div>", RegisteredDescription = "<div><strong>Toutes les inscriptions (locatif ou camping) doivent se faire uniquement par mail <div><strong>", StartDate = new DateTime(2018, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), Title = "La Taillade 2018", TitleImage = "La-Taillade.jpg", UpdatedAt = new DateTime(2018, 8, 8, 18, 16, 4, 87, DateTimeKind.Utc) }
-                    );
                 });
 
             modelBuilder.Entity("MyMeetUp.Logic.Entities.MeetupAdmin", b =>
@@ -238,6 +220,8 @@ namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
 
                     b.Property<string>("Notes")
                         .HasMaxLength(250);
+
+                    b.Property<int>("NumberOfPersons");
 
                     b.Property<decimal>("PaidFees");
 
@@ -306,6 +290,8 @@ namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(60);
+
+                    b.Property<bool>("IsOkToGetMeetupsInfo");
 
                     b.Property<string>("LastName")
                         .IsRequired()

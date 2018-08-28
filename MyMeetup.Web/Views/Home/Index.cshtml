@@ -5,7 +5,7 @@
     Layout = "_layoutIndex";
     ViewData["Title"] = "Rencontres non-scolarisées";
 }
-<br/>
+<br />
 <div class="text-center">
     <H1>Bonjour Ami-e !</H1>
 </div>
@@ -74,16 +74,16 @@
 </div>
 <div class="row" id="divInscription" style="display:none">
     <div class="col-sm-12">
-        <div class="card text-center" >
+        <div class="card text-center">
             <div class="card-header success-color white-text">
                 Finalisons ta pré-inscription
             </div>
             <div class="card-body">
-                <form method="post" asp-action="Index" asp-controller="Home" id="meetup-form" novalidate class="needs-validation" > 
+                <form method="post" asp-action="Index" asp-controller="Home" id="meetup-form" novalidate class="needs-validation">
                     <div class="form-row">
                         <div class="col">
                             <div class="md-form">
-                                <input type="text" class="form-control" maxlength="50" required  id="inputFirstName" name="firstName" re>
+                                <input type="text" class="form-control" maxlength="50" required id="inputFirstName" name="firstName" re>
                                 <label for="inputFirstName">Prénom</label>
                                 <div class="invalid-feedback">
                                     Ne sois pas timide !
@@ -94,7 +94,7 @@
                             <div class="md-form">
                                 <input type="text" required maxlength="50" required class="form-control" id="inputName" name="name">
                                 <label for="inputName">Nom</label>
-                            
+
                                 <div class="invalid-feedback">
                                     Ne sois pas timide !
                                 </div>
@@ -107,7 +107,7 @@
                                 <input type="email" required maxlength="50" class="form-control" id="inputEmail" name="email">
                                 <label for="inputEmail">Email</label>
                                 <div class="invalid-feedback">
-                                   Nous avons besoin de te contacter !
+                                    Nous avons besoin de te contacter !
                                 </div>
                             </div>
                         </div>
@@ -121,47 +121,63 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <em>Nous n'utiliserons cet e-mail que pour vous tenir au courant des informations relatives à cette rencontre</em>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="isOkToGetEmail" @*@(Model.IsVisible ? "checked" : "")*@
+                                       onchange="$('#isOkToGetEmail').val($(this).is(':checked') ? 'true' : 'false' )" />
+                                <input type="hidden" @*value="@(Model.IsVisible.ToString())"*@ id="hidIsOkToGetEmail" name="@nameof(SigninMeetupModel.IsOkToGetMeetupsInfo)" />
+                                <label class="custom-control-label" for="isOkToGetEmail">Cochez cette case pour nous autoriser &aacute; vous pr&eacute;venir par email de nos futures rencontres</label>
+
+                            </div>
+                        </div>
+                    </div>
                     <input type="hidden" name="@nameof(SigninMeetupModel.MeetupId)" value="@Model.Meetup.Id" />
                 </form>
 
             </div>
-            <div id ="divBtnSignin" class="card-footer text-muted success-color white-text">
-                <a class="btn btn-success"onclick="MySubmit()">Je me pré-inscris</a>
+            <div id="divBtnSignin" class="card-footer text-muted success-color white-text">
+                <a class="btn btn-success" onclick="MySubmit()">Je me pré-inscris</a>
             </div>
         </div>
     </div>
 </div>
-    @section Scripts
+@section Scripts
     {
-        <script>
-            $(function () {
-            
-            });
-            function MySubmit() {
-                var form = document.getElementById('meetup-form');
-                if (form.checkValidity() === false) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                } else {
-                    form.submit();
-                }
-                form.classList.add('was-validated');
+    <script>
+        $(function () {
 
+        });
+        function MySubmit() {
+            var form = document.getElementById('meetup-form');
+            if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+            } else {
+                form.submit();
             }
-            function deroule(i) {
-                $("#Accepte" + i).prop("disabled", true);
-                $("#lblCharte" + i).html("J'ai accepté");
-                $("#lblCharte" + i).css('text-decoration', 'underline');
-                var next = $("#divCharte" + (i + 1));
-                if (next.length == 0) {
-                    next = $("#divInscription");
-                }
-                next.show();
-                $('html, body').animate({
-                        scrollTop: next.offset().top
-                    },
-                    2000);
-            }
+            form.classList.add('was-validated');
 
-        </script>
-    }
+        }
+        function deroule(i) {
+            $("#Accepte" + i).prop("disabled", true);
+            $("#lblCharte" + i).html("J'ai accepté");
+            $("#lblCharte" + i).css('text-decoration', 'underline');
+            var next = $("#divCharte" + (i + 1));
+            if (next.length == 0) {
+                next = $("#divInscription");
+            }
+            next.show();
+            $('html, body').animate({
+                scrollTop: next.offset().top
+            },
+                2000);
+        }
+
+    </script>
+}

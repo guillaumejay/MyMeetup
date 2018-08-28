@@ -20,5 +20,7 @@ namespace MyMeetUp.Logic.Models
         public string PhoneNumber { get; set; }
 
         public int? MeetupId { get; set; }
+
+        public bool IsOkToGetMeetupsInfo { get; set; }
     }
 }

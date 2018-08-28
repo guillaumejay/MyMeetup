@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using MyMeetUp.Logic.Models;
 
@@ -15,6 +16,8 @@ namespace MyMeetUp.Logic.Infrastructure
 
         [StringLength(60)][Required]
         public string LastName { get; set; }
+
+        public bool IsOkToGetMeetupsInfo { get; set; }
 
         public string Initials => FirstName.ToLower().Substring(0, 1) + LastName.ToLower().Substring(0, 1);
 
@@ -36,11 +39,12 @@ namespace MyMeetUp.Logic.Infrastructure
         {
             return new MyMeetupUser
             {
-                FirstName=model.FirstName.Trim(),
+                FirstName = model.FirstName.Trim(),
                 LastName = model.Name.Trim(),
-                Email=model.Email.Trim(),
+                Email = model.Email.Trim(),
                 PhoneNumber = model.PhoneNumber?.Trim(),
                 UserName = model.Email.Trim(),
+                IsOkToGetMeetupsInfo = model.IsOkToGetMeetupsInfo
             };
         }
     }
