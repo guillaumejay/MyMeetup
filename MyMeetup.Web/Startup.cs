@@ -80,7 +80,9 @@ namespace MyMeetup.Web
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+             //   app.UseDeveloperExceptionPage();
+              //  app.UseDatabaseErrorPage();
+               app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
             var supportedCultures = new List<CultureInfo>
@@ -98,7 +100,7 @@ namespace MyMeetup.Web
                 SupportedUICultures = supportedCultures
             };
             app.UseRequestLocalization(localizationOptions);
-            app.UseHttpsRedirection();
+         //  app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
