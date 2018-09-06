@@ -1,0 +1,8 @@
+﻿@using MyMeetup.Web.ViewComponents
+@model MyMeetup.Web.Areas.Admin.Models.UserDetailsModel
+
+@{
+    ViewData["Title"] = "Détail utilisateur";
+}
+
+@await Component.InvokeAsync(typeof(MyMeetup.Web.ViewComponents.UserViewComponent), new { userId = Model.Id})

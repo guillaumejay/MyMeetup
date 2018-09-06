@@ -1,0 +1,45 @@
+﻿@model MyMeetup.Web.Models.Components.UserModel
+@{
+}
+<div class="card w-100">
+    <div class="card-header primary-color white-text">
+        Edition d'un utilisateur
+    </div>
+    <form method="post" asp-controller="User" asp-action="Edit" asp-area="" id="frmUser">
+        <div class="card-body">
+            <h3 class="card-title">Utilisateur @Model.FirstName @Model.LastName (@Model.Id)</h3>
+            <div class="form-row">
+                <input type="hidden" value="@Model.Id" name="Id" />
+                
+                <div class="col-md-6">
+                    <div class="md-form">
+
+                        <input type="text" id="firstName"  class="form-control" required name="@nameof(Model.FirstName)" maxlength="80"
+                               value="@Model.FirstName">
+                        <label for="firstName" class="font-weight-light">Prénom</label>
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="md-form">
+
+                        <input type="text" id="lastName" class="form-control" required name="@nameof(Model.LastName)" maxlength="80"
+                               value="@Model.LastName">
+                        <label for="lastName" class="font-weight-light">Nom</label>
+
+                    </div>
+            
+                </div>
+            </div>
+           
+            <a class="btn btn-primary" onclick="validateForm()">@(Model.Id != 0 ? "Modifier" : "Ajouter")</a>
+            @*<a href="#" class="btn btn-secondary">Annuler</a>*@
+        </div>
+    </form>
+</div>
+<script>
+    function validateForm(id) {
+
+            document.getElementById('frmUser').submit();
+    }
+</script>

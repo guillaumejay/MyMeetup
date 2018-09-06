@@ -28,13 +28,15 @@ namespace MyMeetup.Web.Controllers
             return View(CreateIndexModel(CurrentRencontreId));
         }
 
-        private IndexModel CreateIndexModel(int rencontreId)
+        private IndexModel CreateIndexModel(int rencontreId, SigninMeetupModel signinMeetupModel=null)
         {
             IndexModel model = new IndexModel
             {
                 Meetup = Domain.GetMeetup(rencontreId, true),
-                Charter = Domain.GetCharterFor(rencontreId, false, true, true).ToList()
+                Charter = Domain.GetCharterFor(rencontreId, false, true, true).ToList(),
+                SigninMeetupModel = signinMeetupModel
             };
+
             return model;
         }
         [HttpGet]
@@ -49,8 +51,7 @@ namespace MyMeetup.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("Index",CreateIndexModel(CurrentRencontreId));
-
+                return View("Index",CreateIndexModel(CurrentRencontreId,model));
             }
 
             MyMeetupUser user = UserManager.FindByEmailAsync(model.Email.Trim()).Result;
