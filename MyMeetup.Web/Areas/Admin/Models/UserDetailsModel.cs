@@ -8,5 +8,7 @@ namespace MyMeetup.Web.Areas.Admin.Models
     public class UserDetailsModel
     {
         public int Id { get; set; }
+
+        public string Referrer { get; set; }
     }
 }

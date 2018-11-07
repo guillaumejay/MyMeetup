@@ -5,4 +5,4 @@
     ViewData["Title"] = "Détail utilisateur";
 }
 
-@await Component.InvokeAsync(typeof(MyMeetup.Web.ViewComponents.UserViewComponent), new { userId = Model.Id})
+@await Component.InvokeAsync(typeof(MyMeetup.Web.ViewComponents.UserViewComponent), new { userId = Model.Id, Referrer= Model.Referrer})

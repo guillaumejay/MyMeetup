@@ -11,7 +11,7 @@ namespace MyMeetup.Web.Infrastructure
         public MappingProfile()
         {
             CreateMap<Meetup, AdminMeetupModel>();
-            CreateMap<MyMeetupUser,UserModel>();
+            CreateMap<MyMeetupUser,UserEditModel>().ReverseMap();
         }
     }
 }

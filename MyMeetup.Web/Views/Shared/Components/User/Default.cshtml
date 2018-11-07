@@ -1,39 +1,55 @@
-﻿@model MyMeetup.Web.Models.Components.UserModel
+﻿@model MyMeetup.Web.Models.Components.UserEditModel
 @{
 }
 <div class="card w-100">
     <div class="card-header primary-color white-text">
         Edition d'un utilisateur
     </div>
-    <form method="post" asp-controller="User" asp-action="Edit" asp-area="" id="frmUser">
+    <form method="post" asp-controller="User" asp-action="Edit" asp-area="Admin" id="frmUser">
         <div class="card-body">
-            <h3 class="card-title">Utilisateur @Model.FirstName @Model.LastName (@Model.Id)</h3>
-            <div class="form-row">
-                <input type="hidden" value="@Model.Id" name="Id" />
-                
+            <h3 class="card-title">Utilisateur @Model.FirstName @Model.LastName <small>(@Model.Id)</small></h3> 
+            <input type="hidden" value="@Model.Id" name="Id" />
+            <input type="hidden" name="@nameof(Model.BackUrl)" value="@Model.BackUrl"/>
+            <div class="form-row">   
                 <div class="col-md-6">
                     <div class="md-form">
-
-                        <input type="text" id="firstName"  class="form-control" required name="@nameof(Model.FirstName)" maxlength="80"
+                        <input type="text" id="firstName" class="form-control" required name="@nameof(Model.FirstName)" maxlength="80"
                                value="@Model.FirstName">
                         <label for="firstName" class="font-weight-light">Prénom</label>
-
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="md-form">
-
                         <input type="text" id="lastName" class="form-control" required name="@nameof(Model.LastName)" maxlength="80"
                                value="@Model.LastName">
                         <label for="lastName" class="font-weight-light">Nom</label>
-
                     </div>
-            
                 </div>
             </div>
-           
-            <a class="btn btn-primary" onclick="validateForm()">@(Model.Id != 0 ? "Modifier" : "Ajouter")</a>
-            @*<a href="#" class="btn btn-secondary">Annuler</a>*@
+            <div class="form-row">   
+                <div class="col-md-6">
+                    <div class="md-form">
+                        <input type="email" id="email" class="form-control" required name="@nameof(Model.Email)" maxlength="80"
+                               value="@Model.Email">
+                        <label for="email" class="font-weight-light">Email</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                        <input type="checkbox" id="chkAutoriserEmail" name="@nameof(Model.IsOkToGetMeetupsInfo)" value="true"/>
+                        <label for="chkAutoriserEmail" id="lblAutoriserEmail">Accepte de recevoir des emails de RnS</label>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <input type="checkbox" id="chkSupprimer" name="chkSupprimer" onclick="gererSupprimer(this);" />
+                    <label for="chkSupprimer" id="lblSupprimer">Supprimer cet adhérent (totalement)</label>
+                </div>
+                <div class="col-md-6">
+                    <a class="btn btn-primary" style="width:160px" id="btnValider" onclick="validateForm()">@(Model.Id != 0 ? "Modifier" : "Ajouter")</a>
+                    <a onclick="validateForm()" id="btnSupprimer" style="display: none;width:160px" class="btn btn-danger">Supprimer</a>
+                </div>
+            </div>
+
         </div>
     </form>
 </div>
@@ -41,5 +57,16 @@
     function validateForm(id) {
 
             document.getElementById('frmUser').submit();
+    }
+    function gererSupprimer(chk) {
+        if (chk.checked) {
+            $("#lblSupprimer").addClass("texte-danger");
+            $("#btnSupprimer").show();
+            $("#btnValider").hide();
+        } else {
+            $("#lblSupprimer").removeClass("texte-danger");
+            $("#btnSupprimer").hide();
+            $("#btnValider").show();
+        }
     }
 </script>

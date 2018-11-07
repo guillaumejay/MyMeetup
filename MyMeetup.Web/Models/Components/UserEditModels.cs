@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace MyMeetup.Web.Models.Components
+﻿namespace MyMeetup.Web.Models.Components
 {
-    public class UserModel
+    public class UserEditModel
     {
         public string Email { get; set; }
 
@@ -16,5 +11,10 @@ namespace MyMeetup.Web.Models.Components
         public bool IsOkToGetMeetupsInfo { get; set; }
 
         public int Id { get; set; }
+
+        /// <summary>
+        /// Where to get back
+        /// </summary>
+        public string BackUrl { get; set; }
     }
 }

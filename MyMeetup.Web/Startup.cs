@@ -100,7 +100,7 @@ namespace MyMeetup.Web
                 SupportedUICultures = supportedCultures
             };
             app.UseRequestLocalization(localizationOptions);
-         //  app.UseHttpsRedirection();
+          app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 

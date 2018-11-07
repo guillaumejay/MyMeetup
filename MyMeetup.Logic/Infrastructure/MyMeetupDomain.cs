@@ -210,11 +210,9 @@ namespace MyMeetUp.Logic.Infrastructure
 
             return rau;
         }
-
-
-        public IQueryable<Registration> GetRegistrationsFor(int meetupId, bool readOnly)
+        public IQueryable<Registration> GetRegistrations(bool readOnly)
         {
-            var q = _context.Registrations.Where(x => x.MeetupId == meetupId);
+            var q = _context.Registrations.AsQueryable();
             if (readOnly)
             {
                 q = q.AsNoTracking();
@@ -222,5 +220,44 @@ namespace MyMeetUp.Logic.Infrastructure
 
             return q;
         }
+
+        public IQueryable<Registration> GetRegistrationsFor(int meetupId, bool readOnly)
+        {
+            var q = GetRegistrations(readOnly).Where(x => x.MeetupId == meetupId);
+            return q;
+        }
+
+        public void DeleteUserTotally(int userId, UserManager<MyMeetupUser> userManager)
+        {
+            var registrations = _context.Registrations.Where(x => x.UserId == userId).ToList();
+            _context.RemoveRange(registrations);
+            _context.SaveChanges();
+            MyMeetupUser user = userManager.Users.First(x => x.Id == userId);
+            var result = userManager.DeleteAsync(user).Result;
+
+        }
+
+        public void ModifyUser(MyMeetupUser model)
+        {
+            var user = _context.Users.Single(x => x.Id == model.Id);
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Email = model.Email;
+            user.IsOkToGetMeetupsInfo = model.IsOkToGetMeetupsInfo;
+            _context.SaveChanges();
+        }
+
+        public IQueryable<MyMeetupUser> GetUsers(bool isReadOnly)
+        {
+            var query = _context.Users.AsQueryable();
+            if (isReadOnly)
+            {
+                query = query.AsNoTracking();
+            }
+
+            return query;
+        }
+
+  
     }
 }
