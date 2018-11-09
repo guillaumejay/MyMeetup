@@ -23,5 +23,10 @@ namespace MyMeetUp.Logic.Models
         public string RegCode { get; set; }
 
         public DateTime RegisteredOn { get; set; }
+
+        /// <summary>
+        /// https://datatables.net/manual/data/orthogonal-data
+        /// </summary>
+        public string RegisteredOnSort => RegisteredOn.ToString("yyyy/MM/dd hh:mm");
     }
 }

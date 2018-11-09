@@ -35,7 +35,8 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                        <input type="checkbox" id="chkAutoriserEmail" name="@nameof(Model.IsOkToGetMeetupsInfo)" value="true"/>
+                    <input type="checkbox" id="chkAutoriserEmail" name="@nameof(Model.IsOkToGetMeetupsInfo)"
+                           value="true" @(Model.IsOkToGetMeetupsInfo?"checked":"")/>
                         <label for="chkAutoriserEmail" id="lblAutoriserEmail">Accepte de recevoir des emails de RnS</label>
                 </div>
             </div>

@@ -18,6 +18,11 @@ namespace MyMeetUp.Logic.Models
         public string Email { get; set; }
         public DateTime? RegisteredOn { get; set; }
 
+        /// <summary>
+        /// https://datatables.net/manual/data/orthogonal-data
+        /// </summary>
+        public string RegisteredOnSort => RegisteredOn?.ToString("yyyy/MM/dd hh:mm") ?? "";
+
         public int NbMetupsRegistered { get; set; }
 
         public UserModel()

@@ -33,10 +33,11 @@ namespace MyMeetup.Web.Areas.Admin.Controllers
             foreach (var user in participants)
             {
                 var info = new UserModel(user);
-                IGrouping<int, Registration> userReg = regs[user.Id];
-                info.NbMetupsRegistered = userReg.Count();
-                info.RegisteredOn = userReg.FirstOrDefault()?.CreatedAt;
-              
+                if  (regs.TryGetValue(user.Id, out IGrouping<int,Registration> userReg))
+                {
+                    info.NbMetupsRegistered = userReg.Count();
+                    info.RegisteredOn = userReg.FirstOrDefault()?.CreatedAt;
+                }
                 model.Users.Add(info);
             }
             return View(model);

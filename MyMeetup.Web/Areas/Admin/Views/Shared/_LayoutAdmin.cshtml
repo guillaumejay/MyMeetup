@@ -37,10 +37,13 @@
             <!-- Links -->
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item @(controller=="meetup"?"active":"")">
-                    <a asp-area="admin" asp-controller="Meetup" asp-action="index" class="nav-link"><i class="fa fa-users" aria-hidden="true"></i>Rencontres</a>
+                    <a asp-area="admin" asp-controller="Meetup" asp-action="index" class="nav-link"><i class="fa fa-home" aria-hidden="true"></i>Rencontres</a>
                 </li>
                 <li class="nav-item  @(controller=="charter"?"active":"")">
                     <a asp-area="admin" asp-controller="Charter" asp-action="index" class="nav-link"><i class="fa fa-gavel"></i> Charte</a>
+                </li>
+                <li class="nav-item  @(controller=="user"?"active":"")">
+                    <a asp-area="admin" asp-controller="User" asp-action="index" class="nav-link"><i class="fa fa-users"></i> Adhérents</a>
                 </li>
                 <li class="nav-item  @(controller=="configuration"?"active":"")">
                     <a asp-area="admin" asp-controller="Configuration" asp-action="index" class="nav-link"> <i class="fa fa-cog"></i>Configuration</a>

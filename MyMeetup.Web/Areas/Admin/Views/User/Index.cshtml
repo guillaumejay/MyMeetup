@@ -1,15 +1,15 @@
-﻿@model MyMeetup.Web.Areas.Admin.Models.UsersModel
+﻿@model MyMeetUp.Logic.Models.UsersModel
 @{
-    ViewData["Title"] = "Participants de " + Model.Title;
+    ViewData["Title"] = "Adhérents répertoriés";
 }
 <link href="~/lib/datatables/datatables.min.css" rel="stylesheet">
 
 <div class="card w-100">
     <div class="card-header primary-color white-text">
-        Participants pour @Model.Title
+        Adhérents
     </div>
     <div class="card-body">
-        <h3 class="card-title">@Model.Participants.Count inscrit@(Model.Participants.Count > 1 ? "s" : "") </h3>
+        <h3 class="card-title">@Model.Users.Count adhérent@(Model.Users.Count > 1 ? "s" : "") </h3>
         <p class="card-text">
             <table class="table table-striped table-bordered" cellspacing="0" id="dtParticipants">
                 <thead>
@@ -29,28 +29,31 @@
                   
                 </th>
                 <th class="th-sm">
-                    Code
+                    Accepte Emails
                   
                 </th>
                 <th class="th-sm">
-                    Inscrit
-                  
+                    Inscrit depuis le
+                </th>
+                <th class="th-sm">
+                    Nombre de<br/>rencontres
                 </th>
                 </thead>
                 <tbody>
-                    @foreach (var user in Model.Participants)
+                    @foreach (var user in Model.Users)
                     {
-                        <tr>
-                            
-                            <td><a href="/admin/User/Details?userId=@user.Id"><i class="fa fa-edit" aria-hidden="true"></i></a></td>
-                            <td>@user.LastName</td>
+                    <tr>
 
-                            <td>@user.FirstName</td>
+                        <td><a href="/admin/User/Details?userId=@user.Id"><i class="fa fa-edit" aria-hidden="true"></i></a></td>
+                        <td>@user.LastName</td>
 
-                            <td>@user.Email</td>
-                            <td>@user.RegCode </td>
-                            <td>@user.RegisteredOn.ToString("dd/MM/yy hh:mm") </td>
-                        </tr>
+                        <td>@user.FirstName</td>
+
+                        <td>@user.Email</td>
+                        <td>@(user.IsOkToGetMeetupsInfo?"Oui":"Non") </td>
+                        <td data-order="@user.RegisteredOnSort">@(user.RegisteredOn?.ToString("dd/MM/yyyy hh:mm")??"") </td>
+                        <td>@user.NbMetupsRegistered </td>
+                    </tr>
                     }
                 </tbody>
             </table>
