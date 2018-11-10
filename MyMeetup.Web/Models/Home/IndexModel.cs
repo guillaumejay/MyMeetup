@@ -12,5 +12,6 @@ namespace MyMeetup.Web.Models.Home
         public List<CharterContent> Charter { get; set; }=new List<CharterContent>();
 
         public SigninMeetupModel SigninMeetupModel { get; set; }
+        public HomePageDTO HomePageSetup { get; set; }
     }
 }

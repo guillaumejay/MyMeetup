@@ -1,41 +1,55 @@
-﻿using System;
+﻿using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using MyMeetup.Web.Infrastructure;
 using MyMeetup.Web.Models;
 using MyMeetup.Web.Models.Home;
 using MyMeetUp.Logic.Infrastructure;
 using MyMeetUp.Logic.Models;
+using System;
 using System.Diagnostics;
 using System.Linq;
-using Microsoft.ApplicationInsights;
-using MyMeetup.Web.Infrastructure;
+using AutoMapper;
+using MyMeetUp.Logic.Entities;
 
 namespace MyMeetup.Web.Controllers
 {
     public class HomeController : BaseController
     {
-        public int CurrentRencontreId = 1;
-        public HomeController(MyMeetupDomain domain, UserManager<MyMeetupUser> userManager, TelemetryClient telemetryClient) : base(domain, userManager, telemetryClient)
+        //private IMapper _mapper;
+        public Meetup CurrentMeetup;
+        public HomeController(MyMeetupDomain domain, UserManager<MyMeetupUser> userManager, TelemetryClient telemetryClient/*,IMapper mapper*/) : base(domain, userManager, telemetryClient)
         {
-
+            CurrentMeetup = Domain.GetNextMeetup(true);
+          //  _mapper = mapper;
         }
 
         public IActionResult Index()
         {
-            
 
-            return View(CreateIndexModel(CurrentRencontreId));
+
+            return View(CreateLandingPageModel());
         }
 
-        private IndexModel CreateIndexModel(int rencontreId, SigninMeetupModel signinMeetupModel=null)
+        private IndexModel CreateLandingPageModel(SigninMeetupModel signinMeetupModel = null)
         {
-            IndexModel model = new IndexModel
+            IndexModel model = new IndexModel();
+
+            if (CurrentMeetup != null)
             {
-                Meetup = Domain.GetMeetup(rencontreId, true),
-                Charter = Domain.GetCharterFor(rencontreId, false, true, true).ToList(),
-                SigninMeetupModel = signinMeetupModel
-            };
+                model.Meetup = CurrentMeetup;
+                model.Charter = Domain.GetCharterFor(CurrentMeetup.Id, false, true, true).ToList();
+                model.SigninMeetupModel = signinMeetupModel;
+            }
+            
+            else
+            {
+                model.Meetup=new Meetup();
+                model.Meetup.Title = Parameters.Value.HomeTitle;
+                model.Meetup.PublicDescription = Parameters.Value.HomeContent;
+                model.Meetup.TitleImage = Parameters.Value.HomeImage;
+            }
 
             return model;
         }
@@ -51,7 +65,7 @@ namespace MyMeetup.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("Index",CreateIndexModel(CurrentRencontreId,model));
+                return View("Index", CreateLandingPageModel( model));
             }
 
             MyMeetupUser user = UserManager.FindByEmailAsync(model.Email.Trim()).Result;
@@ -93,7 +107,7 @@ namespace MyMeetup.Web.Controllers
                 return View("MyAccount", GetMyAccountModel(configuration, user));
             }
 
-            return View("Index", CreateIndexModel(CurrentRencontreId));
+            return View("Index", CreateLandingPageModel());
         }
 
         private MyAccountModel GetMyAccountModel(IConfiguration configuration, MyMeetupUser currentUser = null)

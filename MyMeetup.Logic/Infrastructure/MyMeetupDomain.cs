@@ -38,13 +38,20 @@ namespace MyMeetUp.Logic.Infrastructure
         public void UpdateHomePage(HomePageDTO homePageSetup)
         {
             var parameters = GetAppParameter(false);
-            parameters.HomeImage = homePageSetup.HomeImage?? "La-Taillade.jpg";
-            parameters.HomeContent = homePageSetup.HomeContent;
+            parameters.HomeImage = homePageSetup.HomeImage;
             parameters.HomeTitle = homePageSetup.HomeTitle;
             _context.SaveChanges();
         }
 
         #region Meetup
+
+        public Meetup GetNextMeetup(bool readOnly)
+        {
+            var q = _context.Meetups.Where(m => m.StartDate > DateTime.Now && m.IsVisible && m.OpenForRegistrationOn.HasValue && m.OpenForRegistrationOn>DateTime.Now);
+            if (readOnly)
+                q = q.AsNoTracking();
+            return q.OrderBy(x => x.OpenForRegistrationOn).FirstOrDefault();
+        }
         public List<MyMeetupUser> GetParticipantsFor(int meetupId)
         {
             List<int> userIs = _context.Registrations.Where(r => r.MeetupId == meetupId).Select(x => x.UserId).ToList();
@@ -273,6 +280,6 @@ namespace MyMeetUp.Logic.Infrastructure
         }
 
 
-      
+        
     }
 }

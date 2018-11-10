@@ -5,6 +5,7 @@
     Layout = "_layoutIndex";
     ViewData["Title"] = "Rencontres non-scolarisées";
     var okForEmail = Model.SigninMeetupModel?.IsOkToGetMeetupsInfo ?? false;
+    bool displayMeetup = Model.Meetup.Id > 0;
 }
 <br />
 <div class="text-center">
@@ -27,9 +28,12 @@
 
         <!-- Title -->
         <h4 class="card-title"><strong>@Model.Meetup.Title</strong></h4>
-        <!-- Subtitle -->
-        <h6 class="font-weight-bold indigo-text py-2">@Model.Meetup.DefaultDateText</h6>
-        <!-- Text -->
+        @if (displayMeetup)
+        {
+            <!-- Subtitle -->
+            <h6 class="font-weight-bold indigo-text py-2">@Model.Meetup.DefaultDateText</h6>
+            <!-- Text -->
+        }
         <p class="card-text">
             @Html.Raw(Model.Meetup.PublicDescription)
         </p>
@@ -38,151 +42,156 @@
     </div>
 
 </div>
+@if (displayMeetup)
+{
+    <div class="row">
+        <!-- Card -->
+        @for (int i = 0; i < Model.Charter.Count; i++)
+        {
+            bool newRow = i == 0 || (i % 2 == 0);
 
-<div class="row">
-    <!-- Card -->
-    @for (int i = 0; i < Model.Charter.Count; i++)
-    {
-        bool newRow = i == 0 || (i % 2 == 0);
-
-        var contenu = Model.Charter[i];
-        string hiddenStyle = (i == 0) ? "" : "display:none;";
-        var chkId = "Accepte" + i;
+            var contenu = Model.Charter[i];
+            string hiddenStyle = (i == 0) ? "" : "display:none;";
+            var chkId = "Accepte" + i;
 
 
+            <div class="col-sm-12">
+                <div id="@($"divCharte{i}")" class="card text-center" style="min-height: 200px; @hiddenStyle">
+                    <div class="card-header success-color white-text">
+                        Lis et accepte :
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">@contenu.Category</h4>
+                        <p class="card-text" style="text-align: left !important">@Html.Raw(contenu.Content)</p>
+
+                    </div>
+                    <div class="card-footer text-muted ">
+                        <p class="mb-0">
+                            <!-- Default unchecked -->
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="@chkId" onchange="deroule(@i)">
+                                <label class="custom-control-label" id="@($"lblCharte{i}")" for="@chkId">J'ai lu et j'accepte</label>
+                            </div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+@if (displayMeetup)
+{
+    <div class="row" id="divInscription" style="display: none">
         <div class="col-sm-12">
-            <div id="@($"divCharte{i}")" class="card text-center" style="min-height: 200px; @hiddenStyle">
+            <div class="card text-center">
                 <div class="card-header success-color white-text">
-                    Lis et accepte :
+                    Finalisons ta pré-inscription
                 </div>
                 <div class="card-body">
-                    <h4 class="card-title">@contenu.Category</h4>
-                    <p class="card-text" style="text-align:left !important">@Html.Raw(contenu.Content)</p>
+                    <form method="post" asp-action="Index" asp-controller="Home" id="meetup-form" novalidate class="needs-validation">
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="md-form">
+                                    <input type="text" class="form-control" maxlength="50" required id="inputFirstName" name="firstName"
+                                           value="@Model.SigninMeetupModel?.FirstName">
+                                    <label for="inputFirstName">Prénom</label>
+                                    <div class="invalid-feedback">
+                                        Ne sois pas timide !
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="md-form">
+                                    <input type="text" required maxlength="50" class="form-control" id="inputName" name="name"
+                                           value="@Model.SigninMeetupModel?.Name">
+                                    <label for="inputName">Nom</label>
+
+                                    <div class="invalid-feedback">
+                                        Ne sois pas timide !
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="md-form">
+                                    <input type="email" required maxlength="50" class="form-control" id="inputEmail" name="email"
+                                           value="@Model.SigninMeetupModel?.Email">
+                                    <label for="inputEmail">Email</label>
+                                    <div class="invalid-feedback">
+                                        Nous avons besoin de te contacter !
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="md-form">
+                                    <input type="text" class="form-control" required id="inputPhone" name="phoneNumber"
+                                           value="@Model.SigninMeetupModel?.PhoneNumber">
+                                    <label for="inputPhone">Téléphone</label>
+                                    <div class="invalid-feedback">
+                                        Nous avons besoin de te contacter !
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <em>Nous n'utiliserons cet e-mail que pour vous tenir au courant des informations relatives à cette rencontre</em>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="isOkToGetEmail" @(okForEmail ? "checked" : "")
+                                           onchange="$('#hidIsOkToGetEmail').val($(this).is(':checked') ? 'true' : 'false')"/>
+                                    <input type="hidden" value="@(okForEmail.ToString())" *@ id="hidIsOkToGetEmail" name="@nameof(SigninMeetupModel.IsOkToGetMeetupsInfo)"/>
+                                    <label class="custom-control-label" for="isOkToGetEmail">Cochez cette case pour nous autoriser &aacute; vous pr&eacute;venir par email de nos futures rencontres</label>
+
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="@nameof(SigninMeetupModel.MeetupId)" value="@Model.Meetup.Id"/>
+                    </form>
 
                 </div>
-                <div class="card-footer text-muted ">
-                    <p class="mb-0">
-                        <!-- Default unchecked -->
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="@chkId" onchange="deroule(@i)">
-                            <label class="custom-control-label" id="@($"lblCharte{i}")" for="@chkId">J'ai lu et j'accepte</label>
-                        </div>
-                    </p>
+                <div id="divBtnSignin" class="card-footer text-muted success-color white-text">
+                    <a class="btn btn-success" onclick="MySubmit()">Je me pré-inscris</a>
                 </div>
-            </div>
-        </div>
-    }
-</div>
-<div class="row" id="divInscription" style="display:none">
-    <div class="col-sm-12">
-        <div class="card text-center">
-            <div class="card-header success-color white-text">
-                Finalisons ta pré-inscription
-            </div>
-            <div class="card-body">
-                <form method="post" asp-action="Index" asp-controller="Home" id="meetup-form" novalidate class="needs-validation">
-                    <div class="form-row">
-                        <div class="col">
-                            <div class="md-form">
-                                <input type="text" class="form-control" maxlength="50" required id="inputFirstName" name="firstName" 
-                                       value="@Model.SigninMeetupModel?.FirstName">
-                                <label for="inputFirstName">Prénom</label>
-                                <div class="invalid-feedback">
-                                    Ne sois pas timide !
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="md-form">
-                                <input type="text" required maxlength="50" class="form-control" id="inputName" name="name"
-                                       value="@Model.SigninMeetupModel?.Name">
-                                <label for="inputName">Nom</label>
-
-                                <div class="invalid-feedback">
-                                    Ne sois pas timide !
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col">
-                            <div class="md-form">
-                                <input type="email" required maxlength="50" class="form-control" id="inputEmail" name="email"
-                                       value="@Model.SigninMeetupModel?.Email">
-                                <label for="inputEmail">Email</label>
-                                <div class="invalid-feedback">
-                                    Nous avons besoin de te contacter !
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="md-form">
-                                <input type="text" class="form-control" required id="inputPhone" name="phoneNumber"
-                                       value="@Model.SigninMeetupModel?.PhoneNumber">
-                                <label for="inputPhone">Téléphone</label>
-                                <div class="invalid-feedback">
-                                    Nous avons besoin de te contacter !
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col">
-                            <em>Nous n'utiliserons cet e-mail que pour vous tenir au courant des informations relatives à cette rencontre</em>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="isOkToGetEmail" @(okForEmail ? "checked" : "")
-                                       onchange="$('#hidIsOkToGetEmail').val($(this).is(':checked') ? 'true' : 'false' )" />
-                                <input type="hidden" value="@(okForEmail.ToString())"*@ id="hidIsOkToGetEmail" name="@nameof(SigninMeetupModel.IsOkToGetMeetupsInfo)" />
-                                <label class="custom-control-label" for="isOkToGetEmail">Cochez cette case pour nous autoriser &aacute; vous pr&eacute;venir par email de nos futures rencontres</label>
-
-                            </div>
-                        </div>
-                    </div>
-                    <input type="hidden" name="@nameof(SigninMeetupModel.MeetupId)" value="@Model.Meetup.Id" />
-                </form>
-
-            </div>
-            <div id="divBtnSignin" class="card-footer text-muted success-color white-text">
-                <a class="btn btn-success" onclick="MySubmit()">Je me pré-inscris</a>
             </div>
         </div>
     </div>
-</div>
-@section Scripts
-    {
-    <script>
-        $(function () {
-
-        });
-        function MySubmit() {
-            var form = document.getElementById('meetup-form');
-            if (form.checkValidity() === false) {
-                event.preventDefault();
-                event.stopPropagation();
-            } else {
-                form.submit();
-            }
-            form.classList.add('was-validated');
-
-        }
-        function deroule(i) {
-            $("#Accepte" + i).prop("disabled", true);
-            $("#lblCharte" + i).html("J'ai accepté");
-            $("#lblCharte" + i).css('text-decoration', 'underline');
-            var next = $("#divCharte" + (i + 1));
-            if (next.length == 0) {
-                next = $("#divInscription");
-            }
-            next.show();
-            $('html, body').animate({
-                scrollTop: next.offset().top
-            },
-                2000);
-        }
-
-    </script>
 }
+    @section Scripts
+        {
+        <script>
+            $(function () {
+
+            });
+            function MySubmit() {
+                var form = document.getElementById('meetup-form');
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                } else {
+                    form.submit();
+                }
+                form.classList.add('was-validated');
+
+            }
+            function deroule(i) {
+                $("#Accepte" + i).prop("disabled", true);
+                $("#lblCharte" + i).html("J'ai accepté");
+                $("#lblCharte" + i).css('text-decoration', 'underline');
+                var next = $("#divCharte" + (i + 1));
+                if (next.length == 0) {
+                    next = $("#divInscription");
+                }
+                next.show();
+                $('html, body').animate({
+                    scrollTop: next.offset().top
+                },
+                    2000);
+            }
+
+        </script>
+    }
