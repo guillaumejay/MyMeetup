@@ -18,6 +18,11 @@ namespace MyMeetUp.Logic.Infrastructure
             _context = context;
         }
 
+        /// <summary>
+        /// one line by app/tenant
+        /// </summary>
+        /// <param name="readOnly"></param>
+        /// <returns></returns>
         public AppParameter GetAppParameter(bool @readOnly)
         {
             //TODO : add caching
@@ -28,6 +33,15 @@ namespace MyMeetUp.Logic.Infrastructure
 
             }
             return q.First();
+        }
+
+        public void UpdateHomePage(HomePageDTO homePageSetup)
+        {
+            var parameters = GetAppParameter(false);
+            parameters.HomeImage = homePageSetup.HomeImage?? "La-Taillade.jpg";
+            parameters.HomeContent = homePageSetup.HomeContent;
+            parameters.HomeTitle = homePageSetup.HomeTitle;
+            _context.SaveChanges();
         }
 
         #region Meetup
@@ -258,6 +272,7 @@ namespace MyMeetUp.Logic.Infrastructure
             return query;
         }
 
-  
+
+      
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -12,6 +13,7 @@ using MyMeetup.Web.Controllers;
 using MyMeetup.Web.Infrastructure;
 using MyMeetUp.Logic.Entities;
 using MyMeetUp.Logic.Infrastructure;
+using MyMeetUp.Logic.Models;
 
 namespace MyMeetup.Web.Areas.Admin.Controllers
 {
@@ -19,11 +21,13 @@ namespace MyMeetup.Web.Areas.Admin.Controllers
     [Authorize(Roles = MyMeetupRole.Administrateur)]
     public class ConfigurationController : BaseController
     {
-        private IConfiguration _configuration;
-        public ConfigurationController(MyMeetupDomain domain, UserManager<MyMeetupUser> userManager,IConfiguration configuration,TelemetryClient telemtryClient) : base(domain, userManager,telemtryClient)
+        private IMapper _mapper;
+        private readonly IConfiguration _configuration;
+        public ConfigurationController(MyMeetupDomain domain, UserManager<MyMeetupUser> userManager,IConfiguration configuration,IMapper mapper,TelemetryClient telemtryClient) : base(domain, userManager,telemtryClient)
 
         {
             _configuration = configuration;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
@@ -39,16 +43,20 @@ namespace MyMeetup.Web.Areas.Admin.Controllers
             model.SmtpServer = settings.Smtp;
             model.SmtpLogin = settings.Login;
             model.SmtpPassword = settings.Password.Length + " caractéres";
+            var parameters=Domain.GetAppParameter(true);
+            model.HomePage = _mapper.Map<HomePageDTO>(parameters);
             return model;
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Index(CharterContent charter)
+        public IActionResult EditHome(HomePageDTO homePageSetup)
         {
             if (!ModelState.IsValid)
                 return View("Index",GetModel());
-            Domain.AddOrUpdateCharter(charter);
+
+
+            Domain.UpdateHomePage(homePageSetup);
 
             return View("Index", GetModel());
         }

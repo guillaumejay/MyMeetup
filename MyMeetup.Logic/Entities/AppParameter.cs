@@ -8,5 +8,12 @@ namespace MyMeetUp.Logic.Entities
     {
         [Required][StringLength(80,MinimumLength = 3)]
         public string Title { get; set; }
+
+        [StringLength(120)]
+        public string HomeTitle { get; set; }
+
+        public string HomeContent { get; set; }
+
+        public string HomeImage { get; set; }
     }
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using MyMeetUp.Logic.Models;
 
 namespace MyMeetup.Web.Areas.Admin.Models
 {
@@ -12,5 +9,7 @@ namespace MyMeetup.Web.Areas.Admin.Models
         public string SmtpLogin { get; set; }
 
         public string SmtpPassword { get; set; }
+
+        public HomePageDTO HomePage { get; set; }
     }
 }

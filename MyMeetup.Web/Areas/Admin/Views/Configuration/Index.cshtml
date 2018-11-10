@@ -23,3 +23,60 @@
         </div>
     </div>
 </div>
+<div class="card w-100" style="margin-top: 10px">
+    <div class="card-header primary-color white-text">
+        Page de garde (quand aucune rencontre n'est ouverte à l'inscription)
+    </div>
+    <div class="card-body">
+        <form method="post" asp-controller="Configuration" asp-action="EditHome" asp-area="Admin" id="frmHome">
+            <div class="form-row">
+
+        
+                <div class="col-md-6">
+                    <div class="md-form">
+                        <input type="text" id="homeTitle" class="form-control" required name="@nameof(Model.HomePage.HomeTitle)" maxlength="80"
+                               value="@Model.HomePage.HomeTitle">
+                        <label for="homeTitle" class="font-weight-light">Titre</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="md-form">
+                        <input type="text" readonly="readonly" id="HomeImage" class="form-control" 
+                               name="@nameof(Model.HomePage.HomeImage)" maxlength="80"
+                               value="@Model.HomePage.HomeImage">
+                        <label for="HomeImage" class="font-weight-light">Image</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="PublicDescription">Description publique</label>
+                    <textarea class="meetupTextArea" required name="@nameof(Model.HomePage.HomeContent)" id="PublicDescription">@Model.HomePage.HomeContent</textarea>
+                </div>
+            </div>
+            <a class="btn btn-primary" onclick="validateForm('frmHome')">Modifier</a>
+            @*<a href="#" class="btn btn-secondary">Annuler</a>*@
+
+
+
+        </form>
+    </div>
+</div>
+@section scripts
+    {
+    <script src="~/lib/tinymce/js/tinymce.min.js"></script>
+
+    <script>
+        $(function () {
+            initMCE({ selector: '.meetupTextArea', height: "250" });
+        });
+
+
+        function validateForm(id) {
+            tinyMCE.triggerSave();
+
+
+            document.getElementById(id).submit();
+        }
+    </script>
+}
