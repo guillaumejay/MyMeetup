@@ -40,6 +40,7 @@ namespace MyMeetUp.Logic.Infrastructure
             var parameters = GetAppParameter(false);
             parameters.HomeImage = homePageSetup.HomeImage;
             parameters.HomeTitle = homePageSetup.HomeTitle;
+            parameters.HomeContent = homePageSetup.HomeContent;
             _context.SaveChanges();
         }
 
