@@ -44,10 +44,20 @@ namespace MyMeetup.Web.Areas.Admin.Controllers
         }
         public IActionResult Details(int userId)
         {
-            UserDetailsModel udm = new UserDetailsModel { Id = userId, Referrer = Request.Headers["Referer"].ToString() };
+            var udm = GetUserDetails(userId, Request.Headers["Referer"].ToString());
             return View(udm);
         }
 
+        private UserDetailsModel GetUserDetails(int userId,string referrer)
+        {
+            
+            UserDetailsModel udm = new UserDetailsModel {Id = userId, Referrer = referrer};
+            udm.Meetups  = Domain.GetRegisteredMeetups(userId);
+
+            return udm;
+        }
+
+        
         public IActionResult Edit(UserEditModel model, string chkSupprimer, [FromServices] IMapper mapper)
         {
             bool aSupprimer = chkSupprimer == "on";
@@ -62,7 +72,7 @@ namespace MyMeetup.Web.Areas.Admin.Controllers
                 Domain.ModifyUser(user);
             }
 
-            return View("Details", new UserDetailsModel { Id = model.Id, Referrer = model.BackUrl });
+            return View("Details", GetUserDetails( model.Id,  model.BackUrl ));
         }
     }
 }

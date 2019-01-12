@@ -129,15 +129,15 @@ namespace MyMeetUp.Logic.Infrastructure
                 var user = new MyMeetupUser
                 {
                     UserName = "admin",
-                    Email = "guillaume.jay@gmail.com",
-                    FirstName = "Guillaume",
-                    LastName = "Jay",
+                    Email = "test@gmail.com",
+                    FirstName = "test",
+                    LastName = "test2",
                     LockoutEnabled = false
                 };
                 string pwd = $"admin{DateTime.Now:yyMMdd}";
                 MyMeetupUser.CreateUser(user, MyMeetupRole.Administrateur, pwd, userManager);
             }
-
+           
         }
     }
 }

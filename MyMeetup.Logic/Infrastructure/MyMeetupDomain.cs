@@ -281,6 +281,18 @@ namespace MyMeetUp.Logic.Infrastructure
         }
 
 
-        
+        public List<RegisteredMeetupModel> GetRegisteredMeetups(int userId)
+        {
+            List<RegisteredMeetupModel> meetups=new  List<RegisteredMeetupModel>();
+            var result = _context.Registrations.Include(x => x.Meetup).Where(x => x.UserId == userId).AsNoTracking()
+                .ToList();
+            foreach (var r in result)
+            {
+                var meetup=new RegisteredMeetupModel(r.MeetupId,r.Id,r.UserId, r.Meetup.Title,r.RegistrationCode,r.CreatedAt);
+                meetups.Add(meetup);
+            }
+
+            return meetups;
+        }
     }
 }
