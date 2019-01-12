@@ -28,26 +28,35 @@
         Incription possible au
         <i class="fa fa-sort float-right" aria-hidden="true"></i>
     </th>
+    <th class="th-sm">
+    Copier
+        </th>
     </thead>
     <tbody>
         @foreach (var meetup in Model.Meetups)
         {
-            <tr>
-                <td>
-                    <a href="/admin/meetup/Details?id=@meetup.MeetupId">
-                        <i class="fa fa-edit" aria-hidden="true"></i>
-                    </a>
-                </td>
-                <td><a href="/admin/meetup/Details?id=@meetup.MeetupId">@meetup.Title</a></td>
+        <tr>
+            <td>
+                <a href="/admin/meetup/Details?id=@meetup.MeetupId">
+                    <i class="fa fa-edit" aria-hidden="true"></i>
+                </a>
+            </td>
+            <td><a href="/admin/meetup/Details?id=@meetup.MeetupId">@meetup.Title</a></td>
 
-                <td>
-                    <a href="/admin/meetup/participants?id=@meetup.MeetupId"><i class="fa fa-users" aria-hidden="true"></i>@meetup.RegistrationCount</a>
-                </td>
+            <td>
+                <a href="/admin/meetup/participants?id=@meetup.MeetupId"><i class="fa fa-users" aria-hidden="true"></i>@meetup.RegistrationCount</a>
+            </td>
 
-                <td>@(meetup.IsVisible == true ? "Oui" : "Non")</td>
+            <td>@(meetup.IsVisible == true ? "Oui" : "Non")</td>
 
-                <td>@meetup.OpenForRegistrationOn</td>
-            </tr>
+            <td>@meetup.OpenForRegistrationOn</td>
+
+            <td>
+                <a href="/admin/meetup/Copy?id=@meetup.MeetupId">
+                    <i class="fa fa-copy" aria-hidden="true"></i>
+                </a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

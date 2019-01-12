@@ -36,8 +36,19 @@ namespace MyMeetup.Web.Areas.Admin.Controllers
 
         public IActionResult Details([BindRequired]int  id ,[FromServices] IMapper mapper)
         {
-            var model = GetMeetupDetailModel(id, mapper);
+            AdminMeetupModel model = GetMeetupDetailModel(id, mapper);
             return View(model);
+        }
+
+        public IActionResult Copy([BindRequired]int id, [FromServices] IMapper mapper)
+        {
+            AdminMeetupModel model = GetMeetupDetailModel(id, mapper);
+            model.Id = 0;
+            model.Title = "Copie de " + model.Title;
+            model.StartDate = DateTime.Now.AddMonths(1);
+            model.EndDate= model.StartDate.AddDays(7);
+            model.OpenForRegistrationOn = null;
+            return View("Details",model);
         }
 
         public IActionResult Participants([BindRequired]int id)

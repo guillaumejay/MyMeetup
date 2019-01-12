@@ -71,8 +71,11 @@
         </div>
     </form>
 </div>
-<h2>Charte particulière à la rencontre</h2>
-@await Html.PartialAsync("_CharterEdit", Model.Contents)
+@if (Model.Id != 0)
+{
+    <h2>Charte particulière à la rencontre</h2>
+    @await Html.PartialAsync("_CharterEdit", Model.Contents)
+}
 @section scripts
     {
     <script src="~/lib/tinymce/js/tinymce.min.js"></script>
