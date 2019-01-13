@@ -11,10 +11,12 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using MyMeetUp.Logic.Entities;
 
 namespace MyMeetup.Web.Controllers
 {
+    [Authorize]
     public class HomeController : BaseController
     {
         //private IMapper _mapper;
@@ -25,6 +27,7 @@ namespace MyMeetup.Web.Controllers
           //  _mapper = mapper;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
 
@@ -53,7 +56,7 @@ namespace MyMeetup.Web.Controllers
 
             return model;
         }
-        [HttpGet]
+        [HttpGet("Me")]
         public IActionResult MyAccount([FromServices]IConfiguration configuration)
         {
             return View("MyAccount", GetMyAccountModel(configuration));
@@ -61,6 +64,7 @@ namespace MyMeetup.Web.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public ActionResult Index(SigninMeetupModel model, [FromServices]SignInManager<MyMeetupUser> signInManager, [FromServices]IConfiguration configuration)
         {
             if (!ModelState.IsValid)
@@ -131,6 +135,7 @@ namespace MyMeetup.Web.Controllers
             }
             return cm;
         }
+
 
         public IActionResult About()
         {

@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using MyMeetUp.Logic.Infrastructure;
+using MyMeetUp.Logic.Infrastructure.DataContexts;
+using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace MyMeetup.Web.Areas.Identity.Pages.Account
 {
@@ -68,7 +70,7 @@ namespace MyMeetup.Web.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
         }
 
-        public async Task<IActionResult> OnPostAsync([FromServices] UserManager<MyMeetupUser> userManager,  string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync([FromServices] UserManager<MyMeetupUser> userManager,[FromServices] MyMeetupContext context,  string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
 
@@ -82,10 +84,19 @@ namespace MyMeetup.Web.Areas.Identity.Pages.Account
                 }
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(user.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: true);
-                if (result.Succeeded)
+                SignInResult result = await _signInManager.PasswordSignInAsync(user.UserName, Input.Password.Trim(), Input.RememberMe, lockoutOnFailure: true);
+                bool isLoginOk = result.Succeeded;
+                if (!isLoginOk && !result.IsLockedOut && !result.IsNotAllowed)
                 {
-                    _logger.LogInformation("User logged in.");
+                    if (context.Registrations.Any(x => x.UserId == user.Id && x.RegistrationCode == Input.Password.Trim()))
+                    {
+                        await _signInManager.SignInAsync(user, Input.RememberMe);
+                        isLoginOk = true;
+                    }
+                }
+                if (isLoginOk)
+                {
+                    _logger.LogInformation($"User {Input.Email} logged in.");
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

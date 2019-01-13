@@ -3,7 +3,7 @@
 @model MyMeetup.Web.Models.Home.IndexModel
 @{
     Layout = "_layoutIndex";
-    ViewData["Title"] = "Rencontres non-scolarisées";
+    ViewData["Title"] = "Rencontres non-scos";
     var okForEmail = Model.SigninMeetupModel?.IsOkToGetMeetupsInfo ?? false;
     bool displayMeetup = Model.Meetup.Id > 0;
 }
