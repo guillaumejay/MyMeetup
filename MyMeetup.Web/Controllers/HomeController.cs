@@ -21,7 +21,7 @@ namespace MyMeetup.Web.Controllers
         public Meetup CurrentMeetup;
         public HomeController(MyMeetupDomain domain, UserManager<MyMeetupUser> userManager, TelemetryClient telemetryClient/*,IMapper mapper*/) : base(domain, userManager, telemetryClient)
         {
-            CurrentMeetup = Domain.GetNextMeetup(true);
+            CurrentMeetup = Domain.GetNextMeetup(DateTime.Now, true);
           //  _mapper = mapper;
         }
 

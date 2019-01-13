@@ -6,9 +6,11 @@ using System.Diagnostics;
 
 namespace MyMeetUp.Logic.Entities
 {
-    [DebuggerDisplay("{Id} {Title} {StartDate} {EndDate}")]
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Meetup : EntityWithDate
     {
+        private string DebuggerDisplay =>  $"{Id} {Title} {StartDate:yyyy-MM-dd} {EndDate:yyyy-MM-dd}";
+        
         [StringLength(80)]
         [Required]
         public string Title { get; set; }

@@ -46,9 +46,11 @@ namespace MyMeetUp.Logic.Infrastructure
 
         #region Meetup
 
-        public Meetup GetNextMeetup(bool readOnly)
+        public Meetup GetNextMeetup(DateTime fromDate,bool readOnly)
         {
-            var q = _context.Meetups.Where(m => m.StartDate > DateTime.Now && m.IsVisible && m.OpenForRegistrationOn.HasValue && m.OpenForRegistrationOn>DateTime.Now);
+            IQueryable<Meetup> q = _context.Meetups.Where(m =>
+                m.StartDate > fromDate && m.IsVisible && m.OpenForRegistrationOn.HasValue &&
+                m.OpenForRegistrationOn <= fromDate);
             if (readOnly)
                 q = q.AsNoTracking();
             return q.OrderBy(x => x.OpenForRegistrationOn).FirstOrDefault();
