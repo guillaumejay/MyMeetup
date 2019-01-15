@@ -1,18 +1,19 @@
 ﻿using Microsoft.ApplicationInsights;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using MyMeetup.Web.Infrastructure;
 using MyMeetup.Web.Models;
 using MyMeetup.Web.Models.Home;
+using MyMeetUp.Logic.Entities;
+using MyMeetUp.Logic.Entities.Enums;
 using MyMeetUp.Logic.Infrastructure;
 using MyMeetUp.Logic.Models;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using MyMeetUp.Logic.Entities;
 
 namespace MyMeetup.Web.Controllers
 {
@@ -24,7 +25,7 @@ namespace MyMeetup.Web.Controllers
         public HomeController(MyMeetupDomain domain, UserManager<MyMeetupUser> userManager, TelemetryClient telemetryClient/*,IMapper mapper*/) : base(domain, userManager, telemetryClient)
         {
             CurrentMeetup = Domain.GetNextMeetup(DateTime.Now, true);
-          //  _mapper = mapper;
+        
         }
 
         [AllowAnonymous]
@@ -45,10 +46,10 @@ namespace MyMeetup.Web.Controllers
                 model.Charter = Domain.GetCharterFor(CurrentMeetup.Id, false, true, true).ToList();
                 model.SigninMeetupModel = signinMeetupModel;
             }
-            
+
             else
             {
-                model.Meetup=new Meetup();
+                model.Meetup = new Meetup();
                 model.Meetup.Title = Parameters.Value.HomeTitle;
                 model.Meetup.PublicDescription = Parameters.Value.HomeContent;
                 model.Meetup.TitleImage = Parameters.Value.HomeImage;
@@ -69,7 +70,7 @@ namespace MyMeetup.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("Index", CreateLandingPageModel( model));
+                return View("Index", CreateLandingPageModel(model));
             }
 
             MyMeetupUser user = UserManager.FindByEmailAsync(model.Email.Trim()).Result;
@@ -116,24 +117,47 @@ namespace MyMeetup.Web.Controllers
 
         private MyAccountModel GetMyAccountModel(IConfiguration configuration, MyMeetupUser currentUser = null)
         {
-            MyAccountModel cm = new MyAccountModel(currentUser ?? CurrentUser);
+            MyAccountModel model = new MyAccountModel(currentUser ?? CurrentUser);
 
-            MyMeetUp.Logic.Entities.Meetup meetup = Domain.GetMeetupsFor(cm.CurrentUser.Id, true).OrderBy(x => x.StartDate).FirstOrDefault();
-            if (meetup == null)
+            List<Registration> regs = Domain.GetRegistrations(model.CurrentUser.Id, true)
+                .Where(x => x.RegistrationStatus <= ERegistrationStatus.Registered)
+                .OrderBy(x => x.Meetup.StartDate).ToList();
+            model.OldMeetups = regs.Where(x => x.Meetup.EndDate <= DateTime.Now).ToList();
+            var nextRegistrations = regs.Where(x => x.Meetup.StartDate > DateTime.Now).ToList();
+            if (nextRegistrations.Any() == false)
             {
-                cm.NextMeetupText = "Vous n'avez aucune rencontre de prévue !";
+           
+                model.NextRegistrations = "Tu n'as aucune rencontre de prévue !";
             }
             else
             {
-                string regCode = Domain.GetRegistrationCode(cm.CurrentUser.Id, meetup.Id);
-                cm.NextMeetupText =
-                    $"Tu es préinscrit-e à {meetup.Title}, à partir du {meetup.StartDate:dd MMMM yyyy}.<br/>" +
-                $"Nous te confirmerons très prochainement cette pré-inscription, par mail (envoyé à {cm.CurrentUser.Email})."
-                    +
-                    "<br/>contact@rencontresnonscos.org";
+                model.NextRegistrations = "Tu es pré-inscrit-e à : <ul> ";
+                List<string> texts = new List<string>();
+                foreach (var reg in regs)
+                {
+                    string tmp = $"<li>{reg.Meetup.Title} (qui commence le {reg.Meetup.StartDate:dd MMMM yyyy}) : ";
+                    if (reg.RegistrationStatus == ERegistrationStatus.Preregistration)
+                    {
+                        tmp += $"ton code d'enregistrement sera envoyé à {model.CurrentUser.Email}";
+                    }
+                    else
+                    {
+                        tmp += $"ton code d'enregistrement est {reg.RegistrationCode}";
+                    }
+                    texts.Add(tmp+ "</li>");
+                }
 
+                model.NextRegistrations += Environment.NewLine + String.Join("", texts) + Environment.NewLine +  "</ul>";
+                List<Meetup> meetups = Domain.GetNextMeetups(DateTime.Now.Date,true);
+                foreach (Meetup m in meetups)
+                {
+                    var vm=new NextMeetupView(m);
+                    vm.IsAlreadyRegistered = regs.Any(x => x.MeetupId == vm.MeetupId);
+                    model.NextMeetups.Add(vm);
+                }
             }
-            return cm;
+            
+            return model;
         }
 
 

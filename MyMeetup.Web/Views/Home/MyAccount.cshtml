@@ -2,15 +2,57 @@
 @model MyMeetup.Web.Models.Home.MyAccountModel
 @{
     Layout = "_Layout";
-        ViewData["Title"] = "Bienvenue !";
-    }
+    ViewData["Title"] = "Bienvenue !";
+    int oldMeetupCount = Model.OldMeetups.Count;
+}
 
 <div class="card" style="width: 72rem;">
     <div class="card-body">
         <h5 class="card-title">Bonjour, @Model.CurrentUser.FirstName, @Model.CurrentUser.LastName </h5>
-        <h6 class="card-subtitle mb-2 text-muted">@Model.CurrentUser.Email</h6>
-        <p class="card-text">@Html.Raw(Model.NextMeetupText)</p>
-    
+        <h6 class="card-subtitle mb-2 text-muted"></h6>
+        <p class="card-text">
+            @Html.Raw(Model.NextRegistrations)
+            <br />
+            <br />
+            Pour nous écrire : <a href="mailto:@ViewBag.ContactEmail">@ViewBag.ContactEmail</a>
+        </p>
+
     </div>
 </div>
 
+@if (oldMeetupCount > 0)
+{
+    <div class="card" style="width: 72rem; margin-top: 20px">
+        <div class="card-body">
+            <h5 class="card-title">Tu as déjà participé à @oldMeetupCount rencontre@(oldMeetupCount > 1 ? "s" : "") </h5>
+            <h6 class="card-subtitle mb-2 text-muted">Merci pour ta présence !</h6>
+            <p class="card-text">
+                <table id="oldMeetups" class="table">
+                    <tr>
+                        <th>Nom</th>
+                        <th>Date</th>
+                        <th>Code</th>
+                    </tr>
+                    <tbody>
+                    @foreach (var registration in Model.OldMeetups)
+                    {
+                        <tr>
+                            <td>
+                                @registration.Meetup.Title
+                            </td>
+                            <td>
+                                Du @registration.Meetup.StartDate.ToString("dd/MM/yyyy") au @registration.Meetup.EndDate.ToString("dd/MM/yyyy")
+                            </td>
+                            <td>
+                                @registration.RegistrationCode
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </p>
+
+        </div>
+    </div>
+
+}

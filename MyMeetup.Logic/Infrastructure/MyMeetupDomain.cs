@@ -6,6 +6,7 @@ using MyMeetUp.Logic.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MyMeetUp.Logic.Entities.Enums;
 
 namespace MyMeetUp.Logic.Infrastructure
 {
@@ -105,9 +106,11 @@ namespace MyMeetUp.Logic.Infrastructure
             return r;
         }
 
-        public IQueryable<Meetup> GetMeetupsFor(int userId, bool readOnly)
+        public IQueryable<Registration> GetRegistrations(int userId, bool readOnly)
         {
-            IQueryable<Meetup> q = _context.Registrations.Where(x => x.UserId == userId).Select(x => x.Meetup);
+            IQueryable<Registration> q = _context.Registrations.Include(x=>x.Meetup)
+                .Where(x => x.UserId == userId)
+                ;
             if (readOnly)
             {
                 q = q.AsNoTracking();
@@ -295,6 +298,14 @@ namespace MyMeetUp.Logic.Infrastructure
             }
 
             return meetups;
+        }
+
+        public List<Meetup> GetNextMeetups(DateTime nowDate, bool readOnly)
+        {
+            var q = _context.Meetups.Where(x => x.EndDate < nowDate);
+            if (readOnly)
+                q = q.AsNoTracking();
+            return q.OrderBy(x => x.StartDate).ToList();
         }
     }
 }

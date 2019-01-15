@@ -31,6 +31,7 @@ namespace MyMeetup.Web.Controllers
         {
             base.OnActionExecuting(context);
             ViewBag.AppTitle = Parameters.Value.Title;
+            ViewBag.ContactEmail = "contact@rencontresnonscos.org";
         }
     }
 }
