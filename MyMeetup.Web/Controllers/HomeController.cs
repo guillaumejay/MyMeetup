@@ -148,15 +148,17 @@ namespace MyMeetup.Web.Controllers
                 }
 
                 model.NextRegistrations += Environment.NewLine + String.Join("", texts) + Environment.NewLine +  "</ul>";
-                List<Meetup> meetups = Domain.GetNextMeetups(DateTime.Now.Date,true);
-                foreach (Meetup m in meetups)
+               
+            }
+            List<Meetup> meetups = Domain.GetNextMeetups(DateTime.Now.Date, true);
+            foreach (Meetup m in meetups)
+            {
+                var vm = new NextMeetupView(m);
+                if (!regs.Any(x => x.MeetupId == vm.MeetupId))
                 {
-                    var vm=new NextMeetupView(m);
-                    vm.IsAlreadyRegistered = regs.Any(x => x.MeetupId == vm.MeetupId);
                     model.NextMeetups.Add(vm);
                 }
             }
-            
             return model;
         }
 

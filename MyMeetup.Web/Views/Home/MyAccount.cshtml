@@ -4,6 +4,7 @@
     Layout = "_Layout";
     ViewData["Title"] = "Bienvenue !";
     int oldMeetupCount = Model.OldMeetups.Count;
+    int futureMeetup = Model.NextMeetups.Count;
 }
 
 <div class="card" style="width: 72rem;">
@@ -19,6 +20,49 @@
 
     </div>
 </div>
+@if (futureMeetup > 0)
+{
+    <div class="card" style="width: 72rem; margin-top: 20px">
+        <div class="card-body">
+            <h5 class="card-title">Voici la liste dse prochaines rencontres</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Nous t'attendons !</h6>
+            <p class="card-text">
+                <table id="oldMeetups" class="table">
+                    <tr>
+                        <th>Nom</th>
+                        <th>Date</th>
+                        <th>Inscription</th>
+                    </tr>
+                    <tbody>
+                    @foreach (NextMeetupView meetup in Model.NextMeetups)
+                    {
+                        <tr>
+                            <td>
+                                <strong>@meetup.Title</strong>
+                            </td>
+                            <td>
+                                @meetup.MeetupDate
+                            </td>
+                            <td>
+                                @if (meetup.CanRegister)
+                                {
+
+                                }
+                                else
+                                {
+                                    <text>L'inscription n'est pas encore ouverte</text>
+                                }
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </p>
+
+        </div>
+    </div>
+
+}
 
 @if (oldMeetupCount > 0)
 {
@@ -38,7 +82,7 @@
                     {
                         <tr>
                             <td>
-                                @registration.Meetup.Title
+                                <strong>@registration.Meetup.Title</strong>
                             </td>
                             <td>
                                 Du @registration.Meetup.StartDate.ToString("dd/MM/yyyy") au @registration.Meetup.EndDate.ToString("dd/MM/yyyy")

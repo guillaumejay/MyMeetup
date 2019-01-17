@@ -302,7 +302,7 @@ namespace MyMeetUp.Logic.Infrastructure
 
         public List<Meetup> GetNextMeetups(DateTime nowDate, bool readOnly)
         {
-            var q = _context.Meetups.Where(x => x.EndDate < nowDate);
+            var q = _context.Meetups.Where(x => x.EndDate > nowDate && x.IsVisible);
             if (readOnly)
                 q = q.AsNoTracking();
             return q.OrderBy(x => x.StartDate).ToList();

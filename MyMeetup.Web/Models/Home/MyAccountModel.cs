@@ -1,4 +1,5 @@
-﻿using MyMeetUp.Logic.Entities;
+﻿using System;
+using MyMeetUp.Logic.Entities;
 using MyMeetUp.Logic.Infrastructure;
 using System.Collections.Generic;
 
@@ -30,7 +31,10 @@ namespace MyMeetup.Web.Models.Home
 
         public string MeetupDate { get; set; }
 
-        public bool IsAlreadyRegistered { get; set;}
+        public string Title { get; set; }
+
+        public bool CanRegister { get; set;}
+
 
         public NextMeetupView()
         {
@@ -39,7 +43,11 @@ namespace MyMeetup.Web.Models.Home
         public NextMeetupView(Meetup meetup)
         {
             MeetupId = meetup.Id;
+            Title = meetup.Title;
             MeetupDate = $"Du {meetup.StartDate:dd/MM/yyyy} au {meetup.EndDate:dd/MM/yyyy}";
+            CanRegister = meetup.IsVisible &&  meetup.OpenForRegistrationOn.HasValue &&
+                          meetup.OpenForRegistrationOn.Value <= DateTime.Now.Date;
+            
         }
     }
 }
