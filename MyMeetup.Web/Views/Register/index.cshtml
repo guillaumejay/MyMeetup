@@ -1,0 +1,72 @@
+﻿@model MyMeetup.Web.Models.MeetupRegisterModel
+@{
+    ViewData["Title"] = "S'enregistrer";
+}
+
+<h1>S'enregistrer à @Model.Meetup.Title</h1>
+
+<div class="card w-100" style="margin-top: 10px">
+    <div class="card-header primary-color white-text">
+        Enregistrement
+    </div>
+    <div class="card-body">
+        <form method="post" asp-controller="Register" asp-action="Index"  id="Register">
+            <div class="form-row">
+                <div class="col-md-12">
+                    <div class="md-form">
+                        <select required id="Accomodation" name="@nameof(Model.AccomodationId)">
+                            @foreach (var item in Model.PossibleAccomodations)
+                            {
+                                <option value="@item.Value" >@item.Text</option>
+                            }
+                        </select>
+                        <label for="Accomodation" class="font-weight-light">Hébergement choisi</label>
+                    </div>
+                </div>
+            </div>
+                <div class="form-row">
+
+
+                    <div class="col-md-6">
+                        <div class="md-form">
+                            <input type="number" min="0" max="9" id="homeTitle" class="form-control" required name="@nameof(Model.AdultNumber)" maxlength="1"
+                                   value="@Model.AdultNumber">
+                            <label for="homeTitle" class="font-weight-light">Nombre d'adultes</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="md-form">
+                            <input type="number" min="0" max="9" id="NbKids" class="form-control" required name="@nameof(Model.ChildrenNumber)" maxlength="1"
+                                   value="@Model.ChildrenNumber">
+                            <label for="NbKids" class="font-weight-light">Nombre d'enfants</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="Notes">Commentaires & indications</label>
+                        <textarea class="meetupTextArea" required name="@nameof(Model.Notes)" id="Notes" rows="8" cols="120">@Model.Notes</textarea>
+                    </div>
+                </div>
+                <a class="btn btn-primary" onclick="validateForm('frmHome')">'enregistrer</a>
+                <a href="/me" class="btn btn-secondary">Annuler</a>
+
+
+
+</form>
+    </div>
+</div>
+@section scripts
+{
+
+    <script>
+  
+
+        function validateForm(id) {
+
+
+            document.getElementById(id).submit();
+        }
+    </script>
+}
