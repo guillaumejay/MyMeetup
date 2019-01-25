@@ -14,19 +14,28 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MyMeetup.Web.Controllers
 {
     [Authorize]
     public class HomeController : BaseController
     {
+
+        public List<SelectListItem> Accomodations = new List<SelectListItem>();
         //private IMapper _mapper;
         public Meetup CurrentMeetup;
         public HomeController(MyMeetupDomain domain, UserManager<MyMeetupUser> userManager, TelemetryClient telemetryClient/*,IMapper mapper*/) : base(domain, userManager, telemetryClient)
         {
             CurrentMeetup = Domain.GetNextMeetup(DateTime.Now, true);
-        
+            var accomodations = Constants.InitAccomodation();
+            foreach (var a in accomodations)
+            {
+                Accomodations.Add(new SelectListItem(a.text,a.id));
+            }
         }
+
+       
 
         [AllowAnonymous]
         public IActionResult Index()
@@ -34,6 +43,15 @@ namespace MyMeetup.Web.Controllers
 
 
             return View(CreateLandingPageModel());
+        }
+
+        [Route("register/{meetupId:int}")]
+        public IActionResult Register(int meetupId)
+        {
+            MeetupRegisterModel rm = new MeetupRegisterModel();
+            rm.Meetup = Domain.GetMeetup(meetupId, true);
+            rm.PossibleAccomodations = Accomodations;
+            return View(rm);
         }
 
         private IndexModel CreateLandingPageModel(SigninMeetupModel signinMeetupModel = null)

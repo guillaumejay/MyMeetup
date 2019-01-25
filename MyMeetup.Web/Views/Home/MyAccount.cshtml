@@ -9,7 +9,7 @@
 
 <div class="card" style="width: 72rem;">
     <div class="card-body">
-        <h5 class="card-title">Bonjour, @Model.CurrentUser.FirstName, @Model.CurrentUser.LastName </h5>
+        <h5 class="card-title">Bonjour, @Model.CurrentUser.FirstName @Model.CurrentUser.LastName </h5>
         <h6 class="card-subtitle mb-2 text-muted"></h6>
         <p class="card-text">
             @Html.Raw(Model.NextRegistrations)
@@ -24,7 +24,7 @@
 {
     <div class="card" style="width: 72rem; margin-top: 20px">
         <div class="card-body">
-            <h5 class="card-title">Voici la liste dse prochaines rencontres</h5>
+            <h5 class="card-title">Voici la liste des prochaines rencontres</h5>
             <h6 class="card-subtitle mb-2 text-muted">Nous t'attendons !</h6>
             <p class="card-text">
                 <table id="oldMeetups" class="table">
@@ -46,7 +46,7 @@
                             <td>
                                 @if (meetup.CanRegister)
                                 {
-                                    <a href="/register/@meetup.MeetupId">S'y inscrire</a>
+                                    <a href="/register/@meetup.MeetupId" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">S'y inscrire</a>
                                 }
                                 else
                                 {

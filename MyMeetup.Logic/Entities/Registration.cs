@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using MyMeetUp.Logic.Entities.Enums;
@@ -35,8 +36,16 @@ namespace MyMeetUp.Logic.Entities
 
         [ForeignKey(nameof(ReferentUserId))]
         public MyMeetupUser ReferentUser { get; set; }
-
+        [Obsolete]
         public int NumberOfPersons { get; set; }
+
+        [Range(0, 10)]
+        public int NumberOfChildren { get; set; }
+
+        [Range(0, 10)]
+        public int NumberOfAdults { get; set; }
+
+        public string AccomodationId { get; set; }
 
         public decimal PaidFees { get; set; }
 
@@ -48,7 +57,7 @@ namespace MyMeetUp.Logic.Entities
 
         public ERegistrationStatus RegistrationStatus { get; set; }
 
-        [StringLength(250)]
+        [StringLength(5000)]
         public string Notes { get; set; }
     }
 }

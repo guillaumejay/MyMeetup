@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace MyMeetUp.Logic.Models
@@ -30,6 +31,7 @@ namespace MyMeetUp.Logic.Models
 
         public string RegistrationCode { get; set; }
 
+      
 
         public DateTime RegisteredOn { get; set; }
 

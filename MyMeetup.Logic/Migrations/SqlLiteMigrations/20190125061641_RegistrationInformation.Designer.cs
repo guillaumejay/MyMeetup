@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyMeetUp.Logic.Infrastructure.DataContexts;
 
 namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
 {
     [DbContext(typeof(MyMeetupSqlLiteContext))]
-    partial class MyMeetupSqlLiteContextModelSnapshot : ModelSnapshot
+    [Migration("20190125061641_RegistrationInformation")]
+    partial class RegistrationInformation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
