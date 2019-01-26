@@ -59,8 +59,8 @@ namespace MyMeetup.Web.Areas.Admin.Controllers
 
         private AdminMeetupModel GetMeetupDetailModel(int id, IMapper mapper)
         {
-            var model = mapper.Map<AdminMeetupModel>(Domain.GetMeetup(id, true));
-            var charters = Domain.GetCharterFor(id,true, false, true).ToList();
+            AdminMeetupModel model = mapper.Map<AdminMeetupModel>(Domain.GetMeetup(id, true));
+            List<CharterContent> charters = Domain.GetCharterFor(id,true, false, true).ToList();
             charters.Add(new CharterContent { Position = charters.Count() + 1,MeetupId= id });
             model.Contents = charters;
             return model;

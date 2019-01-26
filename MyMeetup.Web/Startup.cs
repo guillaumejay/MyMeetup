@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using AutoMapper;
+using ElmahCore.Mvc;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.Extensibility;
@@ -59,6 +60,7 @@ namespace MyMeetup.Web
                 .AddEntityFrameworkStores<MyMeetupContext>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
+            services.AddElmah(options => options.Path = "erreurs");
             services.AddScoped<MyMeetupDomain>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddAutoMapper();
@@ -100,6 +102,7 @@ namespace MyMeetup.Web
                 SupportedUICultures = supportedCultures
             };
             app.UseRequestLocalization(localizationOptions);
+            app.UseElmah();
           app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

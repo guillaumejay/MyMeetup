@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace MyMeetUp.Logic.Entities
 {
@@ -28,6 +29,9 @@ namespace MyMeetUp.Logic.Entities
         public DateTime? OpenForRegistrationOn { get; set; }
 
         public List<MeetupAdmin> MeetupAdmins { get; set; }
+
+        [EmailAddress]
+        public string MeetupPlaceAdminEmail { get; set; }
 
         [Required]
         public string PublicDescription { get; set; }

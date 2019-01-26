@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MyMeetup.Web.Controllers
@@ -40,8 +41,6 @@ namespace MyMeetup.Web.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
-
-
             return View(CreateLandingPageModel());
         }
 
@@ -61,7 +60,8 @@ namespace MyMeetup.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(MeetupRegisterModel model)
+
+        public IActionResult Register(MeetupRegisterModel model, [FromServices]IConfiguration configuration)
         {
             if (ModelState.IsValid)
             {
@@ -73,6 +73,31 @@ namespace MyMeetup.Web.Controllers
                     NumberOfChildren = model.ChildrenNumber
                 };
                 Domain.AddOrUpdateRegistration(r);
+                string body = "Bonjour <br/>";
+                body += $"{CurrentUser.FirstName} {CurrentUser.LastName} s'est inscrit : {r.RegistrationCode}<br/>";
+                body +=
+                    $"Logement : {Accomodations.Single(x => x.Value == r.AccomodationId)} - Adultes {r.NumberOfAdults} - Enfants : {r.NumberOfChildren}<br/>";
+                body += "Notes :<br/>";
+                body += r.Notes;
+                body += "<br/><br/>Cordialement";
+                SendEmail se = new SendEmail();
+                Meetup m = Domain.GetMeetup(model.MeetupId, true);
+                MyMeetupEmail email = new MyMeetupEmail("Nouvel inscrit",body,m.MeetupPlaceAdminEmail??configuration["emailContact"],
+                    configuration["emailContact"]);
+                if (!string.IsNullOrEmpty(m.MeetupPlaceAdminEmail))
+                {
+                    email.BCC = configuration["emailContact"];
+                }
+
+                if (Debugger.IsAttached)
+                {
+                    email.To = configuration["emailContact"];
+                    email.Subject = "TEST " + email.Subject;
+                }
+                email.CC = CurrentUser.Email;
+                SendEmail s=new SendEmail();
+                se.SendSmtpEmail(EmailSender.GetSettings(configuration), email);
+                return View("Index");
             }
             var rm = CreateModelForRegistration(model.MeetupId);
             return View(rm);
@@ -90,10 +115,12 @@ namespace MyMeetup.Web.Controllers
             }
             else
             {
-                model.Meetup = new Meetup();
-                model.Meetup.Title = Parameters.Value.HomeTitle;
-                model.Meetup.PublicDescription = Parameters.Value.HomeContent;
-                model.Meetup.TitleImage = Parameters.Value.HomeImage;
+                model.Meetup = new Meetup
+                {
+                    Title = Parameters.Value.HomeTitle,
+                    PublicDescription = Parameters.Value.HomeContent,
+                    TitleImage = Parameters.Value.HomeImage
+                };
             }
 
             return model;

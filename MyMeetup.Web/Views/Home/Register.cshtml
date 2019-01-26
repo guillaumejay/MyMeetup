@@ -10,7 +10,7 @@
         Enregistrement
     </div>
     <div class="card-body">
-        <form method="post" asp-controller="Home" asp-action="Register"  id="Register">
+        <form method="post" asp-controller="Home" asp-action="Register" id="frmRegister">
             <div class="form-row">
                 <input type="hidden" name="@nameof(@Model.MeetupId)" value="@Model.MeetupId" />
                 <div class="col-md-2">
@@ -54,30 +54,34 @@
             <div class="row">
                 <div class="col">
                     <label for="Notes">Commentaires & indications</label>
-                    <textarea class="meetupTextArea" required name="@nameof(Model.Notes)" id="Notes" rows="8" cols="100"
-                                  maxlength="500">@Model.Notes</textarea>
+                    <textarea class="meetupTextArea" required name="@nameof(Model.Notes)" id="Notes" 
+                              maxlength="500">@Model.Notes</textarea>
                 </div>
             </div>
             <div class="alert alert-primary" role="alert">
                 En cliquant sur S'inscrire, un email sera envoyé (avec une copie à @Model.UserEmail)) au gestionnaire du site pour qu'il procède à officiellement à votre inscription.
             </div>
-                <a class="btn btn-primary" onclick="validateForm('frmHome')">S'inscrire</a>
-                <a href="/me" class="btn btn-secondary">Annuler</a>
+            <a class="btn btn-primary" onclick="validateForm('frmRegister')">S'inscrire</a>
+            <a href="/me" class="btn btn-secondary">Annuler</a>
 
 
 
-</form>
+        </form>
     </div>
 </div>
 @section scripts
-{
+    {
+
+    <script src="~/lib/tinymce/js/tinymce.min.js"></script>
 
     <script>
-  
+        $(function () {
+            initMCE({ selector: '.meetupTextArea', height: "250" });
+        });
+
 
         function validateForm(id) {
-
-
+            tinyMCE.triggerSave();
             document.getElementById(id).submit();
         }
     </script>
