@@ -10,15 +10,16 @@
         Enregistrement
     </div>
     <div class="card-body">
-        <form method="post" asp-controller="Register" asp-action="Index"  id="Register">
+        <form method="post" asp-controller="Home" asp-action="Register"  id="Register">
             <div class="form-row">
-                <div class="col-md-1">
+                <input type="hidden" name="@nameof(@Model.MeetupId)" value="@Model.MeetupId" />
+                <div class="col-md-2">
                     <label for="Accomodation" class="font-weight-light">Hébergement choisi</label>
                 </div>
-                <div class="col-md-11">
+                <div class="col-md-;10">
                     <div class="md-form">
 
-                        <select required id="Accomodation" name="@nameof(Model.AccomodationId)">
+                        <select style="width: 300px;text-align:right" required id="Accomodation" name="@nameof(Model.AccomodationId)">
                             @foreach (var item in Model.PossibleAccomodations)
                             {
                                 <option value="@item.Value">@item.Text</option>
@@ -28,32 +29,38 @@
                     </div>
                 </div>
             </div>
-                <div class="form-row">
+            <div class="form-row">
 
 
-                    <div class="col-md-6">
-                        <div class="md-form">
-                            <input type="number" min="0" max="9" id="homeTitle" class="form-control" required name="@nameof(Model.AdultNumber)" maxlength="1"
-                                   value="@Model.AdultNumber">
-                            <label for="homeTitle" class="font-weight-light">Nombre d'adultes</label>
-                        </div>
+                <div class="col-md-6">
+                    <div class="md-form">
+                        <input type="number" min="0" max="9" id="homeTitle" class="form-control" required name="@nameof(Model.AdultNumber)" maxlength="1"
+                               value="@Model.AdultNumber">
+                        <label for="homeTitle" class="font-weight-light">Nombre d'adultes</label>
                     </div>
-                    <div class="col-md-6">
-                        <div class="md-form">
-                            <input type="number" min="0" max="9" id="NbKids" class="form-control" required name="@nameof(Model.ChildrenNumber)" maxlength="1"
-                                   value="@Model.ChildrenNumber">
-                            <label for="NbKids" class="font-weight-light">Nombre d'enfants</label>
-                        </div>
-                    </div>
-
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <label for="Notes">Commentaires & indications</label>
-                        <textarea class="meetupTextArea" required name="@nameof(Model.Notes)" id="Notes" rows="8" cols="100"
+                <div class="col-md-6">
+                    <div class="md-form">
+                        <input type="number" min="0" max="9" id="NbKids" class="form-control" required name="@nameof(Model.ChildrenNumber)" maxlength="1"
+                               value="@Model.ChildrenNumber">
+                        <label for="NbKids" class="font-weight-light">Nombre d'enfants</label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="alert alert-primary" role="alert">
+                Si vous pensez bénéficier des VACAFs, n'oubliez pas de l'indiquez ci-dessous. (Le processus de réservation est officiel)
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="Notes">Commentaires & indications</label>
+                    <textarea class="meetupTextArea" required name="@nameof(Model.Notes)" id="Notes" rows="8" cols="100"
                                   maxlength="500">@Model.Notes</textarea>
-                    </div>
                 </div>
+            </div>
+            <div class="alert alert-primary" role="alert">
+                En cliquant sur S'inscrire, un email sera envoyé (avec une copie à @Model.UserEmail)) au gestionnaire du site pour qu'il procède à officiellement à votre inscription.
+            </div>
                 <a class="btn btn-primary" onclick="validateForm('frmHome')">S'inscrire</a>
                 <a href="/me" class="btn btn-secondary">Annuler</a>
 

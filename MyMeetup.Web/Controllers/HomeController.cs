@@ -48,9 +48,33 @@ namespace MyMeetup.Web.Controllers
         [Route("register/{meetupId:int}")]
         public IActionResult Register(int meetupId)
         {
-            MeetupRegisterModel rm = new MeetupRegisterModel();
-            rm.Meetup = Domain.GetMeetup(meetupId, true);
+            var rm = CreateModelForRegistration(meetupId);
+            return View(rm);
+        }
+
+        private MeetupRegisterModel CreateModelForRegistration(int meetupId)
+        {
+            MeetupRegisterModel rm = new MeetupRegisterModel(Domain.GetMeetup(meetupId, true));
+            rm.UserEmail = CurrentUser.Email;
             rm.PossibleAccomodations = Accomodations;
+            return rm;
+        }
+
+        [HttpPost]
+        public IActionResult Register(MeetupRegisterModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Registration r = new Registration(CurrentUser.Id, model.MeetupId)
+                {
+                    AccomodationId = model.AccomodationId,
+                    Notes = model.Notes,
+                    NumberOfAdults = model.AdultNumber,
+                    NumberOfChildren = model.ChildrenNumber
+                };
+                Domain.AddOrUpdateRegistration(r);
+            }
+            var rm = CreateModelForRegistration(model.MeetupId);
             return View(rm);
         }
 
@@ -64,7 +88,6 @@ namespace MyMeetup.Web.Controllers
                 model.Charter = Domain.GetCharterFor(CurrentMeetup.Id, false, true, true).ToList();
                 model.SigninMeetupModel = signinMeetupModel;
             }
-
             else
             {
                 model.Meetup = new Meetup();
@@ -79,7 +102,6 @@ namespace MyMeetup.Web.Controllers
         public IActionResult MyAccount([FromServices]IConfiguration configuration)
         {
             return View("MyAccount", GetMyAccountModel(configuration));
-
         }
 
         [HttpPost]

@@ -5,6 +5,7 @@ using MyMeetUp.Logic.Infrastructure.DataContexts;
 using MyMeetUp.Logic.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using MyMeetUp.Logic.Entities.Enums;
 
@@ -100,7 +101,7 @@ namespace MyMeetUp.Logic.Infrastructure
                 }
             }
             Registration r =
-                new Registration(user.Id, meetupId) { RegistrationCode = Registration.CreateCode(user, meetupId) };
+                new Registration(user.Id, meetupId) { RegistrationCode = Registration.CreateCode(user.Id, meetupId) };
             _context.Registrations.Add(r);
             _context.SaveChanges();
             return r;
@@ -306,6 +307,34 @@ namespace MyMeetUp.Logic.Infrastructure
             if (readOnly)
                 q = q.AsNoTracking();
             return q.OrderBy(x => x.StartDate).ToList();
+        }
+
+        public int AddOrUpdateRegistration(Registration registration)
+        {
+            var inDb = _context.Registrations.Where(x =>
+                    x.MeetupId == registration.MeetupId && x.ReferentUserId == registration.ReferentUserId)
+                .SingleOrDefault();
+            if (inDb == null)
+            {
+                registration.RegistrationCode = Registration.CreateCode(registration.UserId, registration.MeetupId);
+                Debug.Assert(registration.MeetupId!=0);
+                Debug.Assert(registration.UserId != 0);
+                registration.RegistrationStatus = ERegistrationStatus.Preregistration;
+                registration.ReferentUserId = null;
+                _context.Registrations.Add(registration);
+                _context.SaveChanges();
+            }
+            else
+            {
+                inDb.AccomodationId = registration.AccomodationId;
+                inDb.Notes = registration.Notes;
+                inDb.NumberOfAdults = registration.NumberOfAdults;
+                inDb.NumberOfChildren = registration.NumberOfChildren;
+                registration.Id = inDb.Id;
+            }
+
+            _context.SaveChanges();
+            return registration.Id;
         }
     }
 }

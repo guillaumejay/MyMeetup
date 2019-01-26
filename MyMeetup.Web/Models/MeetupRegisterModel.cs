@@ -9,6 +9,19 @@ namespace MyMeetup.Web.Models
 {
     public class MeetupRegisterModel
     {
+        public MeetupRegisterModel()
+        {
+
+        }
+
+        public MeetupRegisterModel(Meetup meetup)
+        {
+            Meetup = meetup;
+            MeetupId = meetup.Id;
+        }
+
+        public string UserEmail { get; set; }
+        public int MeetupId { get; set; }
         public Meetup Meetup { get; set; }
 
         public int AdultNumber { get; set; }

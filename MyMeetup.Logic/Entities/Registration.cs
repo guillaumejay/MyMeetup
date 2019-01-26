@@ -49,9 +49,9 @@ namespace MyMeetUp.Logic.Entities
 
         public decimal PaidFees { get; set; }
 
-        public static string CreateCode(MyMeetupUser user, int meetupId)
+        public static string CreateCode(int userId, int meetupId)
         {
-            string code = string.Join("",$"{user.Id:0000}{user.Initials}{meetupId:000}".Reverse());
+            string code = string.Join("",$"{userId:0000}-{DateTime.Now.Month}{DateTime.Now.Day}-{meetupId:000}".Reverse());
             return code;
         }
 
