@@ -7,6 +7,20 @@
     <div class="card-header primary-color white-text">
         @Model.Title
     </div>
+
+@if (Model.Errors.Any())
+{
+    <div>
+        <div class="alert alert-danger" role="alert">
+            <ul>
+            @foreach (var erreur in Model.Errors)
+            {
+                <li>@erreur</li>
+            }
+            </ul>
+        </div>
+    </div>
+}
     <form method="post" asp-controller="Meetup" asp-action="DetailsMeetup" id="frmMeetup">
         <div class="card-body">
             <h3 class="card-title">@Model.DefaultDateText</h3>
@@ -79,7 +93,7 @@
                     <textarea class="meetupTextArea" required name="@nameof(Model.RegisteredDescription)" id="RegDescription">@Model.RegisteredDescription</textarea>
                 </div>
             </div>
-            <a class="btn btn-primary" onclick="validateForm()">@(Model.Id != 0 ? "Modifier" : "Ajouter")</a>
+            <a class="btn btn-primary" onclick="validateForm()">@(Model.Id != 0 ? "Valider" : "Ajouter")</a>
             @*<a href="#" class="btn btn-secondary">Annuler</a>*@
         </div>
     </form>
@@ -105,8 +119,13 @@
 
             if (id != undefined)
                 document.getElementById('frmCharter' + id).submit();
-            else
+            else {
+           
+                $("#frmMeetup").validate({
+                    debug: true
+                });
                 document.getElementById('frmMeetup').submit();
+            }
         }
     </script>
 }

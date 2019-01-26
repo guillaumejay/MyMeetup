@@ -13,7 +13,7 @@ namespace MyMeetUp.Logic.Entities
         private string DebuggerDisplay =>  $"{Id} {Title} {StartDate:yyyy-MM-dd} {EndDate:yyyy-MM-dd}";
         
         [StringLength(80)]
-        [Required]
+        [Required(ErrorMessage = "LE titre es requis")]
         public string Title { get; set; }
 
         [Column(TypeName = "Date")]

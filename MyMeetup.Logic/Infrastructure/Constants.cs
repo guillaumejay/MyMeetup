@@ -11,8 +11,8 @@ namespace MyMeetUp.Logic.Infrastructure
             accomodations.Add(("Landette 4 couchages", "Landette4"));
             accomodations.Add(("Landette 6 couchages", "Landette6"));
             accomodations.Add(("Chalet", "Chalet"));
-            accomodations.Add(("Mobilhome Docinela", "Docinela"));
-            accomodations.Add(("Mobilhome Pichonela", "Pichonela"));
+       //     accomodations.Add(("Mobilhome Docinela", "Docinela"));
+         //   accomodations.Add(("Mobilhome Pichonela", "Pichonela"));
             accomodations.Add(("Mobilhome Hacienda", "Hacienda"));
             accomodations.Add(("Yourte", "Yourte"));
             accomodations.Add(("Gîte T4", "GiteT4"));
