@@ -34,5 +34,6 @@ namespace MyMeetup.Web.Models
         public List<SelectListItem> PossibleAccomodations{ get; set; }
 
         public string AccomodationId { get; set; }
+        public List<string> Errors { get; set; } =new List<string>();
     }
 }

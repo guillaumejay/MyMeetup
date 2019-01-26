@@ -12,6 +12,7 @@ using MyMeetUp.Logic.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MyMeetup.Web.Infrastructure;
 
 namespace MyMeetup.Web.Areas.Admin.Controllers
 {
@@ -107,13 +108,8 @@ namespace MyMeetup.Web.Areas.Admin.Controllers
             if (!ModelState.IsValid)
             {
                 model = GetMeetupDetailModel(meetup, mapper);
-                foreach (ModelStateEntry error in ModelState.Values )
-                {
-                    if (error.ValidationState == ModelValidationState.Invalid)
-                    {
-                        model.Errors.Add(string.Join(",", error.Errors.First().ErrorMessage));
-                    }
-                }
+                Tools.TransferModalStateError(model.Errors,ModelState);
+          
                 return View("Details", model);
             }
 

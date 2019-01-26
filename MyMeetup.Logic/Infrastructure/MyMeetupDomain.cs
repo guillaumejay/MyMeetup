@@ -319,7 +319,7 @@ namespace MyMeetUp.Logic.Infrastructure
                 registration.RegistrationCode = Registration.CreateCode(registration.UserId, registration.MeetupId);
                 Debug.Assert(registration.MeetupId!=0);
                 Debug.Assert(registration.UserId != 0);
-                registration.RegistrationStatus = ERegistrationStatus.Preregistration;
+
                 registration.ReferentUserId = null;
                 _context.Registrations.Add(registration);
                 _context.SaveChanges();

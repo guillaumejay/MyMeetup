@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace MyMeetUp.Logic.Infrastructure
 {
+    [DebuggerDisplay("{Subject} From {From} to {To} ReplyTo {ReplyTo}")]
    public class MyMeetupEmail
     {
         public string BCC;

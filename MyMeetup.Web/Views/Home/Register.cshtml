@@ -5,12 +5,25 @@
 
 <h1>S'enregistrer à @Model.Meetup.Title</h1>
 
+@if (Model.Errors.Any())
+{
+    <div>
+        <div class="alert alert-danger" role="alert">
+            <ul>
+                @foreach (var erreur in Model.Errors)
+                {
+                    <li>@erreur</li>
+                }
+            </ul>
+        </div>
+    </div>
+}
 <div class="card w-100" style="margin-top: 10px">
     <div class="card-header primary-color white-text">
         Enregistrement
     </div>
     <div class="card-body">
-        <form method="post" asp-controller="Home" asp-action="Register" id="frmRegister">
+        <form method="post" asp-controller="Home" asp-action="postRegister" id="frmRegister">
             <div class="form-row">
                 <input type="hidden" name="@nameof(@Model.MeetupId)" value="@Model.MeetupId" />
                 <div class="col-md-2">
@@ -32,14 +45,14 @@
             <div class="form-row">
 
 
-                <div class="col-md-6">
+                <div class="col-md-2">
                     <div class="md-form">
                         <input type="number" min="0" max="9" id="homeTitle" class="form-control" required name="@nameof(Model.AdultNumber)" maxlength="1"
                                value="@Model.AdultNumber">
                         <label for="homeTitle" class="font-weight-light">Nombre d'adultes</label>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-2">
                     <div class="md-form">
                         <input type="number" min="0" max="9" id="NbKids" class="form-control" required name="@nameof(Model.ChildrenNumber)" maxlength="1"
                                value="@Model.ChildrenNumber">
@@ -48,9 +61,15 @@
                 </div>
 
             </div>
-            <div class="alert alert-primary" role="alert">
-                Si vous pensez bénéficier des VACAFs, n'oubliez pas de l'indiquez ci-dessous. (Le processus de réservation est officiel)
-            </div>
+            <div class="alert alert-primary" role="alert"><ul>
+    <li>
+        Vous devrez indiquer vos <strong>noms, prénom, adresse postale, nb d’adultes et d’enfants</strong>.
+    </li>
+    <li>  Si vous souhaitez faire une demande pour voir si vous pouvez obtenir la VACAF, indiquez-le dès votre 1er mail car cela demande une procédure administrative différente.</li>
+                    <li>   Si vous partagez votre emplacement/logement avec une autre famille, merci de nous indiquer : ses nom/prénom et email.
+    </li>
+</ul>
+                    </div>
             <div class="row">
                 <div class="col">
                     <label for="Notes">Commentaires & indications</label>
@@ -59,7 +78,7 @@
                 </div>
             </div>
             <div class="alert alert-primary" role="alert">
-                En cliquant sur S'inscrire, un email sera envoyé (avec une copie à @Model.UserEmail)) au gestionnaire du site pour qu'il procède à officiellement à votre inscription.
+                En cliquant sur S'inscrire, un email sera envoyé (avec une copie ton email @Model.UserEmail)) au gestionnaire du site pour qu'il procède à officiellement à votre inscription.
             </div>
             <a class="btn btn-primary" onclick="validateForm('frmRegister')">S'inscrire</a>
             <a href="/me" class="btn btn-secondary">Annuler</a>
@@ -81,6 +100,7 @@
 
 
         function validateForm(id) {
+            debugger;
             tinyMCE.triggerSave();
             document.getElementById(id).submit();
         }

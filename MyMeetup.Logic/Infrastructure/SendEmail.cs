@@ -31,7 +31,7 @@ namespace MyMeetUp.Logic.Infrastructure
         private MailMessage CreateEmailMessage(MyMeetupEmail email)
         {
             MailMessage message = new MailMessage(email.From, email.To, email.Subject, email.Body);
-
+            message.IsBodyHtml = true;
             if (!string.IsNullOrEmpty(email.ReplyTo))
             {
 
@@ -47,6 +47,7 @@ namespace MyMeetUp.Logic.Infrastructure
 
             SmtpClient smtpClient = GetSmtpClient(serverSettings);
             MailMessage message = CreateEmailMessage(email);
+            
             return smtpClient.SendMailAsync(message);
             
         }

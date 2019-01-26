@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -24,9 +25,9 @@ namespace MyMeetup.Web.Controllers
     {
 
         public List<SelectListItem> Accomodations = new List<SelectListItem>();
-        //private IMapper _mapper;
+    private IMapper _mapper;
         public Meetup CurrentMeetup;
-        public HomeController(MyMeetupDomain domain, UserManager<MyMeetupUser> userManager, TelemetryClient telemetryClient/*,IMapper mapper*/) : base(domain, userManager, telemetryClient)
+        public HomeController(MyMeetupDomain domain, UserManager<MyMeetupUser> userManager, TelemetryClient telemetryClient,IMapper mapper) : base(domain, userManager, telemetryClient)
         {
             CurrentMeetup = Domain.GetNextMeetup(DateTime.Now, true);
             var accomodations = Constants.InitAccomodation();
@@ -48,6 +49,12 @@ namespace MyMeetup.Web.Controllers
         public IActionResult Register(int meetupId)
         {
             var rm = CreateModelForRegistration(meetupId);
+            if (rm.Meetup.IsVisible == false || rm.Meetup.EndDate <= DateTime.Now.Date ||
+                rm.Meetup.OpenForRegistrationOn.HasValue == false ||
+                rm.Meetup.OpenForRegistrationOn.Value > DateTime.Now.Date)
+            {
+                return Redirect("/me");
+            }
             return View(rm);
         }
 
@@ -58,10 +65,16 @@ namespace MyMeetup.Web.Controllers
             rm.PossibleAccomodations = Accomodations;
             return rm;
         }
+        private MeetupRegisterModel CreateModelForRegistration(MeetupRegisterModel model)
+        {
+            MeetupRegisterModel rm = _mapper.Map<MeetupRegisterModel>(model);
+            rm.UserEmail = CurrentUser.Email;
+            rm.PossibleAccomodations = Accomodations;
+            return rm;
+        }
+        [HttpPost("postRegister")]
 
-        [HttpPost]
-
-        public IActionResult Register(MeetupRegisterModel model, [FromServices]IConfiguration configuration)
+        public IActionResult PostRegister(MeetupRegisterModel model, [FromServices]IConfiguration configuration)
         {
             if (ModelState.IsValid)
             {
@@ -72,6 +85,7 @@ namespace MyMeetup.Web.Controllers
                     NumberOfAdults = model.AdultNumber,
                     NumberOfChildren = model.ChildrenNumber
                 };
+                r.RegistrationStatus = ERegistrationStatus.Registered;
                 Domain.AddOrUpdateRegistration(r);
                 string body = "Bonjour <br/>";
                 body += $"{CurrentUser.FirstName} {CurrentUser.LastName} s'est inscrit : {r.RegistrationCode}<br/>";
@@ -97,11 +111,17 @@ namespace MyMeetup.Web.Controllers
                 email.CC = CurrentUser.Email;
                 SendEmail s=new SendEmail();
                 se.SendSmtpEmail(EmailSender.GetSettings(configuration), email);
-                return View("Index");
+                return Redirect("/me");
             }
-            var rm = CreateModelForRegistration(model.MeetupId);
+            MeetupRegisterModel rm = CreateModelForRegistration(model);
+
+                Tools.TransferModalStateError(rm.Errors, ModelState);
+
+            
+            
             return View(rm);
         }
+
 
         private IndexModel CreateLandingPageModel(SigninMeetupModel signinMeetupModel = null)
         {
@@ -198,6 +218,7 @@ namespace MyMeetup.Web.Controllers
             }
             else
             {
+                
                 model.NextRegistrations = "Tu es pré-inscrit-e à : <ul> ";
                 List<string> texts = new List<string>();
                 foreach (var reg in regs)
@@ -209,7 +230,7 @@ namespace MyMeetup.Web.Controllers
                     }
                     else
                     {
-                        tmp += $"ton code d'enregistrement est {reg.RegistrationCode}";
+                        tmp += $"ton code d'enregistrement est {reg.RegistrationCode} pour {reg.NumberOfAdults} adultes, {reg.NumberOfChildren} dans {reg.AccomodationId}";
                     }
                     texts.Add(tmp+ "</li>");
                 }

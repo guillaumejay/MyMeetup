@@ -19,7 +19,11 @@ namespace MyMeetUp.Logic.Entities
         [ForeignKey(nameof(Meetup))]
         public int MeetupId { get; set; }
 
-        public Registration(int userId, int meetupId)
+        public Registration()
+        {
+            RegistrationStatus = ERegistrationStatus.Preregistration;
+        }
+        public Registration(int userId, int meetupId):this()
         {
             UserId = userId;
             MeetupId = meetupId;
