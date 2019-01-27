@@ -16,6 +16,19 @@ namespace MyMeetup.Web.Models.Home
 
         public List<Registration> OldMeetups { get; set; }
 
+        public string EmailContactText
+        {
+            get
+        {
+            if (CurrentUser.IsOkToGetMeetupsInfo)
+            {
+                return "Tu souhaites recevoir des emails de notre part pour nos prochaines rencontres";
+            }
+
+            return "Tu NE souhaites PAS recevoir d'emails de notre part sur nos prochaines rencontres";
+        }
+        }
+
         public List<NextMeetupView> NextMeetups=new List<NextMeetupView>();
 
         public MyAccountModel(MyMeetupUser user)

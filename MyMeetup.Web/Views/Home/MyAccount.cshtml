@@ -14,8 +14,11 @@
         <p class="card-text">
             @Html.Raw(Model.NextRegistrations)
             <br />
-            <br />
             Pour nous écrire : <a href="mailto:@ViewBag.ContactEmail">@ViewBag.ContactEmail</a>
+            <div class="alert alert-info" role="alert">
+                @Model.EmailContactText
+                <a href="/changeEmailContact" class="btn btn-warning">Clicque ici si tu as changé d'avis</a>
+            </div>
         </p>
 
     </div>

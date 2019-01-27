@@ -50,7 +50,7 @@
         {
             bool newRow = i == 0 || (i % 2 == 0);
 
-            var contenu = Model.Charter[i];
+            var chartItem = Model.Charter[i];
             string hiddenStyle = (i == 0) ? "" : "display:none;";
             var chkId = "Accepte" + i;
 
@@ -61,8 +61,8 @@
                         Lis et accepte :
                     </div>
                     <div class="card-body">
-                        <h4 class="card-title">@contenu.Category</h4>
-                        <p class="card-text" style="text-align: left !important">@Html.Raw(contenu.Content)</p>
+                        <h4 class="card-title">@chartItem.Category</h4>
+                        <p class="card-text" style="text-align: left !important">@Html.Raw(chartItem.Content)</p>
 
                     </div>
                     <div class="card-footer text-muted ">

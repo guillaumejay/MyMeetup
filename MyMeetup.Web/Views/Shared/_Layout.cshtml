@@ -1,4 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using MyMeetUp.Logic.Infrastructure
+
+
+@inject SignInManager<MyMeetupUser> SignInManager
+@inject UserManager<MyMeetupUser> UserManager
+@{
+    var controller = ViewContext.RouteData.Values["Controller"]?.ToString().ToLower();
+    var action = ViewContext.RouteData.Values["Action"]?.ToString().ToLower();
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -12,7 +23,7 @@
     <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
     <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -22,16 +33,7 @@
     <meta name="theme-color" content="#ffffff">
     <title>@ViewData["Title"] - MyMeetup</title>
 
-    @*<environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-     
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>*@
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Bootstrap core CSS -->
@@ -42,46 +44,58 @@
     <link href="~/lib/mdbootstrap/css/style.min.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Rencontres.Web</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <nav class="navbar navbar-expand-lg navbar-dark primary-color sticky-top">
+
+            <!-- Navbar brand -->
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">Administration</a>
+
+            <!-- Collapse button -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Collapsible content -->
+            <div class="collapse navbar-collapse" id="basicExampleNav">
+
+                <!-- Links -->
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item @(controller == "Home" && action=="me" ? "active" : "")">
+                        <a asp-controller="Home" asp-action="MyAccount" class="nav-link"><i class="fa fa-home" aria-hidden="true"></i> Mes infos</a>
+                    </li>
+                    <li class="nav-item  @(controller == "Home"  && action=="charter" ? "active" : "")">
+                        <a  asp-controller="Home" asp-action="Charter" class="nav-link"><i class="fa fa-gavel"></i> Charte</a>
+                    </li>
+                    
                 </ul>
+
                 <partial name="_LoginPartial" />
             </div>
-        </div>
-    </nav>
+            <!-- Collapsible content -->
 
+        </nav>
+    }
     @*<partial name="_CookieConsentPartial" />*@
-<div class="container">
-    @RenderBody()
-    <hr />
-    <footer>
-        <p>&copy; 2018-19 - @ViewBag.AppTitle / <a href="mailto:@ViewBag.ContactEmail">@ViewBag.ContactEmail</a></p>
-    </footer>
-</div>
+    <div class="container">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; 2018-19 - @ViewBag.AppTitle / <a href="mailto:@ViewBag.ContactEmail">@ViewBag.ContactEmail</a></p>
+        </footer>
+    </div>
 
-<!-- JQuery -->
-<script type="text/javascript" src="~/lib/mdbootstrap/js/jquery-3.3.1.min.js"></script>
-<script src="~/lib/jquery-validation/jquery.validate.js"></script>
-<!-- Bootstrap tooltips -->
-<script type="text/javascript" src="~/lib/mdbootstrap/js/popper.min.js"></script>
-<!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="~/lib/mdbootstrap/js/bootstrap.min.js"></script>
-<!-- MDB core JavaScript -->
-<script type="text/javascript" src="~/lib/mdbootstrap/js/mdb.min.js"></script>
+    <!-- JQuery -->
+    <script type="text/javascript" src="~/lib/mdbootstrap/js/jquery-3.3.1.min.js"></script>
+    <script src="~/lib/jquery-validation/jquery.validate.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="~/lib/mdbootstrap/js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="~/lib/mdbootstrap/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="~/lib/mdbootstrap/js/mdb.min.js"></script>
     <environment include="Development">
 
         @*<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>*@
@@ -89,7 +103,7 @@
     </environment>
     <environment exclude="Development">
         @*
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
+            <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
         *@
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>

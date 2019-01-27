@@ -1,0 +1,21 @@
+﻿@model MyMeetup.Web.Areas.Admin.Models.AdminCharterModel
+@{
+    ViewData["Title"] = "Charte";
+}
+
+<h2>Charte commune</h2>
+@foreach (var chartItem in Model.Contents)
+{
+    
+    <div class="col-sm-12">
+        <div class="card text-center" style="min-height: 200px; ">
+  
+            <div class="card-body">
+                <h4 class="card-title">@chartItem.Category</h4>
+                <p class="card-text" style="text-align: left !important">@Html.Raw(chartItem.Content)</p>
+
+            </div>
+          
+        </div>
+    </div>
+}

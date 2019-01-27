@@ -17,6 +17,7 @@ using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using MyMeetup.Web.Areas.Admin.Models;
 
 namespace MyMeetup.Web.Controllers
 {
@@ -36,8 +37,16 @@ namespace MyMeetup.Web.Controllers
                 Accomodations.Add(new SelectListItem(a.text,a.id));
             }
         }
+        [AllowAnonymous]
+        public IActionResult Charter()
+        {
+            AdminCharterModel m = new AdminCharterModel();
+            var contents = Domain.GetCharterFor(null, true, true, true).ToList();
+            contents.Add(new CharterContent { Position = contents.Count() + 1 });
+            m.Contents = contents;
+            return View(m);
+        }
 
-       
 
         [AllowAnonymous]
         public IActionResult Index()
@@ -200,6 +209,14 @@ namespace MyMeetup.Web.Controllers
             }
 
             return View("Index", CreateLandingPageModel());
+        }
+
+        [HttpGet("ChangeEmailContact")]
+        public ActionResult ChangeEmailContact()
+        {
+            CurrentUser.IsOkToGetMeetupsInfo = !CurrentUser.IsOkToGetMeetupsInfo;
+            Domain.ModifyUser(CurrentUser);
+            return RedirectToAction("MyAccount");
         }
 
         private MyAccountModel GetMyAccountModel(IConfiguration configuration, MyMeetupUser currentUser = null)

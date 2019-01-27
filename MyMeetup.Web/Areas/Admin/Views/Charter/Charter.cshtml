@@ -1,0 +1,41 @@
+﻿@model MyMeetup.Web.Areas.Admin.Models.AdminCharterModel
+@{
+    ViewData["Title"] = "Index";
+}
+@section header
+    {
+    <environment include="Development">
+    </environment>
+    <environment exclude="Development">
+    </environment>
+}
+<h2>Charte commune</h2>
+@await Html.PartialAsync("_CharterEdit",Model.Contents)
+
+
+@section Scripts
+    {
+    <script src="~/lib/tinymce/js/tinymce.min.js"></script>
+    <environment include="Development">
+        @*<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+            <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>*@
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        @*<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>*@
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+    <script>
+        $(function () {
+            initMCE({selector:'textarea'});
+            
+        });
+
+        function validateForm(id) {
+            tinyMCE.triggerSave();
+            document.getElementById('frmCharter' + id).submit();
+        }
+
+    </script>
+}
