@@ -224,16 +224,16 @@ namespace MyMeetUp.Logic.Infrastructure
         }
         #endregion
 
-        public ResultAddRegularUser AddRegularUser(SigninMeetupModel model, UserManager<MyMeetupUser> userManager)
+        public ResultAddRegularUser AddRegularUser(SigninMeetupModel model,int? meetupIdToRegister, UserManager<MyMeetupUser> userManager)
         {
           ResultAddRegularUser rau=new ResultAddRegularUser();
             MyMeetupUser newUser = MyMeetupUser.From(model);
             rau.UserId = MyMeetupUser.CreateUser(newUser, MyMeetupRole.Participant,
                    newUser.Initials +
                    DateTime.Now.ToString("HHmmss"), userManager);
-            if (rau.UserOk && model.MeetupId.HasValue)
+            if (rau.UserOk && meetupIdToRegister.HasValue)
             {
-                rau.RegistrationCode = Register(newUser, model.MeetupId.Value).RegistrationCode;
+                rau.RegistrationCode = Register(newUser, meetupIdToRegister.Value).RegistrationCode;
             }
 
             return rau;
@@ -311,9 +311,8 @@ namespace MyMeetUp.Logic.Infrastructure
 
         public int AddOrUpdateRegistration(Registration registration)
         {
-            var inDb = _context.Registrations.Where(x =>
-                    x.MeetupId == registration.MeetupId && x.ReferentUserId == registration.ReferentUserId)
-                .SingleOrDefault();
+            var inDb = _context.Registrations
+                .SingleOrDefault(x => x.MeetupId == registration.MeetupId && x.UserId == registration.UserId);
             if (inDb == null)
             {
                 registration.RegistrationCode = Registration.CreateCode(registration.UserId, registration.MeetupId);

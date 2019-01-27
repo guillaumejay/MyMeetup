@@ -29,7 +29,7 @@
                 <div class="col-md-2">
                     <label for="Accomodation" class="font-weight-light">Hébergement choisi</label>
                 </div>
-                <div class="col-md-;10">
+                <div class="col-md-4">
                     <div class="md-form">
 
                         <select style="width: 300px;text-align:right" required id="Accomodation" name="@nameof(Model.AccomodationId)">
@@ -41,32 +41,28 @@
 
                     </div>
                 </div>
-            </div>
-            <div class="form-row">
-
-
-                <div class="col-md-2">
+                <div class="col-md-1">
                     <div class="md-form">
                         <input type="number" min="0" max="9" id="homeTitle" class="form-control" required name="@nameof(Model.AdultNumber)" maxlength="1"
                                value="@Model.AdultNumber">
                         <label for="homeTitle" class="font-weight-light">Nombre d'adultes</label>
                     </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-1">
                     <div class="md-form">
                         <input type="number" min="0" max="9" id="NbKids" class="form-control" required name="@nameof(Model.ChildrenNumber)" maxlength="1"
                                value="@Model.ChildrenNumber">
                         <label for="NbKids" class="font-weight-light">Nombre d'enfants</label>
                     </div>
                 </div>
-
             </div>
+
             <div class="alert alert-primary" role="alert"><ul>
     <li>
-        Vous devrez indiquer vos <strong>noms, prénom, adresse postale, nb d’adultes et d’enfants</strong>.
+        Vous devez indiquer vos <strong>noms, prénoms, adresse postale</strong>.
     </li>
-    <li>  Si vous souhaitez faire une demande pour voir si vous pouvez obtenir la VACAF, indiquez-le dès votre 1er mail car cela demande une procédure administrative différente.</li>
-                    <li>   Si vous partagez votre emplacement/logement avec une autre famille, merci de nous indiquer : ses nom/prénom et email.
+    <li>  Si vous souhaitez faire une demande pour voir si vous pouvez obtenir la VACAF, indiquez-le dans la commentaire ci-dessous car cela demande une procédure administrative différente.</li>
+                    <li>   Si vous partagez votre emplacement/logement avec une autre famille, merci de nous indiquer un contact pour eux : nom/prénom et email.
     </li>
 </ul>
                     </div>
@@ -78,7 +74,7 @@
                 </div>
             </div>
             <div class="alert alert-primary" role="alert">
-                En cliquant sur S'inscrire, un email sera envoyé (avec une copie ton email @Model.UserEmail)) au gestionnaire du site pour qu'il procède à officiellement à votre inscription.
+                En cliquant sur S'inscrire, ta demande de réservation sera envoyée (avec une copie sur @Model.UserEmail) à La Taillade.
             </div>
             <a class="btn btn-primary" onclick="validateForm('frmRegister')">S'inscrire</a>
             <a href="/me" class="btn btn-secondary">Annuler</a>

@@ -15,10 +15,15 @@
             @Html.Raw(Model.NextRegistrations)
             <br />
             Pour nous écrire : <a href="mailto:@ViewBag.ContactEmail">@ViewBag.ContactEmail</a>
-            <div class="alert alert-info" role="alert">
-                @Model.EmailContactText
+            <div class="alert alert-info row" role="alert">
+                <div class="col-md-8">
+                    @Model.EmailContactText
+                </div>
+            <div class="col-md-4">
+
                 <a href="/changeEmailContact" class="btn btn-warning">Clicque ici si tu as changé d'avis</a>
             </div>
+                </div>
         </p>
 
     </div>

@@ -92,17 +92,24 @@ namespace MyMeetup.Web.Controllers
                     AccomodationId = model.AccomodationId,
                     Notes = model.Notes,
                     NumberOfAdults = model.AdultNumber,
-                    NumberOfChildren = model.ChildrenNumber
+                    NumberOfChildren = model.ChildrenNumber,
+                    RegistrationStatus = ERegistrationStatus.Registered
                 };
-                r.RegistrationStatus = ERegistrationStatus.Registered;
                 Domain.AddOrUpdateRegistration(r);
-                string body = "Bonjour <br/>";
-                body += $"{CurrentUser.FirstName} {CurrentUser.LastName} s'est inscrit : {r.RegistrationCode}<br/>";
+                string body = "Bonjour :-) <br/><br/>";
+                body += "Voici une réservation à partir du site de Rencontres Non-Scos :<br/><br/>";
+                body += $"Prénom : {CurrentUser.FirstName}<br/>  Nom : {CurrentUser.LastName} <br/>Email : {CurrentUser.Email}<br/>";
                 body +=
-                    $"Logement : {Accomodations.Single(x => x.Value == r.AccomodationId)} - Adultes {r.NumberOfAdults} - Enfants : {r.NumberOfChildren}<br/>";
-                body += "Notes :<br/>";
-                body += r.Notes;
-                body += "<br/><br/>Cordialement";
+                    $"Logement : {Accomodations.Single(x => x.Value == r.AccomodationId).Value}<br/>Adultes : {r.NumberOfAdults} <br/>Enfants : {r.NumberOfChildren}<br/>";
+                if (!string.IsNullOrWhiteSpace(r.Notes))
+                {
+                    body += "Notes :<hr>";
+                    body += r.Notes;
+                    body += "<hr>";
+
+                }
+
+                body += "<br/>Cordialement";
                 SendEmail se = new SendEmail();
                 Meetup m = Domain.GetMeetup(model.MeetupId, true);
                 MyMeetupEmail email = new MyMeetupEmail("Nouvel inscrit",body,m.MeetupPlaceAdminEmail??configuration["emailContact"],
@@ -117,6 +124,8 @@ namespace MyMeetup.Web.Controllers
                     email.To = configuration["emailContact"];
                     email.Subject = "TEST " + email.Subject;
                 }
+
+                email.ReplyTo = CurrentUser.Email;
                 email.CC = CurrentUser.Email;
                 SendEmail s=new SendEmail();
                 se.SendSmtpEmail(EmailSender.GetSettings(configuration), email);
@@ -174,23 +183,25 @@ namespace MyMeetup.Web.Controllers
             {
                 return View("MyAccount", GetMyAccountModel(configuration, user));
             }
-            var result = Domain.AddRegularUser(model, UserManager);
+            var result = Domain.AddRegularUser(model,null ,UserManager);
             if (result.UserOk)
             {
                 user = UserManager.FindByEmailAsync(model.Email).Result;
                 SendEmail se = new SendEmail();
-                MyMeetupEmail email = new MyMeetupEmail("Nouvel inscrit",
-                    configuration["emailContact"], configuration["emailContact"]);
+                MyMeetupEmail email = new MyMeetupEmail("Nouvel Adhérent",
+                    configuration["emailContact"], configuration["emailContact"])
+                {
+                    Body = $"{model.FirstName} {model.Name} - {model.Email} {model.PhoneNumber}"
+                };
                 //TODO Ugly, should be templated
-                email.Body = $"{model.FirstName} {model.Name} - {model.Email} {model.PhoneNumber}";
                 if (!string.IsNullOrEmpty(result.RegistrationCode))
                 {
                     var meetup = Domain.GetMeetup(model.MeetupId.Value, true);
                     email.Body += Environment.NewLine +
                                   $"Inscrit(e) à {meetup.Title} et son code d'enregistrement est {result.RegistrationCode}";
-                    email.ReplyTo = model.Email;
+                
                 }
-
+                email.ReplyTo = model.Email;
                 try
                 {
                     if (!Debugger.IsAttached)
@@ -203,9 +214,16 @@ namespace MyMeetup.Web.Controllers
                     _telemetryClient.TrackException(e);
                 }
 
-
+                signInManager.SignInAsync(user, isPersistent: true).Wait();
                 //   signInManager.SignInAsync(user, isPersistent: true);
-                return View("MyAccount", GetMyAccountModel(configuration, user));
+                if (model.MeetupId.HasValue)
+                {
+
+                    return RedirectToAction("Register", new { meetupId = model.MeetupId.Value});
+                }
+
+                return RedirectToAction("MyAccount");
+           //     return View("MyAccount", GetMyAccountModel(configuration, user));
             }
 
             return View("Index", CreateLandingPageModel());

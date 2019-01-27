@@ -145,7 +145,7 @@
                                     <input type="checkbox" class="custom-control-input" id="isOkToGetEmail" @(okForEmail ? "checked" : "")
                                            onchange="$('#hidIsOkToGetEmail').val($(this).is(':checked') ? 'true' : 'false')"/>
                                     <input type="hidden" value="@(okForEmail.ToString())" *@ id="hidIsOkToGetEmail" name="@nameof(SigninMeetupModel.IsOkToGetMeetupsInfo)"/>
-                                    <label class="custom-control-label" for="isOkToGetEmail">Cochez cette case pour nous autoriser &aacute; vous pr&eacute;venir par email de nos futures rencontres</label>
+                                    <label class="custom-control-label" for="isOkToGetEmail">Cochez cette case pour nous autoriser a vous pr&eacute;venir par email de nos futures rencontres</label>
 
                                 </div>
                             </div>

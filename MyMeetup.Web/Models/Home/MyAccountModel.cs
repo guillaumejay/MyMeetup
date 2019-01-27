@@ -22,10 +22,10 @@ namespace MyMeetup.Web.Models.Home
         {
             if (CurrentUser.IsOkToGetMeetupsInfo)
             {
-                return "Tu souhaites recevoir des emails de notre part pour nos prochaines rencontres";
+                return "Actuellement, tu souhaites recevoir nos emails pour les prochaines rencontres";
             }
 
-            return "Tu NE souhaites PAS recevoir d'emails de notre part sur nos prochaines rencontres";
+            return "Actuellement, tu NE souhaites PAS recevoir nos emails pour les prochaines rencontres";
         }
         }
 
