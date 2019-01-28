@@ -87,7 +87,7 @@ namespace MyMeetup.Web
                app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-            app.UseDeveloperExceptionPage();
+          // app.UseDeveloperExceptionPage();
             var supportedCultures = new List<CultureInfo>
             {
                 new CultureInfo("fr"),

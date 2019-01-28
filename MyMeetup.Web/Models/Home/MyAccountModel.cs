@@ -29,6 +29,8 @@ namespace MyMeetup.Web.Models.Home
         }
         }
 
+        public bool IsOkToGetEmail => CurrentUser.IsOkToGetMeetupsInfo;
+
         public List<NextMeetupView> NextMeetups=new List<NextMeetupView>();
 
         public MyAccountModel(MyMeetupUser user)

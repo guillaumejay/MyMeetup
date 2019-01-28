@@ -25,6 +25,7 @@ namespace MyMeetup.Web.Areas.Identity.Pages.Account
         {
             _signInManager = signInManager;
             _logger = logger;
+          
         }
 
         [BindProperty]

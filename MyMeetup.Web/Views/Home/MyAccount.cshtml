@@ -5,6 +5,7 @@
     ViewData["Title"] = "Bienvenue !";
     int oldMeetupCount = Model.OldMeetups.Count;
     int futureMeetup = Model.NextMeetups.Count;
+    string classAlert = Model.IsOkToGetEmail ? "success" : "warning";
 }
 
 <div class="card" style="width: 72rem;">
@@ -15,15 +16,15 @@
             @Html.Raw(Model.NextRegistrations)
             <br />
             Pour nous écrire : <a href="mailto:@ViewBag.ContactEmail">@ViewBag.ContactEmail</a>
-            <div class="alert alert-info row" role="alert">
+            <div class="alert alert-@classAlert row" role="alert">
                 <div class="col-md-8">
                     @Model.EmailContactText
                 </div>
-            <div class="col-md-4">
+                <div class="col-md-4">
 
-                <a href="/changeEmailContact" class="btn btn-warning">Clicque ici si tu as changé d'avis</a>
-            </div>
+                    <a href="/changeEmailContact" class="btn btn-warning">Clicque ici si tu as changé d'avis</a>
                 </div>
+            </div>
         </p>
 
     </div>
@@ -42,27 +43,27 @@
                         <th>Inscription</th>
                     </tr>
                     <tbody>
-                    @foreach (NextMeetupView meetup in Model.NextMeetups)
-                    {
-                        <tr>
-                            <td>
-                                <strong>@meetup.Title</strong>
-                            </td>
-                            <td>
-                                @meetup.MeetupDate
-                            </td>
-                            <td>
-                                @if (meetup.CanRegister)
-                                {
-                                    <a href="/register/@meetup.MeetupId" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">S'y inscrire</a>
-                                }
-                                else
-                                {
-                                    <text>L'inscription n'est pas encore ouverte</text>
-                                }
-                            </td>
-                        </tr>
-                    }
+                        @foreach (NextMeetupView meetup in Model.NextMeetups)
+                        {
+                            <tr>
+                                <td>
+                                    <strong>@meetup.Title</strong>
+                                </td>
+                                <td>
+                                    @meetup.MeetupDate
+                                </td>
+                                <td>
+                                    @if (meetup.CanRegister)
+                                    {
+                                        <a href="/register/@meetup.MeetupId" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">S'y inscrire</a>
+                                    }
+                                    else
+                                    {
+                                        <text>L'inscription n'est pas encore ouverte</text>
+                                    }
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </p>
@@ -86,20 +87,20 @@
                         <th>Code</th>
                     </tr>
                     <tbody>
-                    @foreach (var registration in Model.OldMeetups)
-                    {
-                        <tr>
-                            <td>
-                                <strong>@registration.Meetup.Title</strong>
-                            </td>
-                            <td>
-                                Du @registration.Meetup.StartDate.ToString("dd/MM/yyyy") au @registration.Meetup.EndDate.ToString("dd/MM/yyyy")
-                            </td>
-                            <td>
-                                @registration.RegistrationCode
-                            </td>
-                        </tr>
-                    }
+                        @foreach (var registration in Model.OldMeetups)
+                        {
+                            <tr>
+                                <td>
+                                    <strong>@registration.Meetup.Title</strong>
+                                </td>
+                                <td>
+                                    Du @registration.Meetup.StartDate.ToString("dd/MM/yyyy") au @registration.Meetup.EndDate.ToString("dd/MM/yyyy")
+                                </td>
+                                <td>
+                                    @registration.RegistrationCode
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </p>
