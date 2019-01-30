@@ -9,7 +9,7 @@ namespace MyMeetUp.Logic.Infrastructure
    public class MyMeetupEmail
     {
         public string BCC;
-        public object CC;
+        public string CC;
         public string Subject { get; set; }
 
         public string Body { get; set; }

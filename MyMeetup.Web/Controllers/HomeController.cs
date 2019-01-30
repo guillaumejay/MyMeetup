@@ -112,7 +112,7 @@ namespace MyMeetup.Web.Controllers
                 body += "<br/>Cordialement";
                 SendEmail se = new SendEmail();
                 Meetup m = Domain.GetMeetup(model.MeetupId, true);
-                MyMeetupEmail email = new MyMeetupEmail("Nouvel inscrit",body,m.MeetupPlaceAdminEmail??configuration["emailContact"],
+                MyMeetupEmail email = new MyMeetupEmail("Nouvel inscrit " + m.Title,body,m.MeetupPlaceAdminEmail??configuration["emailContact"],
                     configuration["emailContact"]);
                 if (!string.IsNullOrEmpty(m.MeetupPlaceAdminEmail))
                 {
@@ -191,7 +191,7 @@ namespace MyMeetup.Web.Controllers
                 MyMeetupEmail email = new MyMeetupEmail("Nouvel Adhérent",
                     configuration["emailContact"], configuration["emailContact"])
                 {
-                    Body = $"{model.FirstName} {model.Name} - {model.Email} {model.PhoneNumber}"
+                    Body = $"PRénom :{model.FirstName} <br/>Nom :{model.Name} - <br/>Email : {model.Email} <br/>Tel: {model.PhoneNumber}"
                 };
                 //TODO Ugly, should be templated
                 if (!string.IsNullOrEmpty(result.RegistrationCode))
