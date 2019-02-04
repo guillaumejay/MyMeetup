@@ -38,6 +38,6 @@ namespace MyMeetUp.Logic.Models
         /// <summary>
         /// https://datatables.net/manual/data/orthogonal-data
         /// </summary>
-        public string RegisteredOnSort => RegisteredOn.ToString("yyyy/MM/dd hh:mm");
+        public string RegisteredOnSort => RegisteredOn.ToString("yyyy/MM/dd HH:mm");
     }
 }

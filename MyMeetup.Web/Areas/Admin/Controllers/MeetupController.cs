@@ -6,13 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MyMeetup.Web.Areas.Admin.Models;
 using MyMeetup.Web.Controllers;
+using MyMeetup.Web.Infrastructure;
 using MyMeetUp.Logic.Entities;
 using MyMeetUp.Logic.Infrastructure;
 using MyMeetUp.Logic.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MyMeetup.Web.Infrastructure;
 
 namespace MyMeetup.Web.Areas.Admin.Controllers
 {
@@ -75,6 +75,7 @@ namespace MyMeetup.Web.Areas.Admin.Controllers
         }
         private ParticipantsMeetupModel CreateModel(int meetupId)
         {
+            var accomodations = AccomodationModel.DefaultAccomodationModels;
             var m = Domain.GetMeetup(meetupId, true);
             List<MyMeetupUser> participants = Domain.GetParticipantsFor(meetupId);
             var model = new ParticipantsMeetupModel
@@ -95,6 +96,9 @@ namespace MyMeetup.Web.Areas.Admin.Controllers
                 var reg = regs.First(x => x.UserId == user.Id);
                 info.RegCode = reg.RegistrationCode;
                 info.RegisteredOn = reg.CreatedAt;
+                info.AdultNumber = reg.NumberOfAdults;
+                info.KidNumber = reg.NumberOfChildren;
+                info.Accomodation = accomodations.Single(x => x.Id == reg.AccomodationId).Description;
                 info.RegistrationId = reg.Id;
                 model.Participants.Add(info);
             }
@@ -108,8 +112,8 @@ namespace MyMeetup.Web.Areas.Admin.Controllers
             if (!ModelState.IsValid)
             {
                 model = GetMeetupDetailModel(meetup, mapper);
-                Tools.TransferModalStateError(model.Errors,ModelState);
-          
+                Tools.TransferModalStateError(model.Errors, ModelState);
+
                 return View("Details", model);
             }
 

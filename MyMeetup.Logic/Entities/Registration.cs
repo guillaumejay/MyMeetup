@@ -55,7 +55,8 @@ namespace MyMeetUp.Logic.Entities
 
         public static string CreateCode(int userId, int meetupId)
         {
-            string code = string.Join("",$"{userId:0000}-{DateTime.Now.Month}{DateTime.Now.Day}-{meetupId:000}".Reverse());
+            string code = string.Join("",$"{userId:0000}" +
+                                         $"-{DateTime.Now.Month}{DateTime.Now.Day}-{meetupId:000}".Reverse());
             return code;
         }
 

@@ -22,11 +22,18 @@ namespace MyMeetUp.Logic.Models
 
         public string RegCode { get; set; }
 
+        public string Accomodation { get; set; }
+
+        public int AdultNumber { get; set; }
+
+        public int KidNumber { get; set; }
+        
+
         public DateTime RegisteredOn { get; set; }
 
         /// <summary>
         /// https://datatables.net/manual/data/orthogonal-data
         /// </summary>
-        public string RegisteredOnSort => RegisteredOn.ToString("yyyy/MM/dd hh:mm");
+        public string RegisteredOnSort => RegisteredOn.ToString("yyyy/MM/dd HH:mm");
     }
 }

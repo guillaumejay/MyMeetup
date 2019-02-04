@@ -1,8 +1,11 @@
-﻿using Microsoft.ApplicationInsights;
+﻿using AutoMapper;
+using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
+using MyMeetup.Web.Areas.Admin.Models;
 using MyMeetup.Web.Infrastructure;
 using MyMeetup.Web.Models;
 using MyMeetup.Web.Models.Home;
@@ -14,29 +17,31 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using AutoMapper;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using MyMeetup.Web.Areas.Admin.Models;
 
 namespace MyMeetup.Web.Controllers
 {
     [Authorize]
     public class HomeController : BaseController
     {
-
-        public List<SelectListItem> Accomodations = new List<SelectListItem>();
-    private IMapper _mapper;
+        private IMapper _mapper;
         public Meetup CurrentMeetup;
-        public HomeController(MyMeetupDomain domain, UserManager<MyMeetupUser> userManager, TelemetryClient telemetryClient,IMapper mapper) : base(domain, userManager, telemetryClient)
+        public HomeController(MyMeetupDomain domain, UserManager<MyMeetupUser> userManager, TelemetryClient telemetryClient, IMapper mapper) : base(domain, userManager, telemetryClient)
         {
             CurrentMeetup = Domain.GetNextMeetup(DateTime.Now, true);
-            var accomodations = Constants.InitAccomodation();
+        }
+
+        private List<SelectListItem> CreateSelectListForAcc(List<AccomodationModel> accomodations)
+        {
+            var list = new List<SelectListItem>();
+            
             foreach (var a in accomodations)
             {
-                Accomodations.Add(new SelectListItem(a.text,a.id));
+               list.Add(new SelectListItem(a.Description, a.Id));
             }
+
+            return list;
         }
+
         [AllowAnonymous]
         public IActionResult Charter()
         {
@@ -67,18 +72,26 @@ namespace MyMeetup.Web.Controllers
             return View(rm);
         }
 
-        private MeetupRegisterModel CreateModelForRegistration(int meetupId)
+        private MeetupRegisterModel CreateModelForRegistration(int meetupId, bool onlyActiveAcc = true)
         {
             MeetupRegisterModel rm = new MeetupRegisterModel(Domain.GetMeetup(meetupId, true));
             rm.UserEmail = CurrentUser.Email;
-            rm.PossibleAccomodations = Accomodations;
+            FillAccomodations(rm, onlyActiveAcc);
+       
             return rm;
         }
-        private MeetupRegisterModel CreateModelForRegistration(MeetupRegisterModel model)
+
+        private void FillAccomodations(MeetupRegisterModel rm, bool onlyActiveAcc)
+        {
+            var possible = AccomodationModel.DefaultAccomodationModels;
+            rm.PossibleAccomodations = CreateSelectListForAcc( (onlyActiveAcc) ? possible.Where(x => x.IsActive).ToList() : possible);
+        }
+
+        private MeetupRegisterModel CreateModelForRegistration(MeetupRegisterModel model,bool onlyActiveAcc=true)
         {
             MeetupRegisterModel rm = _mapper.Map<MeetupRegisterModel>(model);
             rm.UserEmail = CurrentUser.Email;
-            rm.PossibleAccomodations = Accomodations;
+            FillAccomodations(rm,true);
             return rm;
         }
         [HttpPost("postRegister")]
@@ -87,6 +100,7 @@ namespace MyMeetup.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                var accomodations = AccomodationModel.DefaultAccomodationModels;
                 Registration r = new Registration(CurrentUser.Id, model.MeetupId)
                 {
                     AccomodationId = model.AccomodationId,
@@ -100,7 +114,7 @@ namespace MyMeetup.Web.Controllers
                 body += "Voici une réservation à partir du site de Rencontres Non-Scos :<br/><br/>";
                 body += $"Prénom : {CurrentUser.FirstName}<br/>  Nom : {CurrentUser.LastName} <br/>Email : {CurrentUser.Email}<br/>";
                 body +=
-                    $"Logement : {Accomodations.Single(x => x.Value == r.AccomodationId).Value}<br/>Adultes : {r.NumberOfAdults} <br/>Enfants : {r.NumberOfChildren}<br/>";
+                    $"Logement : {accomodations.Single(x => x.Id == r.AccomodationId).Id}<br/>Adultes : {r.NumberOfAdults} <br/>Enfants : {r.NumberOfChildren}<br/>";
                 if (!string.IsNullOrWhiteSpace(r.Notes))
                 {
                     body += "Notes :<hr>";
@@ -112,7 +126,7 @@ namespace MyMeetup.Web.Controllers
                 body += "<br/>Cordialement";
                 SendEmail se = new SendEmail();
                 Meetup m = Domain.GetMeetup(model.MeetupId, true);
-                MyMeetupEmail email = new MyMeetupEmail("Nouvel inscrit " + m.Title,body,m.MeetupPlaceAdminEmail??configuration["emailContact"],
+                MyMeetupEmail email = new MyMeetupEmail("Nouvel inscrit " + m.Title, body, m.MeetupPlaceAdminEmail ?? configuration["emailContact"],
                     configuration["emailContact"]);
                 if (!string.IsNullOrEmpty(m.MeetupPlaceAdminEmail))
                 {
@@ -127,17 +141,15 @@ namespace MyMeetup.Web.Controllers
 
                 email.ReplyTo = CurrentUser.Email;
                 email.CC = CurrentUser.Email;
-                SendEmail s=new SendEmail();
+                SendEmail s = new SendEmail();
                 se.SendSmtpEmail(EmailSender.GetSettings(configuration), email);
                 return Redirect("/me");
             }
             MeetupRegisterModel rm = CreateModelForRegistration(model);
 
-                Tools.TransferModalStateError(rm.Errors, ModelState);
+            Tools.TransferModalStateError(rm.Errors, ModelState);
 
-            
-            
-            return View(rm);
+            return View("Register",rm);
         }
 
 
@@ -183,7 +195,7 @@ namespace MyMeetup.Web.Controllers
             {
                 return View("MyAccount", GetMyAccountModel(configuration, user));
             }
-            var result = Domain.AddRegularUser(model,null ,UserManager);
+            var result = Domain.AddRegularUser(model, null, UserManager);
             if (result.UserOk)
             {
                 user = UserManager.FindByEmailAsync(model.Email).Result;
@@ -199,7 +211,7 @@ namespace MyMeetup.Web.Controllers
                     var meetup = Domain.GetMeetup(model.MeetupId.Value, true);
                     email.Body += Environment.NewLine +
                                   $"Inscrit(e) à {meetup.Title} et son code d'enregistrement est {result.RegistrationCode}";
-                
+
                 }
                 email.ReplyTo = model.Email;
                 try
@@ -219,11 +231,11 @@ namespace MyMeetup.Web.Controllers
                 if (model.MeetupId.HasValue)
                 {
 
-                    return RedirectToAction("Register", new { meetupId = model.MeetupId.Value});
+                    return RedirectToAction("Register", new { meetupId = model.MeetupId.Value });
                 }
 
                 return RedirectToAction("MyAccount");
-           //     return View("MyAccount", GetMyAccountModel(configuration, user));
+                //     return View("MyAccount", GetMyAccountModel(configuration, user));
             }
 
             return View("Index", CreateLandingPageModel());
@@ -248,12 +260,12 @@ namespace MyMeetup.Web.Controllers
             var nextRegistrations = regs.Where(x => x.Meetup.StartDate > DateTime.Now).ToList();
             if (nextRegistrations.Any() == false)
             {
-           
+
                 model.NextRegistrations = "Tu n'as aucune rencontre de prévue !";
             }
             else
             {
-                
+
                 model.NextRegistrations = "Tu es pré-inscrit-e à : <ul> ";
                 List<string> texts = new List<string>();
                 foreach (var reg in regs)
@@ -267,11 +279,11 @@ namespace MyMeetup.Web.Controllers
                     {
                         tmp += $"ton code d'enregistrement est {reg.RegistrationCode} pour {reg.NumberOfAdults} adultes, {reg.NumberOfChildren} dans {reg.AccomodationId}";
                     }
-                    texts.Add(tmp+ "</li>");
+                    texts.Add(tmp + "</li>");
                 }
 
-                model.NextRegistrations += Environment.NewLine + String.Join("", texts) + Environment.NewLine +  "</ul>";
-               
+                model.NextRegistrations += Environment.NewLine + String.Join("", texts) + Environment.NewLine + "</ul>";
+
             }
             List<Meetup> meetups = Domain.GetNextMeetups(DateTime.Now.Date, true);
             foreach (Meetup m in meetups)
@@ -283,14 +295,6 @@ namespace MyMeetup.Web.Controllers
                 }
             }
             return model;
-        }
-
-
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
         }
 
         public IActionResult Contact()

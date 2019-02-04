@@ -28,6 +28,8 @@
                     Email
                   
                 </th>
+                <th>Ad.:Enf.</th>
+                <th class="th-sm">Hébergement</th>
                 <th class="th-sm">
                     Code
                   
@@ -48,8 +50,10 @@
                             <td>@user.FirstName</td>
 
                             <td>@user.Email</td>
+                            <td>@(user.AdultNumber)/@(user.KidNumber)</td>
+                            <td> @user.Accomodation</td>
                             <td>@user.RegCode </td>
-                            <td data-order="@user.RegisteredOnSort">@user.RegisteredOn.ToString("yyyy/MM/dd hh:mm") </td>
+                            <td data-order="@user.RegisteredOnSort">@user.RegisteredOn.ToString("yyyy/MM/dd HH:mm") </td>
                         </tr>
                     }
                 </tbody>
