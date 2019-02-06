@@ -27,7 +27,7 @@
             <div class="form-row">
                 <input type="hidden" name="@nameof(@Model.MeetupId)" value="@Model.MeetupId" />
                 <div class="col-md-2">
-                    <label for="Accomodation" class="font-weight-light">Hébergement choisi</label>
+                    <label for="Accomodation" class="font-weight-light">Hébergement désiré</label>
                 </div>
                 <div class="col-md-4">
                     <div class="md-form">
@@ -39,6 +39,9 @@
                             }
                         </select>
 
+                    </div>
+                    <div class="alert alert-primary" role="alert">
+                        Ce choix est à titre indicatif, les logements seront attribués par ordre chronologique de réservation.
                     </div>
                 </div>
                 <div class="col-md-1">

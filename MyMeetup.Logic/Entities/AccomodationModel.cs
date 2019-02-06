@@ -34,9 +34,9 @@ public    class AccomodationModel
                     new AccomodationModel("Landette4", "Landette 4 couchages (165€)", true),
                     new AccomodationModel("Landette6", "Landette 6 couchages (165€)", true),
                     new AccomodationModel("Chalet", "Chalet (3-4 places, 280€)", true),
-                    new AccomodationModel("Hacienda", "Mobilhome Hacienda (8 places, 340€)", true),
+                    new AccomodationModel("Hacienda", "Mobilhome Hacienda (8 places, 340€)", false),
                     new AccomodationModel("Yourte", "Mobilhome Hacienda (8 places, 340€)", true),
-                    new AccomodationModel("GiteT4", "Gîte T4 (8 places, 390€)", true),
+                    new AccomodationModel("GiteT4", "Gîte T4 (8 places, 390€)", false),
                     new AccomodationModel("GiteT6", "Chambre dans Gîte T6 (212€)", true)
                 };
 
