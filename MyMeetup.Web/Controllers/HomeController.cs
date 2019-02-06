@@ -41,7 +41,7 @@ namespace MyMeetup.Web.Controllers
         public IActionResult Charter()
         {
             AdminCharterModel m = new AdminCharterModel();
-            var contents = Domain.GetCharterFor(null, true, true, true).ToList();
+            var contents = Domain.GetCharterFor(null, false, true, true).ToList();
             contents.Add(new CharterContent { Position = contents.Count() + 1 });
             m.Contents = contents;
             return View(m);
