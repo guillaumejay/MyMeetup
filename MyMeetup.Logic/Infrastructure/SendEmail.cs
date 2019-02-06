@@ -38,7 +38,18 @@ namespace MyMeetUp.Logic.Infrastructure
                 message.ReplyToList.Add(email.ReplyTo);
 
             }
+            if (!string.IsNullOrEmpty(email.CC))
+            {
 
+                message.CC.Add(email.CC);
+
+            }
+            if (!string.IsNullOrEmpty(email.BCC))
+            {
+
+                message.CC.Add(email.BCC);
+
+            }
             return message;
         }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using AutoMapper;
+using ElmahCore;
 using ElmahCore.Mvc;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Channel;
@@ -60,13 +61,18 @@ namespace MyMeetup.Web
                 .AddEntityFrameworkStores<MyMeetupContext>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
-            services.AddElmah(options => options.Path = "erreurs");
+           // services.AddElmah(options => options.Path = "erreurs");
+            services.AddElmah<XmlFileErrorLog>(options =>
+            {
+                options.LogPath = "~/AppData"; options.Path = "erreurs"; 
+            });
             services.AddScoped<MyMeetupDomain>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddAutoMapper();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<TelemetryClient>();
+
             TelemetryConfiguration.Active.TelemetryInitializers.Add(new MyTelemetryInitializer(services));
         }
 
