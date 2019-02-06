@@ -35,7 +35,7 @@ namespace MyMeetUp.Logic.Infrastructure.DataContexts
                     .Property(nameof(EntityWithDate.UpdatedAt))
                     .HasDefaultValueSql("getutcdate()");
             }
-         //   Seeding.SeedDataByMigration(modelBuilder);
+
         }
 
  

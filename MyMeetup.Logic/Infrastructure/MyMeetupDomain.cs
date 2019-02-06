@@ -200,14 +200,19 @@ namespace MyMeetUp.Logic.Infrastructure
         public IOrderedQueryable<CharterContent> GetCharterFor(int? meetupId, bool exclusive, bool onlyActive, bool readOnly)
         {
             IQueryable<CharterContent> q;
-            if (exclusive)
+            if (exclusive )
             {
-                q = _context.CharterContents.Where(x => x.MeetupId == meetupId);
+                q = _context.CharterContents.Where(x =>x.MeetupId.HasValue &&  x.MeetupId == meetupId);
             }
             else
             {
-                q = _context.CharterContents.Where(x =>
-                 (x.MeetupId == null || x.MeetupId == meetupId.Value));
+                if (meetupId.HasValue)
+                    q = _context.CharterContents.Where(x =>
+                 (x.MeetupId == null ? true:  x.MeetupId.Value == meetupId.Value));
+                else
+                {
+                    q = _context.CharterContents.Where(x => (x.MeetupId == null));
+                }
             }
 
             if (onlyActive)

@@ -48,7 +48,7 @@ namespace MyMeetup.Web
             //      Configuration.GetConnectionString("MyMeetupDb")));
             services.AddDbContext<MyMeetupContext, MyMeetupSqlLiteContext>(options =>
                     options.UseSqlite(
-                        Configuration.GetConnectionString("MyMeetupDb")));
+                        Configuration.GetConnectionString("MyMeetupDb")).EnableSensitiveDataLogging(System.Diagnostics.Debugger.IsAttached));
 
             services.AddIdentity<MyMeetupUser, MyMeetupRole>(options =>
             {
