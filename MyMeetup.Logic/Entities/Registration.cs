@@ -55,9 +55,10 @@ namespace MyMeetUp.Logic.Entities
 
         public static string CreateCode(int userId, int meetupId)
         {
-            string code = string.Join("",$"{userId:0000}" +
-                                         $"-{DateTime.Now.Month}{DateTime.Now.Day}-{meetupId:000}".Reverse());
-            return code;
+            string code = ($"{userId:0000}" +
+                                         $"-{DateTime.Now.Month}{DateTime.Now.Day}-{meetupId:000}");
+            // https://csharp.2000things.com/2011/08/18/392-reversing-a-string-using-the-reverse-method/
+            return new string(code.Reverse().ToArray()); ;
         }
 
         public ERegistrationStatus RegistrationStatus { get; set; }
