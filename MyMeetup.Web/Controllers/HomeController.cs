@@ -126,7 +126,7 @@ namespace MyMeetup.Web.Controllers
                 body += "<br/>Cordialement";
                 SendEmail se = new SendEmail();
                 Meetup m = Domain.GetMeetup(model.MeetupId, true);
-                MyMeetupEmail email = new MyMeetupEmail("Nouvel inscrit " + m.Title, body, m.MeetupPlaceAdminEmail ?? configuration["emailContact"],
+                MyMeetupEmail email = new MyMeetupEmail("{CurrentUser.FirstName} {CurrentUser.LastName} s'inscrit à " + m.Title, body, m.MeetupPlaceAdminEmail ?? configuration["emailContact"],
                     configuration["emailContact"]);
                 if (!string.IsNullOrEmpty(m.MeetupPlaceAdminEmail))
                 {
@@ -200,10 +200,10 @@ namespace MyMeetup.Web.Controllers
             {
                 user = UserManager.FindByEmailAsync(model.Email).Result;
                 SendEmail se = new SendEmail();
-                MyMeetupEmail email = new MyMeetupEmail("Nouvel Adhérent",
+                MyMeetupEmail email = new MyMeetupEmail($"Nouvel Adhérent {model.FirstName} {model.Name} ",
                     configuration["emailContact"], configuration["emailContact"])
                 {
-                    Body = $"PRénom :{model.FirstName} <br/>Nom :{model.Name} - <br/>Email : {model.Email} <br/>Tel: {model.PhoneNumber}"
+                    Body = $"Prénom :{model.FirstName} <br/>Nom :{model.Name} - <br/>Email : {model.Email} <br/>Tel: {model.PhoneNumber}"
                 };
                 //TODO Ugly, should be templated
                 if (!string.IsNullOrEmpty(result.RegistrationCode))
