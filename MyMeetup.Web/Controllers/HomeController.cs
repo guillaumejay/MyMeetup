@@ -126,7 +126,7 @@ namespace MyMeetup.Web.Controllers
                 body += "<br/>Cordialement";
                 SendEmail se = new SendEmail();
                 Meetup m = Domain.GetMeetup(model.MeetupId, true);
-                MyMeetupEmail email = new MyMeetupEmail("{CurrentUser.FirstName} {CurrentUser.LastName} s'inscrit à " + m.Title, body, m.MeetupPlaceAdminEmail ?? configuration["emailContact"],
+                MyMeetupEmail email = new MyMeetupEmail($"{CurrentUser.FirstName} {CurrentUser.LastName} s'inscrit à " + m.Title, body, m.MeetupPlaceAdminEmail ?? configuration["emailContact"],
                     configuration["emailContact"]);
                 if (!string.IsNullOrEmpty(m.MeetupPlaceAdminEmail))
                 {
