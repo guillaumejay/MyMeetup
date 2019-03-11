@@ -30,7 +30,7 @@ public    class AccomodationModel
             {
                 var accomodations = new List<AccomodationModel>
                 {
-                    new AccomodationModel("Camping", "Emplacement Camping", true),
+                    new AccomodationModel("Camping", "Emplacement Camping", false),
                     new AccomodationModel("Landette4", "Landette 4 couchages (165€)", false),
                     new AccomodationModel("Landette6", "Landette 6 couchages (165€)", false),
                     new AccomodationModel("Chalet", "Chalet (3-4 places, 280€)", false),
