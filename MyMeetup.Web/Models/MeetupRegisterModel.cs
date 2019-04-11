@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MyMeetUp.Logic.Entities;
 
@@ -17,7 +14,8 @@ namespace MyMeetup.Web.Models
         public MeetupRegisterModel(Meetup meetup)
         {
             Meetup = meetup;
-            MeetupId = meetup.Id;
+            if (meetup!=null)
+                MeetupId = meetup.Id;
         }
 
         public string UserEmail { get; set; }

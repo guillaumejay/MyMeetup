@@ -98,7 +98,7 @@ namespace MyMeetup.Web.Areas.Admin.Controllers
                 info.RegisteredOn = reg.CreatedAt;
                 info.AdultNumber = reg.NumberOfAdults;
                 info.KidNumber = reg.NumberOfChildren;
-                info.Accomodation = accomodations.Single(x => x.Id == reg.AccomodationId).Description;
+                info.Accomodation = accomodations.SingleOrDefault(x => x.Id == reg.AccomodationId)?.Description??"";
                 info.RegistrationId = reg.Id;
                 model.Participants.Add(info);
             }

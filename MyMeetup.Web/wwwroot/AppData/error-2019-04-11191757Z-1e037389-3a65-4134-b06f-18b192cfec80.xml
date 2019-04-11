@@ -1,0 +1,129 @@
+﻿<error errorId="1e037389-3a65-4134-b06f-18b192cfec80" application="MyMeetup.Web" host="DIOR" type="HTTP" message="NotFound" detail="# caller: @C:\Sources\ElmahCore\ElmahCore\Internal$\CallerInfo.cs:10&#xD;&#xA;ElmahCore.HttpException: NotFound" user="admin" time="2019-04-11T19:17:57.3773771Z" statusCode="404">
+  <serverVariables>
+    <item name="RequestTimedOut">
+      <value string="False" />
+    </item>
+    <item name="ConnectionIdFeature">
+      <value string="0HLLUM9HAI56G" />
+    </item>
+    <item name="HasStartedConsumingRequestBody">
+      <value string="False" />
+    </item>
+    <item name="MaxRequestBodySize" />
+    <item name="AllowSynchronousIO">
+      <value string="True" />
+    </item>
+    <item name="TraceIdentifier">
+      <value string="0HLLUM9HAI56G:00000002" />
+    </item>
+    <item name="IsUpgradableRequest">
+      <value string="False" />
+    </item>
+    <item name="IsUpgraded">
+      <value string="False" />
+    </item>
+    <item name="RemoteIpAddress">
+      <value string="::1" />
+    </item>
+    <item name="RemotePort">
+      <value string="59205" />
+    </item>
+    <item name="LocalIpAddress">
+      <value string="127.0.0.1" />
+    </item>
+    <item name="LocalPort">
+      <value string="12846" />
+    </item>
+    <item name="Scheme">
+      <value string="http" />
+    </item>
+    <item name="Method">
+      <value string="Get" />
+    </item>
+    <item name="PathBase" />
+    <item name="Path">
+      <value string="/Identity" />
+    </item>
+    <item name="QueryString">
+      <value string="" />
+    </item>
+    <item name="RawTarget">
+      <value string="/Identity" />
+    </item>
+    <item name="HttpVersion">
+      <value string="HTTP/1.1" />
+    </item>
+    <item name="Header_Connection">
+      <value string="Keep-Alive" />
+    </item>
+    <item name="Header_Accept">
+      <value string="text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" />
+    </item>
+    <item name="Header_Accept-Encoding">
+      <value string="gzip, deflate" />
+    </item>
+    <item name="Header_Accept-Language">
+      <value string="fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3" />
+    </item>
+    <item name="Header_Cookie">
+      <value string=".AspNetCore.Antiforgery.LCf8VIsONHE=CfDJ8LOrHQzjxohIiDQR25Uxfiti91rLtH6hT7L6w8R2PGJXH1xUEhrxZmpDG8DQ9UJEOKLNmjDFIfq7C8TNBVp8T_UEMLmN8MJW76rvsy0Dlps1Efi6nwPjPVYJj5NvWpwuLpncLOYvhwX2QUEwyR3STD0; .AspNetCore.Identity.Application=CfDJ8LOrHQzjxohIiDQR25UxfiulETJ8Vv98I953v3dmF0IV1bWMxSGEqk-u3_DLKN0zLbkjODAI5_AD6eOkXaFZXwT2V2j5WpYkUWTCVS8LF8iiNj5wIhgKTcQRSs1aQeZtkS0q0yeqbR0REes3Rn_no0n2ad51pvVCddyDrs90n1turqD9LhVdJC_aPDqmYIv9Bjn3cDQHcMqXMePRmKjCT38bGFKb6r3wuOhjhkZlfLvdl0DF0TBT1BV0Z5uA2V_XdyWBawjOeDdQ_4tVnhoaiOoqWMwyX3uDSYdmKzldBM80WpY3TtYt2kyje3aQO2qu297aJCAE2OX4vd8D_dg8QZoEKfu8eg-1VCMnC393sqi2V8UlThs5OOhFgFF6SmcCqlLzGbvCoAJegsnN2eEcKxFvv5ojPEW1cDnZtrXACUUl_PGIQ0IsqPCAZG1DnunqfH67tjo1MWf8e2X-KJhE9oWAPX4GBZY6QPJuyGo-weO1vnPM4TydxA4Ij_KWOVzhbcZj4xgB32CJoQffdGlm4Hc0NiX9EnuzTe2FsngOykdLWxAbUvOXgWdnxdhhVnvgjChUfG3HCuY-2EYBOetdu9nrFlbdmuKkdDEKwm1Ey5-sHdRNPjD142E05BE47V5enXMhpbGhKqd4EdW7Rw4l2Nk" />
+    </item>
+    <item name="Header_Host">
+      <value string="localhost:62764" />
+    </item>
+    <item name="Header_Referer">
+      <value string="http://localhost:62764/Identity/Account/Manage" />
+    </item>
+    <item name="Header_User-Agent">
+      <value string="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0" />
+    </item>
+    <item name="Header_Upgrade-Insecure-Requests">
+      <value string="1" />
+    </item>
+    <item name="Header_MS-ASPNETCORE-TOKEN">
+      <value string="076c6b7e-2024-4119-bcb6-5b66156ab7e5" />
+    </item>
+    <item name="Header_X-Original-Proto">
+      <value string="http" />
+    </item>
+    <item name="Header_X-Original-For">
+      <value string="127.0.0.1:59206" />
+    </item>
+    <item name="StatusCode">
+      <value string="404" />
+    </item>
+    <item name="ReasonPhrase" />
+    <item name="HasResponseStarted">
+      <value string="False" />
+    </item>
+    <item name="User_ClaimsPrincipalSelector" />
+    <item name="User_Current" />
+    <item name="Connection_Id">
+      <value string="0HLLUM9HAI56G" />
+    </item>
+    <item name="Connection_RemoteIpAddress">
+      <value string="::1" />
+    </item>
+    <item name="Connection_RemotePort">
+      <value string="59205" />
+    </item>
+    <item name="Connection_LocalIpAddress">
+      <value string="127.0.0.1" />
+    </item>
+    <item name="Connection_LocalPort">
+      <value string="12846" />
+    </item>
+    <item name="Connection_ClientCertificate" />
+    <item name="HttpStatusCode">
+      <value string="404" />
+    </item>
+  </serverVariables>
+  <cookies>
+    <item name=".AspNetCore.Antiforgery.LCf8VIsONHE">
+      <value string="CfDJ8LOrHQzjxohIiDQR25Uxfiti91rLtH6hT7L6w8R2PGJXH1xUEhrxZmpDG8DQ9UJEOKLNmjDFIfq7C8TNBVp8T_UEMLmN8MJW76rvsy0Dlps1Efi6nwPjPVYJj5NvWpwuLpncLOYvhwX2QUEwyR3STD0" />
+    </item>
+    <item name=".AspNetCore.Identity.Application">
+      <value string="CfDJ8LOrHQzjxohIiDQR25UxfiulETJ8Vv98I953v3dmF0IV1bWMxSGEqk-u3_DLKN0zLbkjODAI5_AD6eOkXaFZXwT2V2j5WpYkUWTCVS8LF8iiNj5wIhgKTcQRSs1aQeZtkS0q0yeqbR0REes3Rn_no0n2ad51pvVCddyDrs90n1turqD9LhVdJC_aPDqmYIv9Bjn3cDQHcMqXMePRmKjCT38bGFKb6r3wuOhjhkZlfLvdl0DF0TBT1BV0Z5uA2V_XdyWBawjOeDdQ_4tVnhoaiOoqWMwyX3uDSYdmKzldBM80WpY3TtYt2kyje3aQO2qu297aJCAE2OX4vd8D_dg8QZoEKfu8eg-1VCMnC393sqi2V8UlThs5OOhFgFF6SmcCqlLzGbvCoAJegsnN2eEcKxFvv5ojPEW1cDnZtrXACUUl_PGIQ0IsqPCAZG1DnunqfH67tjo1MWf8e2X-KJhE9oWAPX4GBZY6QPJuyGo-weO1vnPM4TydxA4Ij_KWOVzhbcZj4xgB32CJoQffdGlm4Hc0NiX9EnuzTe2FsngOykdLWxAbUvOXgWdnxdhhVnvgjChUfG3HCuY-2EYBOetdu9nrFlbdmuKkdDEKwm1Ey5-sHdRNPjD142E05BE47V5enXMhpbGhKqd4EdW7Rw4l2Nk" />
+    </item>
+  </cookies>
+</error>

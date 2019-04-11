@@ -63,7 +63,7 @@ namespace MyMeetup.Web.Controllers
         public IActionResult Register(int meetupId)
         {
             var rm = CreateModelForRegistration(meetupId);
-            if (rm.Meetup.IsVisible == false || rm.Meetup.EndDate <= DateTime.Now.Date ||
+            if (rm.Meetup ==null || rm.Meetup.IsVisible == false || rm.Meetup.EndDate <= DateTime.Now.Date ||
                 rm.Meetup.OpenForRegistrationOn.HasValue == false ||
                 rm.Meetup.OpenForRegistrationOn.Value > DateTime.Now.Date)
             {
@@ -170,7 +170,10 @@ namespace MyMeetup.Web.Controllers
                     Title = Parameters.Value.HomeTitle,
                     PublicDescription = Parameters.Value.HomeContent,
                     TitleImage = Parameters.Value.HomeImage
+
                 };
+                model.Charter = Domain.GetCharterFor(null, false, true, true).ToList();
+                model.SigninMeetupModel = signinMeetupModel;
             }
 
             return model;
