@@ -1,0 +1,146 @@
+﻿<error errorId="f60a7525-f5ee-4e94-98de-cb9b1b9c8ebb" application="MyMeetup.Web" host="BEREN" type="System.NullReferenceException" message="Object reference not set to an instance of an object." source="MyMeetUp.Logic" detail="# caller: @C:\Sources\ElmahCore\ElmahCore\Internal$\CallerInfo.cs:10&#xD;&#xA;System.NullReferenceException: Object reference not set to an instance of an object.&#xD;&#xA;   at MyMeetUp.Logic.Infrastructure.SendEmail.GetSmtpClient(ServerSettings serverSettings) in C:\Projets\github\MyMeetup\MyMeetup.Logic\Infrastructure\SendEmail.cs:line 69&#xD;&#xA;   at MyMeetUp.Logic.Infrastructure.SendEmail.SendSmtpEmailAsync(ServerSettings serverSettings, MyMeetupEmail email) in C:\Projets\github\MyMeetup\MyMeetup.Logic\Infrastructure\SendEmail.cs:line 59&#xD;&#xA;   at MyMeetup.Web.Infrastructure.EmailSender.SendEmailAsync(String email, String subject, String htmlMessage) in C:\Projets\github\MyMeetup\MyMeetup.Web\Infrastructure\EmailSender.cs:line 23&#xD;&#xA;   at MyMeetup.Web.Areas.Identity.Pages.Account.ForgotPasswordModel.OnPostAsync() in C:\Projets\github\MyMeetup\MyMeetup.Web\Areas\Identity\Pages\Account\ForgotPassword.cshtml.cs:line 57&#xD;&#xA;   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.ExecutorFactory.GenericTaskHandlerMethod.Convert[T](Object taskAsObject)&#xD;&#xA;   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.ExecutorFactory.GenericTaskHandlerMethod.Execute(Object receiver, Object[] arguments)&#xD;&#xA;   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.PageActionInvoker.InvokeHandlerMethodAsync()&#xD;&#xA;   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.PageActionInvoker.InvokeNextPageFilterAsync()&#xD;&#xA;   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.PageActionInvoker.Rethrow(PageHandlerExecutedContext context)&#xD;&#xA;   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.PageActionInvoker.Next(State&amp; next, Scope&amp; scope, Object&amp; state, Boolean&amp; isCompleted)&#xD;&#xA;   at Microsoft.AspNetCore.Mvc.RazorPages.Internal.PageActionInvoker.InvokeInnerFilterAsync()&#xD;&#xA;   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()&#xD;&#xA;   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)&#xD;&#xA;   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State&amp; next, Scope&amp; scope, Object&amp; state, Boolean&amp; isCompleted)&#xD;&#xA;   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()&#xD;&#xA;   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()&#xD;&#xA;   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)&#xD;&#xA;   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)&#xD;&#xA;   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)&#xD;&#xA;   at ElmahCore.Mvc.ErrorLogMiddleware.Invoke(HttpContext context, Func`1 next)" time="2019-07-30T15:04:55.8581871Z">
+  <serverVariables>
+    <item name="RequestTimedOut">
+      <value string="False" />
+    </item>
+    <item name="ConnectionIdFeature">
+      <value string="0HLOKVSQAQB6F" />
+    </item>
+    <item name="HasStartedConsumingRequestBody">
+      <value string="True" />
+    </item>
+    <item name="MaxRequestBodySize" />
+    <item name="AllowSynchronousIO">
+      <value string="True" />
+    </item>
+    <item name="TraceIdentifier">
+      <value string="0HLOKVSQAQB6F:00000004" />
+    </item>
+    <item name="IsUpgradableRequest">
+      <value string="False" />
+    </item>
+    <item name="IsUpgraded">
+      <value string="False" />
+    </item>
+    <item name="RemoteIpAddress">
+      <value string="::1" />
+    </item>
+    <item name="RemotePort">
+      <value string="51682" />
+    </item>
+    <item name="LocalIpAddress">
+      <value string="127.0.0.1" />
+    </item>
+    <item name="LocalPort">
+      <value string="18875" />
+    </item>
+    <item name="Scheme">
+      <value string="https" />
+    </item>
+    <item name="Method">
+      <value string="Post" />
+    </item>
+    <item name="PathBase" />
+    <item name="Path">
+      <value string="/Identity/Account/ForgotPassword" />
+    </item>
+    <item name="QueryString">
+      <value string="" />
+    </item>
+    <item name="RawTarget">
+      <value string="/Identity/Account/ForgotPassword" />
+    </item>
+    <item name="HttpVersion">
+      <value string="HTTP/1.1" />
+    </item>
+    <item name="Header_Cache-Control">
+      <value string="max-age=0" />
+    </item>
+    <item name="Header_Connection">
+      <value string="Keep-Alive" />
+    </item>
+    <item name="Header_Content-Type">
+      <value string="application/x-www-form-urlencoded" />
+    </item>
+    <item name="Header_Accept">
+      <value string="text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3" />
+    </item>
+    <item name="Header_Accept-Encoding">
+      <value string="gzip, deflate, br" />
+    </item>
+    <item name="Header_Accept-Language">
+      <value string="fr,en-US;q=0.9,en;q=0.8" />
+    </item>
+    <item name="Header_Cookie">
+      <value string=".AspNetCore.Antiforgery.k-ytUjLvXAk=CfDJ8IAqIbrGmuhErOMX79wzmN5ogw7F98HzJRhBt0cXekLZSMjMB99ORSFYmEMJOc_nToEiHXdQHiNqvVwmT0dDG76X1CoXiRpnmRoXdAgBji3EfWxQVbNtx0QezTbHliS-qd_K3TXwir9tdvGYfn0SJUw" />
+    </item>
+    <item name="Header_Host">
+      <value string="localhost:44348" />
+    </item>
+    <item name="Header_Referer">
+      <value string="https://localhost:44348/Identity/Account/ForgotPassword" />
+    </item>
+    <item name="Header_User-Agent">
+      <value string="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36" />
+    </item>
+    <item name="Header_Origin">
+      <value string="https://localhost:44348" />
+    </item>
+    <item name="Header_Content-Length">
+      <value string="220" />
+    </item>
+    <item name="Header_upgrade-insecure-requests">
+      <value string="1" />
+    </item>
+    <item name="Header_MS-ASPNETCORE-TOKEN">
+      <value string="3217576d-955c-4769-9570-a6159027fcc5" />
+    </item>
+    <item name="Header_X-Original-Proto">
+      <value string="http" />
+    </item>
+    <item name="Header_X-Original-For">
+      <value string="127.0.0.1:51698" />
+    </item>
+    <item name="StatusCode">
+      <value string="200" />
+    </item>
+    <item name="ReasonPhrase" />
+    <item name="HasResponseStarted">
+      <value string="False" />
+    </item>
+    <item name="User_ClaimsPrincipalSelector" />
+    <item name="User_Current" />
+    <item name="Connection_Id">
+      <value string="0HLOKVSQAQB6F" />
+    </item>
+    <item name="Connection_RemoteIpAddress">
+      <value string="::1" />
+    </item>
+    <item name="Connection_RemotePort">
+      <value string="51682" />
+    </item>
+    <item name="Connection_LocalIpAddress">
+      <value string="127.0.0.1" />
+    </item>
+    <item name="Connection_LocalPort">
+      <value string="18875" />
+    </item>
+    <item name="Connection_ClientCertificate" />
+    <item name="HttpStatusCode">
+      <value string="0" />
+    </item>
+  </serverVariables>
+  <form>
+    <item name="Input.Email">
+      <value string="guillaume.jay@gmail.com" />
+    </item>
+    <item name="__RequestVerificationToken">
+      <value string="CfDJ8IAqIbrGmuhErOMX79wzmN6JG4ANRIRGHLY45DepCmTOUcoblXEpxrnBVNtGtZplt8Q_xaITBjRrDCwA81z3TQdsl6BwKdwrdaY5eE7twWoM8Pd3XBHxI4NqcZjM0rCl0p7ddH_WmNQuHqf14z2s4ks" />
+    </item>
+  </form>
+  <cookies>
+    <item name=".AspNetCore.Antiforgery.k-ytUjLvXAk">
+      <value string="CfDJ8IAqIbrGmuhErOMX79wzmN5ogw7F98HzJRhBt0cXekLZSMjMB99ORSFYmEMJOc_nToEiHXdQHiNqvVwmT0dDG76X1CoXiRpnmRoXdAgBji3EfWxQVbNtx0QezTbHliS-qd_K3TXwir9tdvGYfn0SJUw" />
+    </item>
+  </cookies>
+</error>

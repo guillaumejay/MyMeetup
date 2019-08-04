@@ -83,6 +83,7 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
                     EndDate = table.Column<DateTime>(type: "Date", nullable: false),
                     IsVisible = table.Column<bool>(nullable: false),
                     OpenForRegistrationOn = table.Column<DateTime>(nullable: true),
+                    MeetupPlaceAdminEmail = table.Column<string>(nullable: true),
                     PublicDescription = table.Column<string>(nullable: false),
                     RegisteredDescription = table.Column<string>(nullable: false),
                     TitleImage = table.Column<string>(nullable: true)
@@ -199,6 +200,28 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Payments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    PaymentDate = table.Column<DateTime>(type: "Date", nullable: false),
+                    AmountPaid = table.Column<decimal>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
+                    Notes = table.Column<string>(maxLength: 5000, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Payments_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CharterContents",
                 columns: table => new
                 {
@@ -261,9 +284,11 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
                     RegistrationCode = table.Column<string>(maxLength: 20, nullable: true),
                     ReferentUserId = table.Column<int>(nullable: true),
                     NumberOfPersons = table.Column<int>(nullable: false),
-                    PaidFees = table.Column<decimal>(nullable: false),
+                    NumberOfChildren = table.Column<int>(nullable: false),
+                    NumberOfAdults = table.Column<int>(nullable: false),
+                    AccomodationId = table.Column<string>(nullable: true),
                     RegistrationStatus = table.Column<int>(nullable: false),
-                    Notes = table.Column<string>(maxLength: 250, nullable: true)
+                    Notes = table.Column<string>(maxLength: 5000, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -333,6 +358,11 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
                 column: "MeetupId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Payments_UserId",
+                table: "Payments",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Registrations_MeetupId",
                 table: "Registrations",
                 column: "MeetupId");
@@ -373,6 +403,9 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
 
             migrationBuilder.DropTable(
                 name: "MeetupAdmins");
+
+            migrationBuilder.DropTable(
+                name: "Payments");
 
             migrationBuilder.DropTable(
                 name: "Registrations");

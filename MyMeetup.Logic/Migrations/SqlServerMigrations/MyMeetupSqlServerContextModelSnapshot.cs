@@ -15,7 +15,7 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -181,6 +181,8 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
 
                     b.Property<bool>("IsVisible");
 
+                    b.Property<string>("MeetupPlaceAdminEmail");
+
                     b.Property<DateTime?>("OpenForRegistrationOn");
 
                     b.Property<string>("PublicDescription")
@@ -220,11 +222,36 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
                     b.ToTable("MeetupAdmins");
                 });
 
+            modelBuilder.Entity("MyMeetUp.Logic.Entities.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("AmountPaid");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(5000);
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("Date");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Payments");
+                });
+
             modelBuilder.Entity("MyMeetUp.Logic.Entities.Registration", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AccomodationId");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -233,11 +260,13 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
                     b.Property<int>("MeetupId");
 
                     b.Property<string>("Notes")
-                        .HasMaxLength(250);
+                        .HasMaxLength(5000);
+
+                    b.Property<int>("NumberOfAdults");
+
+                    b.Property<int>("NumberOfChildren");
 
                     b.Property<int>("NumberOfPersons");
-
-                    b.Property<decimal>("PaidFees");
 
                     b.Property<int?>("ReferentUserId");
 
@@ -411,6 +440,14 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
 
                     b.HasOne("MyMeetUp.Logic.Infrastructure.MyMeetupUser", "User")
                         .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("MyMeetUp.Logic.Entities.Payment", b =>
+                {
+                    b.HasOne("MyMeetUp.Logic.Infrastructure.MyMeetupUser", "User")
+                        .WithMany("Payments")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

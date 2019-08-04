@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MyMeetUp.Logic.Infrastructure;
+﻿using System.Collections.Generic;
 using MyMeetUp.Logic.Models;
 
 namespace MyMeetup.Web.Areas.Admin.Models

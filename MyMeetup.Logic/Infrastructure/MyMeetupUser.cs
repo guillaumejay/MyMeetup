@@ -1,6 +1,8 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
+using MyMeetUp.Logic.Entities;
 using MyMeetUp.Logic.Models;
 
 namespace MyMeetUp.Logic.Infrastructure
@@ -16,6 +18,8 @@ namespace MyMeetUp.Logic.Infrastructure
 
         [StringLength(60)][Required]
         public string LastName { get; set; }
+
+        public List<Payment> Payments { get; set; }
 
         public bool IsOkToGetMeetupsInfo { get; set; }
 

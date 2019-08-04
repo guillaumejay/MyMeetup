@@ -3,12 +3,12 @@
 namespace MyMeetUp.Logic.Infrastructure.DataContexts
 {
     /// <summary>
-    ///  Add-Migration  -Context MyMeetupSqlLiteContext -OutputDir Migrations\SqlLiteMigrations
+    ///  Add-Migration  -Context MyMeetupSqliteContext -OutputDir Migrations\SqliteMigrations
     /// </summary>
-    public class MyMeetupSqlLiteContext:MyMeetupContext
+    public class MyMeetupSqliteContext:MyMeetupContext
     {
         //https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/provider
-        public MyMeetupSqlLiteContext(DbContextOptions options) : base(options)
+        public MyMeetupSqliteContext(DbContextOptions options) : base(options)
         {
         }
     }

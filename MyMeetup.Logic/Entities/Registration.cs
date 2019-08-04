@@ -51,7 +51,6 @@ namespace MyMeetUp.Logic.Entities
 
         public string AccomodationId { get; set; }
 
-        public decimal PaidFees { get; set; }
 
         public static string CreateCode(int userId, int meetupId)
         {

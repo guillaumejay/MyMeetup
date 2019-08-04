@@ -53,7 +53,7 @@ namespace MyMeetup.Web.Areas.Admin.Controllers
             
             UserDetailsModel udm = new UserDetailsModel {Id = userId, Referrer = referrer};
             udm.Meetups  = Domain.GetRegisteredMeetups(userId);
-
+            udm.Payments = Domain.GetPayments(userId, true);
             return udm;
         }
 

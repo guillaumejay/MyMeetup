@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using MyMeetUp.Logic.Entities;
 using MyMeetUp.Logic.Models;
 
 namespace MyMeetup.Web.Areas.Admin.Models
@@ -13,6 +11,8 @@ namespace MyMeetup.Web.Areas.Admin.Models
         public string Referrer { get; set; }
 
        public List<RegisteredMeetupModel> Meetups { get; set; }=new List<RegisteredMeetupModel>();
+
+       public List<Payment> Payments { get; set; } = new List<Payment>();
     }
 
   

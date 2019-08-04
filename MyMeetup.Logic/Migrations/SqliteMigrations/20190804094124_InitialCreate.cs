@@ -1,12 +1,13 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
+namespace MyMeetUp.Logic.Migrations.SqliteMigrations
 {
-    public partial class InitialCreation : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+
             migrationBuilder.CreateTable(
                 name: "AppParameters",
                 columns: table => new
@@ -15,7 +16,10 @@ namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
                         .Annotation("Sqlite:Autoincrement", true),
                     CreatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
                     UpdatedAt = table.Column<DateTime>(nullable: false, defaultValueSql: "getutcdate()"),
-                    Title = table.Column<string>(maxLength: 80, nullable: false)
+                    Title = table.Column<string>(maxLength: 80, nullable: false),
+                    HomeTitle = table.Column<string>(maxLength: 120, nullable: true),
+                    HomeContent = table.Column<string>(nullable: true),
+                    HomeImage = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -41,22 +45,22 @@ namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
                     PasswordHash = table.Column<string>(nullable: true),
                     SecurityStamp = table.Column<string>(nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(maxLength: 60, nullable: false),
                     LastName = table.Column<string>(maxLength: 60, nullable: false),
                     IsOkToGetMeetupsInfo = table.Column<bool>(nullable: false)
@@ -79,6 +83,7 @@ namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
                     EndDate = table.Column<DateTime>(type: "Date", nullable: false),
                     IsVisible = table.Column<bool>(nullable: false),
                     OpenForRegistrationOn = table.Column<DateTime>(nullable: true),
+                    MeetupPlaceAdminEmail = table.Column<string>(nullable: true),
                     PublicDescription = table.Column<string>(nullable: false),
                     RegisteredDescription = table.Column<string>(nullable: false),
                     TitleImage = table.Column<string>(nullable: true)
@@ -195,6 +200,28 @@ namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Payments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    PaymentDate = table.Column<DateTime>(type: "Date", nullable: false),
+                    AmountPaid = table.Column<decimal>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
+                    Notes = table.Column<string>(maxLength: 5000, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Payments_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CharterContents",
                 columns: table => new
                 {
@@ -257,9 +284,11 @@ namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
                     RegistrationCode = table.Column<string>(maxLength: 20, nullable: true),
                     ReferentUserId = table.Column<int>(nullable: true),
                     NumberOfPersons = table.Column<int>(nullable: false),
-                    PaidFees = table.Column<decimal>(nullable: false),
+                    NumberOfChildren = table.Column<int>(nullable: false),
+                    NumberOfAdults = table.Column<int>(nullable: false),
+                    AccomodationId = table.Column<string>(nullable: true),
                     RegistrationStatus = table.Column<int>(nullable: false),
-                    Notes = table.Column<string>(maxLength: 250, nullable: true)
+                    Notes = table.Column<string>(maxLength: 5000, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -327,6 +356,11 @@ namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
                 column: "MeetupId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Payments_UserId",
+                table: "Payments",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Registrations_MeetupId",
                 table: "Registrations",
                 column: "MeetupId");
@@ -367,6 +401,9 @@ namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
 
             migrationBuilder.DropTable(
                 name: "MeetupAdmins");
+
+            migrationBuilder.DropTable(
+                name: "Payments");
 
             migrationBuilder.DropTable(
                 name: "Registrations");

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -7,16 +7,36 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20190804093035_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190804093035_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\SqlLiteMigrations\20180826124020_InitialCreation.cs" />
+    <Compile Remove="Migrations\SqlLiteMigrations\20180826124020_InitialCreation.Designer.cs" />
+    <Compile Remove="Migrations\SqlLiteMigrations\20181110064344_AddParameters.cs" />
+    <Compile Remove="Migrations\SqlLiteMigrations\20181110064344_AddParameters.Designer.cs" />
+    <Compile Remove="Migrations\SqlLiteMigrations\20190125061641_RegistrationInformation.cs" />
+    <Compile Remove="Migrations\SqlLiteMigrations\20190125061641_RegistrationInformation.Designer.cs" />
     <Compile Remove="Migrations\SqlLiteMigrations\20190126130859_MeteetupAndRegistrationUpdate.cs" />
     <Compile Remove="Migrations\SqlLiteMigrations\20190126131036_MeetupAndRegistrationUpdate.cs" />
+    <Compile Remove="Migrations\SqlLiteMigrations\20190126131526_MeetupAInfonUpdate.cs" />
+    <Compile Remove="Migrations\SqlLiteMigrations\20190126131526_MeetupAInfonUpdate.Designer.cs" />
+    <Compile Remove="Migrations\SqlLiteMigrations\20190730161244_Payments.cs" />
+    <Compile Remove="Migrations\SqlLiteMigrations\20190730161244_Payments.Designer.cs" />
+    <Compile Remove="Migrations\SqlLiteMigrations\20190804090229_Payments.cs" />
+    <Compile Remove="Migrations\SqlLiteMigrations\20190804090229_Payments.Designer.cs" />
+    <Compile Remove="Migrations\SqlServerMigrations\20181110064532_InitialCreate.cs" />
+    <Compile Remove="Migrations\SqlServerMigrations\20181110064532_InitialCreate.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Design" Version="1.1.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\SqlLiteMigrations\" />
   </ItemGroup>
 
 </Project>

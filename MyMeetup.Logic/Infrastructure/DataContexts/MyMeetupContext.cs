@@ -18,6 +18,8 @@ namespace MyMeetUp.Logic.Infrastructure.DataContexts
 
         public DbSet<Meetup> Meetups { get; set; }
 
+        public DbSet<Payment> Payments { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

@@ -200,7 +200,7 @@ namespace MyMeetUp.Logic.Infrastructure
         public IOrderedQueryable<CharterContent> GetCharterFor(int? meetupId, bool exclusive, bool onlyActive, bool readOnly)
         {
             IQueryable<CharterContent> q;
-            if (exclusive )
+            if (exclusive && meetupId.HasValue )
             {
                 q = _context.CharterContents.Where(x =>x.MeetupId.HasValue &&  x.MeetupId == meetupId);
             }
@@ -291,7 +291,13 @@ namespace MyMeetUp.Logic.Infrastructure
             return query;
         }
 
-
+        public List<Payment> GetPayments(int userId, bool readOnly)
+        {
+            var query = _context.Payments.Where(x => x.UserId == userId);
+            if (readOnly)
+                query = query.AsNoTracking();
+            return query.ToList();
+        }
         public List<RegisteredMeetupModel> GetRegisteredMeetups(int userId)
         {
             List<RegisteredMeetupModel> meetups=new  List<RegisteredMeetupModel>();
@@ -340,5 +346,7 @@ namespace MyMeetUp.Logic.Infrastructure
             _context.SaveChanges();
             return registration.Id;
         }
+
+     
     }
 }

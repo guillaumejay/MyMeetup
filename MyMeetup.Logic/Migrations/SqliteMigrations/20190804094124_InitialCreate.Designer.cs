@@ -6,17 +6,17 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyMeetUp.Logic.Infrastructure.DataContexts;
 
-namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
+namespace MyMeetUp.Logic.Migrations.SqliteMigrations
 {
-    [DbContext(typeof(MyMeetupSqlLiteContext))]
-    [Migration("20190125061641_RegistrationInformation")]
-    partial class RegistrationInformation
+    [DbContext(typeof(MyMeetupSqliteContext))]
+    [Migration("20190804094124_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028");
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
@@ -175,6 +175,8 @@ namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
 
                     b.Property<bool>("IsVisible");
 
+                    b.Property<string>("MeetupPlaceAdminEmail");
+
                     b.Property<DateTime?>("OpenForRegistrationOn");
 
                     b.Property<string>("PublicDescription")
@@ -214,6 +216,28 @@ namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
                     b.ToTable("MeetupAdmins");
                 });
 
+            modelBuilder.Entity("MyMeetUp.Logic.Entities.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<decimal>("AmountPaid");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(5000);
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("Date");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Payments");
+                });
+
             modelBuilder.Entity("MyMeetUp.Logic.Entities.Registration", b =>
                 {
                     b.Property<int>("Id")
@@ -235,8 +259,6 @@ namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
                     b.Property<int>("NumberOfChildren");
 
                     b.Property<int>("NumberOfPersons");
-
-                    b.Property<decimal>("PaidFees");
 
                     b.Property<int?>("ReferentUserId");
 
@@ -406,6 +428,14 @@ namespace MyMeetUp.Logic.Migrations.SqlLiteMigrations
 
                     b.HasOne("MyMeetUp.Logic.Infrastructure.MyMeetupUser", "User")
                         .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("MyMeetUp.Logic.Entities.Payment", b =>
+                {
+                    b.HasOne("MyMeetUp.Logic.Infrastructure.MyMeetupUser", "User")
+                        .WithMany("Payments")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
