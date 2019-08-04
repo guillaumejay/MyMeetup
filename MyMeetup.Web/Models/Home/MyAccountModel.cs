@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using MyMeetUp.Logic.Entities;
 using MyMeetUp.Logic.Infrastructure;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ namespace MyMeetup.Web.Models.Home
         }
 
         public bool IsOkToGetEmail => CurrentUser.IsOkToGetMeetupsInfo;
+        public List<Payment> Payments { get; set; }
 
         public List<NextMeetupView> NextMeetups=new List<NextMeetupView>();
 

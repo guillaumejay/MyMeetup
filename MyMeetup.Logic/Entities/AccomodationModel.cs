@@ -34,11 +34,11 @@ public    class AccomodationModel
                     new AccomodationModel("Docinela", "Mobilhome Docinela (4 places: 2 chambres) 270€", true),
                     new AccomodationModel("Landette1", "Landette 1 couchage (avec sanitaires) (165€)", false),
                     new AccomodationModel("Landette46", "landettes (4 ou 6 places, une seule pièce) 165€", true),
-                    new AccomodationModel("Chalet", "Chalet (3-4 places, 280€)", false),
-                    new AccomodationModel("Hacienda", "Mobilhome Hacienda (8 places, 340€)", false),
-                    new AccomodationModel("Yourte", "Yourte (4-6 places / 2 chambres : 340€)", false),
-                    new AccomodationModel("GiteT4", "Gîte T4 (8 places, 390€)", false),
-                    new AccomodationModel("GiteT6", "Chambre ( avec douche/wc privés) dans Gîte T6 (212€)", false)
+                    new AccomodationModel("ChaletStudios", "Chalets/studio (3-4 places) 280€", true),
+                    new AccomodationModel("Hacienda", "Mobilhome Hacienda (8 places, 340€)", true),
+                    new AccomodationModel("Yourte", "Yourte (4-6 places / 2 chambres : 340€)", true),
+                    new AccomodationModel("GiteT4", "Gîte T4 (8 places, 390€)", true),
+                    new AccomodationModel("GiteT6", "Chambre (2-3 lites)( avec douche/wc privés) dans Gîte T6 (212€)", true)
                 };
 
                 return accomodations;

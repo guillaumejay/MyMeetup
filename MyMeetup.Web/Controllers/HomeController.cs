@@ -255,7 +255,7 @@ namespace MyMeetup.Web.Controllers
         private MyAccountModel GetMyAccountModel(IConfiguration configuration, MyMeetupUser currentUser = null)
         {
             MyAccountModel model = new MyAccountModel(currentUser ?? CurrentUser);
-
+            model.Payments = Domain.GetPayments(model.CurrentUser?.Id??-1, true);
             List<Registration> regs = Domain.GetRegistrations(model.CurrentUser.Id, true)
                 .Where(x => x.RegistrationStatus <= ERegistrationStatus.Registered)
                 .OrderBy(x => x.Meetup.StartDate).ToList();
