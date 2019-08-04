@@ -1,22 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 using MyMeetUp.Logic.Infrastructure;
 
 namespace MyMeetUp.Logic.Entities
 {
     [Table("Payments")]
-    public class Payment
+    public class Payment: EntityWithDate.EntityWithDateTyped
     {
-        [Key]
-
-        public int Id { get; set; }
+     
         [Column(TypeName = "Date")]
         
         public DateTime PaymentDate { get; set; }
 
+        [Range(1,100)]
         public decimal AmountPaid { get; set; }
 
         [ForeignKey(nameof(MyMeetupUser))]

@@ -205,6 +205,8 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedAt = table.Column<DateTime>(type: "Date", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "Date", nullable: false),
                     PaymentDate = table.Column<DateTime>(type: "Date", nullable: false),
                     AmountPaid = table.Column<decimal>(nullable: false),
                     UserId = table.Column<int>(nullable: false),

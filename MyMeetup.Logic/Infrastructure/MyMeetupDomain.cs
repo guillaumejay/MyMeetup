@@ -347,6 +347,11 @@ namespace MyMeetUp.Logic.Infrastructure
             return registration.Id;
         }
 
-     
+
+        public void AddPayment(Payment payment)
+        {
+            _context.Payments.Add(payment);
+            _context.SaveChanges();
+        }
     }
 }

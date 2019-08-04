@@ -230,10 +230,16 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
 
                     b.Property<decimal>("AmountPaid");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("Date");
+
                     b.Property<string>("Notes")
                         .HasMaxLength(5000);
 
                     b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("Date");
+
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("Date");
 
                     b.Property<int>("UserId");

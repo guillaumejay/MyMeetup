@@ -31,9 +31,9 @@ public    class AccomodationModel
                 var accomodations = new List<AccomodationModel>
                 {
                     new AccomodationModel("Camping", "Emplacement Camping", true),
+                    new AccomodationModel("Docinela", "Mobilhome Docinela (4 places: 2 chambres) 270€", true),
                     new AccomodationModel("Landette1", "Landette 1 couchage (avec sanitaires) (165€)", false),
-                    new AccomodationModel("Landette4", "Landette 4 couchages (165€)", false),
-                    new AccomodationModel("Landette6", "Landette 6 couchages (165€)", false),
+                    new AccomodationModel("Landette46", "landettes (4 ou 6 places, une seule pièce) 165€", true),
                     new AccomodationModel("Chalet", "Chalet (3-4 places, 280€)", false),
                     new AccomodationModel("Hacienda", "Mobilhome Hacienda (8 places, 340€)", false),
                     new AccomodationModel("Yourte", "Yourte (4-6 places / 2 chambres : 340€)", false),

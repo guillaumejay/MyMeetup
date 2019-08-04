@@ -2,30 +2,26 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyMeetUp.Logic.Infrastructure.DataContexts;
 
-namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
+namespace MyMeetUp.Logic.Migrations.SqliteMigrations
 {
-    [DbContext(typeof(MyMeetupSqlServerContext))]
-    [Migration("20190804094004_InitialCreate")]
+    [DbContext(typeof(MyMeetupSqliteContext))]
+    [Migration("20190804103728_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 
@@ -43,8 +39,7 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 
@@ -107,8 +102,7 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
             modelBuilder.Entity("MyMeetUp.Logic.Entities.AppParameter", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -137,8 +131,7 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
             modelBuilder.Entity("MyMeetUp.Logic.Entities.CharterContent", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Category")
                         .IsRequired()
@@ -171,8 +164,7 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
             modelBuilder.Entity("MyMeetUp.Logic.Entities.Meetup", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -227,15 +219,20 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
             modelBuilder.Entity("MyMeetUp.Logic.Entities.Payment", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<decimal>("AmountPaid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("Date");
 
                     b.Property<string>("Notes")
                         .HasMaxLength(5000);
 
                     b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("Date");
+
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("Date");
 
                     b.Property<int>("UserId");
@@ -250,8 +247,7 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
             modelBuilder.Entity("MyMeetUp.Logic.Entities.Registration", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("AccomodationId");
 
@@ -297,8 +293,7 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
             modelBuilder.Entity("MyMeetUp.Logic.Infrastructure.MyMeetupRole", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -313,8 +308,7 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
                 });
@@ -322,8 +316,7 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
             modelBuilder.Entity("MyMeetUp.Logic.Infrastructure.MyMeetupUser", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
 
@@ -375,8 +368,7 @@ namespace MyMeetUp.Logic.Migrations.SqlServerMigrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
                 });

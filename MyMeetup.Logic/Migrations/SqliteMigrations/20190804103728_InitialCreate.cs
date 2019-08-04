@@ -7,7 +7,6 @@ namespace MyMeetUp.Logic.Migrations.SqliteMigrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-
             migrationBuilder.CreateTable(
                 name: "AppParameters",
                 columns: table => new
@@ -205,6 +204,8 @@ namespace MyMeetUp.Logic.Migrations.SqliteMigrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    CreatedAt = table.Column<DateTime>(type: "Date", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "Date", nullable: false),
                     PaymentDate = table.Column<DateTime>(type: "Date", nullable: false),
                     AmountPaid = table.Column<decimal>(nullable: false),
                     UserId = table.Column<int>(nullable: false),

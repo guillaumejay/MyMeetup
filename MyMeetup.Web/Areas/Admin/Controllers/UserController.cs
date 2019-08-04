@@ -45,7 +45,7 @@ namespace MyMeetup.Web.Areas.Admin.Controllers
         public IActionResult Details(int userId)
         {
             var udm = GetUserDetails(userId, Request.Headers["Referer"].ToString());
-            return View(udm);
+            return View("Details",udm);
         }
 
         private UserDetailsModel GetUserDetails(int userId,string referrer)
@@ -73,6 +73,12 @@ namespace MyMeetup.Web.Areas.Admin.Controllers
             }
 
             return View("Details", GetUserDetails( model.Id,  model.BackUrl ));
+        }
+
+        public IActionResult AddPayment(Payment payment)
+        {
+            Domain.AddPayment(payment);
+            return Details(payment.UserId);
         }
     }
 }
