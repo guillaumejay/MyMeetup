@@ -114,43 +114,45 @@
     <div class="card-body">
         <h5 class="card-title">Adhésions </h5>
         <h6 class="card-subtitle mb-2 text-muted">
-            Merci de nous permettre de payer les frais de l'association
+
         </h6>
         <p class="card-text">
             @if (Model.Payments.Any())
             {
-                <table class="table table-striped table-bordered" cellspacing="0" id="dtPayments">
-                    <thead>
-                    <th class="th-sm">Date</th>
-                    <th class="th-sm">Montant</th>
+            <table class="table table-striped table-bordered" cellspacing="0" id="dtPayments">
+                <thead>
+                <th class="th-sm">Date</th>
+                <th class="th-sm">Montant</th>
 
-                    </thead>
-                    <tbody>
-                        @foreach (Payment payment in Model.Payments)
-                        {
-                            <tr>
+                </thead>
+                <tbody>
+                    @foreach (Payment payment in Model.Payments)
+                    {
+                    <tr>
 
-                                <td data-order="@payment.PaymentDate">@payment.PaymentDate.ToString("dd/MM/yyyy")</td>
-                                <td>@payment.AmountPaid.ToString("C")</td>
+                        <td data-order="@payment.PaymentDate">@payment.PaymentDate.ToString("dd/MM/yyyy")</td>
+                        <td>@payment.AmountPaid.ToString("C")</td>
 
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                    </tr>
+                    }
+                </tbody>
+            </table>
             }
-            else
+            @*else
             {
-                <text>
-                    Notre base de données ne contient pas de trace d'adhésion pour toi, cependant c'est probablement une erreur de saisie de notre part.
-                    <br />
-                    N'hésite pas à nous contacter par <a href="mailto:@ViewBag.ContactEmail">@ViewBag.ContactEmail</a>	pour que nous corrigions cela.
-                    '
-                </text>
-            }
+            <text>
+                Notre base de données ne contient pas de trace d'adhésion pour toi, alors que tu as adhéré(e), cependant c'est probablement une erreur de saisie de notre part.
+                <br />
+                N'hésite pas à nous contacter par <a href="mailto:@ViewBag.ContactEmail">@ViewBag.ContactEmail</a>	pour que nous corrigions cela.
+                '
+            </text>
+            }*@
         </p>
-        Si tu dois adhérer cette année 2019 (deux euros) : <br/>
-        <iframe id="haWidgetButton" src="https://www.helloasso.com/associations/rencontres-non-scos/paiements/inscription-a-l-association/widget-bouton" style="border: none;"></iframe>
-        <br/>
+        Nous avons prolongé l'année couverte par les adhésions en cours : aussi, si votre famille est déjà adhérente (et a donc déjà réglé 5€ à notre asso), votre nouvelle cotisation ne sera à effectuer qu'en 2020. Pour les autres, pour pouvoir vous inscrire et participer à cette nouvelle rencontre : vous devez adhérer à notre association, au tarif de 2€/famille.
+<br />
+        <iframe id="haWidget" allowtransparency="true" src="https://www.helloasso.com/associations/rencontres-non-scos/adhesions/adhesion-jusqu-au-31-12-2019/widget-bouton" style="width:100%;height:70px;border:none;"></iframe><div style="width:100%;text-align:center;">Propulsé par <a href="https://www.helloasso.com" rel="nofollow">HelloAsso</a></div>
+        
+        <br />
         (Il nous faudra un peu de temps pour mettre à jour les données affichées ici)
     </div>
 </div>
