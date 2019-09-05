@@ -32,7 +32,7 @@ public    class AccomodationModel
                 {
                     new AccomodationModel("Camping", "Emplacement Camping", true),
                     new AccomodationModel("Docinela", "Mobilhome Docinela (4 places, 2 chambres) 270€", true),
-                    new AccomodationModel("Pichonela", "Mobilhome Pichonela (5 places, 2 chambres) 280€", true),
+                    new AccomodationModel("Pichonela", "Mobilhome Pichonela (5 places, 2 chambres) 280€", false),
                     new AccomodationModel("Landette1", "Landette 1 couchage (avec sanitaires) (165€)", false),
                     new AccomodationModel("Landette46", "Landettes (4 ou 6 places, une seule pièce) 165€", true),
                     new AccomodationModel("ChaletStudios", "Chalets/studio (3-4 places) 280€", true),
