@@ -38,7 +38,7 @@ public    class AccomodationModel
                     new AccomodationModel("ChaletStudios", "Chalets/studio (3-4 places) 280€", false),
                     new AccomodationModel("Hacienda", "Mobilhome Hacienda (8 places) 340€", true),
                     new AccomodationModel("Yourte", "Yourte (4-6 places, 2 chambres) 340€)", true),
-                    new AccomodationModel("GiteT4", "Gîte T4 (8 places) 390€", true),
+                    new AccomodationModel("GiteT4", "Gîte T4 (8 places) 390€", false),
                     new AccomodationModel("GiteT6", "Chambre dans Gîte T6 (2-3 lits, avec douche/wc privés) 212€", true)
                 };
 
