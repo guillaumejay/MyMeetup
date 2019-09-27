@@ -35,7 +35,7 @@ public    class AccomodationModel
                     new AccomodationModel("Pichonela", "Mobilhome Pichonela (5 places, 2 chambres) 280€", false),
                     new AccomodationModel("Landette1", "Landette 1 couchage (avec sanitaires) (165€)", false),
                     new AccomodationModel("Landette46", "Landettes (4 ou 6 places, une seule pièce) 165€", true),
-                    new AccomodationModel("ChaletStudios", "Chalets/studio (3-4 places) 280€", true),
+                    new AccomodationModel("ChaletStudios", "Chalets/studio (3-4 places) 280€", false),
                     new AccomodationModel("Hacienda", "Mobilhome Hacienda (8 places) 340€", true),
                     new AccomodationModel("Yourte", "Yourte (4-6 places, 2 chambres) 340€)", true),
                     new AccomodationModel("GiteT4", "Gîte T4 (8 places) 390€", true),
