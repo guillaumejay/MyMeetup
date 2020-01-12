@@ -3,6 +3,8 @@ using System.Collections;
 using MyMeetUp.Logic.Entities;
 using MyMeetUp.Logic.Infrastructure;
 using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace MyMeetup.Web.Models.Home
 {
@@ -32,6 +34,31 @@ namespace MyMeetup.Web.Models.Home
 
         public bool IsOkToGetEmail => CurrentUser.IsOkToGetMeetupsInfo;
         public List<Payment> Payments { get; set; }
+
+        public DateTime? DateDernierPaiement
+        {
+            get
+            {
+                if (Payments==null)
+                    return null;
+                if (Payments.Any() == false)
+                    return null;
+                return Payments.OrderByDescending(x => x.PaymentDate).First().PaymentDate;
+            }
+        }
+
+        public bool EstAjoutCotisation
+        {
+            get
+            {
+                var datePaiement = DateDernierPaiement;
+                if (datePaiement == null)
+                    return false;
+                if (datePaiement.Value.Year < 2020)
+                    return false;
+                return true;
+            }
+        }
 
         public List<NextMeetupView> NextMeetups=new List<NextMeetupView>();
 
