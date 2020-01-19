@@ -56,7 +56,7 @@
                                 <td>
                                     @if (meetup.CanRegister)
                                     {
-                                        @if (Model.EstAjoutCotisation == false)
+                                        @*@if (Model.EstAjoutCotisation == false)
                                         {
                                             <text>
                                                 Vous devez payer l'adhésion.<br/>'
@@ -66,9 +66,9 @@
                                             </text>
                                         }
                                         else
-                                        {
+                                        {*@
                                             <a href="/register/@meetup.MeetupId" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">S'y inscrire</a>
-                                        }
+                                        //}
                                     }
                                     else
                                     {
