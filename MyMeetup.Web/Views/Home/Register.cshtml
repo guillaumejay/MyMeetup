@@ -76,7 +76,10 @@
                               maxlength="500">@Model.Notes</textarea>
                 </div>
             </div>
+            
             <div class="alert alert-primary" role="alert">
+                Rappel: Vous devez indiquer vos <strong>noms, prénoms, adresse postale</strong>.<br/>
+                <br/>>
                 En cliquant sur S'inscrire, ta demande de réservation nous sera envoyée (avec une copie sur @Model.UserEmail).
             </div>
             <a class="btn btn-primary" onclick="validateForm('frmRegister')">S'inscrire</a>
@@ -96,7 +99,6 @@
 
 
         function validateForm(id) {
-            debugger;
             tinyMCE.triggerSave();
             document.getElementById(id).submit();
         }

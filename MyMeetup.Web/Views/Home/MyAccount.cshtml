@@ -13,6 +13,20 @@
     <div class="card-body">
         <h5 class="card-title">Bonjour, @Model.CurrentUser.FirstName @Model.CurrentUser.LastName </h5>
         <h6 class="card-subtitle mb-2 text-muted"></h6>
+        @if (Model.EstAjoutCotisation == false)
+        {
+           <p>
+               A priori, vous n'avez pas payé l'adhésion de deux euros.<br />
+               <table>
+                   <tr>
+                       <td><iframe id="haWidgetButton" src="https://www.helloasso.com/associations/rencontres-non-scos/paiements/inscription-a-l-association/widget-bouton"
+                                   style="border: none"></iframe></td>
+                       <td>Géré par <a href="https://www.helloasso.com" rel="nofollow">HelloAsso</a></td>
+                   </tr>
+               </table>
+                    Une fois votre paiment effectué chez HelloAsso, il nous faudra un peu temps pour mettre l'information à jour ici.
+           </p>
+    }
         <p class="card-text">
             @Html.Raw(Model.NextRegistrations)
             <br />
