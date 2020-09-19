@@ -27,7 +27,7 @@ namespace MyMeetup.Web.Controllers
         public Meetup CurrentMeetup;
         public HomeController(MyMeetupDomain domain, UserManager<MyMeetupUser> userManager, TelemetryClient telemetryClient, IMapper mapper) : base(domain, userManager, telemetryClient)
         {
-            CurrentMeetup = Domain.GetNextMeetup(DateTime.Now, true);
+            CurrentMeetup = Domain.GetNextMeetup(DateTime.Now, false,true);
         }
 
         private List<SelectListItem> CreateSelectListForAcc(List<AccomodationModel> accomodations)
@@ -54,7 +54,7 @@ namespace MyMeetup.Web.Controllers
 
 
         [AllowAnonymous]
-        public IActionResult Index()
+        public ActionResult<IndexModel> Index()
         {
             return View(CreateLandingPageModel());
         }
@@ -74,8 +74,10 @@ namespace MyMeetup.Web.Controllers
 
         private MeetupRegisterModel CreateModelForRegistration(int meetupId, bool onlyActiveAcc = true)
         {
-            MeetupRegisterModel rm = new MeetupRegisterModel(Domain.GetMeetup(meetupId, true));
-            rm.UserEmail = CurrentUser.Email;
+            MeetupRegisterModel rm = new MeetupRegisterModel(Domain.GetMeetup(meetupId, true))
+            {
+                UserEmail = CurrentUser.Email
+            };
             FillAccomodations(rm, onlyActiveAcc);
        
             return rm;

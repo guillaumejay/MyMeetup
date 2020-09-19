@@ -20,9 +20,9 @@ namespace MyMeetup.Web.Areas.Admin.Controllers
         {
             AdminIndexModel aim = new AdminIndexModel();
             aim.Meetups.AddRange(Domain.GetAdminMeetup());
-            // When I said I was a specially crafted software, I was not joking...
-
+            
             aim.HelloText = CurrentUser.FirstName;
+            // When I said I was a specially crafted software, I was not joking...
             if (CurrentUser.FirstName == "Lori")
             {
                 aim.HelloText = $"<i class=\"fa fa-heart\" style='color:pink;font-size:24px'> </i>{aim.HelloText}<i class=\"fa fa-heart\"  style='color:pink;font-size:24px'></i>";
