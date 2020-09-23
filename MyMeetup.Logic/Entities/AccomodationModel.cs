@@ -41,7 +41,7 @@ namespace MyMeetUp.Logic.Entities
                     new AccomodationModel("GiteT4", "Gîte T4 (8 places, 3 chambres) 390€", false),
                     new AccomodationModel("Cabanela", "Cabanela (4 places, 2 chambres) 350€", false),
                     new AccomodationModel("GiteT6", "Chambre dans Gîte T6 (2-3 lits, avec douche/wc privés) 212€", false),
-                    new AccomodationModel("GiteT6", "Chambre dans Gîte T6 (1 lit), avec douche/wc privés) 90€", true)
+                    new AccomodationModel("GiteT6-1", "Chambre dans Gîte T6 (1 lit), avec douche/wc privés) 90€", true)
                 };
 
                 return accomodations;
