@@ -5,7 +5,7 @@
     Layout = "_layoutIndex";
     ViewData["Title"] = "Rencontres non-scos";
     var okForEmail = Model.SigninMeetupModel?.IsOkToGetMeetupsInfo ?? false;
-    bool displayMeetup = Model.Meetup.Id > 0;
+    bool displayMeetup =  Model.Meetup.Id > 0;
 }
 <br />
 <div class="text-center">
@@ -42,8 +42,8 @@
     </div>
 
 </div>
-@*@if (displayMeetup)
-{*@
+@if (displayMeetup)
+{
         <div class="col-md-4 "></div>
         <div class="col-md-12" style="text-align: center">
             <a class="btn btn-primary waves-effect waves-light" href="/me" style="font-size:22px">
@@ -95,9 +95,9 @@
             </div>
         }
     </div>
-@*}*@
-@*@if (displayMeetup)
-{*@
+}
+@if (displayMeetup)
+{
 
 <div class="row" id="divInscription" style="display: none"> 
 <div class="col-sm-12">
@@ -178,7 +178,7 @@
             </div>
         </div>
     </div>
-@*}*@
+}
     @section Scripts
         {
         <script>
