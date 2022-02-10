@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+//using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -69,7 +70,7 @@ namespace MyMeetup.Web
             services.AddScoped<MyMeetupDomain>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddAutoMapper();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(options => options.EnableEndpointRouting = false).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<TelemetryClient>();
 
@@ -119,6 +120,7 @@ namespace MyMeetup.Web
             Seeding.SeedRoles(roleManager);
             Seeding.SeedUsers(userManager);
             Seeding.SeedData(context);
+            
             app.UseMvc(routes =>
             {
 

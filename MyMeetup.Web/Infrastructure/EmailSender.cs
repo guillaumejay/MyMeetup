@@ -8,7 +8,7 @@ using MyMeetUp.Logic.Infrastructure;
 
 namespace MyMeetup.Web.Infrastructure
 {
-    public class EmailSender:IEmailSender
+    public class EmailSender :IEmailSender
     {
         private IConfiguration _configuration;
         public EmailSender(IConfiguration configuration)
